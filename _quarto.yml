@@ -5,11 +5,11 @@ website:
   title: "IS415-Project"
   navbar:
     left:
-      - href: index.qmd
+      - href: "index.qmd"
         text: Home
-      - href: about.qmd
+      - href: "about.qmd"
         text: About
-      - href: project overview/overview.qmd
+      - href: "project overview/overview.html"
         text: Project Overview
 
 format:
