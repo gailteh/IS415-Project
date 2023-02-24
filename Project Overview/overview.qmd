@@ -32,11 +32,9 @@ title: "Overview"
 
 ### iii. Point Pattern Analysis
 
--   L-function
+-   Kernel Density Estimation: Visualise the density of the spatial points and identify patterns in the distribution.
 
--   G-function
-
--   KDE
+-   L-function & G-function: Determine whether the points patterns is clustered or randomly distributed
 
 # 8. Literature Review
 
@@ -48,7 +46,7 @@ title: "Overview"
 
 ![](images/image-751352976.png)
 
-### Summary: 
+### Summary:
 
 MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.
 
@@ -66,7 +64,24 @@ MBGapp is a Shiny Web Application that can be used to teach the different stages
 
 ## 2. [Spatial Point Analysis of Carpark Vacancies in Singapore](https://jesuscaro.org/portfolio/carpark/)
 
-(gail)
+![](images/image-1631201293.png)
+
+### Summary
+
+The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.
+
+### Learning Points
+
+-   The study split the availability into 3 categories (Low, Mid, High). The study analysed the availability of different carparks within a day and segregated it between business hours and non-business hours
+
+```{=html}
+<!-- -->
+```
+-   They did a visualisation of the carpark availability across Singapore across both business and non-business hours.
+
+### Linking back to our project
+
+We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.
 
 ## 3. [Measuring Spatial Distribution of Coffee Shops in Surakarta](https://iopscience.iop.org/article/10.1088/1755-1315/778/1/012031/pdf)
 

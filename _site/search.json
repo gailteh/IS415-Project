@@ -32,7 +32,7 @@
     "href": "Project Overview/overview.html#spatial-point-analysis-of-carpark-vacancies-in-singapore",
     "title": "Overview",
     "section": "2. Spatial Point Analysis of Carpark Vacancies in Singapore",
-    "text": "2. Spatial Point Analysis of Carpark Vacancies in Singapore\n(gail)"
+    "text": "2. Spatial Point Analysis of Carpark Vacancies in Singapore\n\n\nSummary\nThe writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.\n\n\nLearning Points\n\nThe study split the availability into 3 categories (Low, Mid, High). The study analysed the availability of different carparks within a day and segregated it between business hours and non-business hours\n\n\n\nThey did a visualisation of the carpark availability across Singapore across both business and non-business hours.\n\n\n\nLinking back to our project\nWe can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area."
   },
   {
     "objectID": "Project Overview/overview.html#measuring-spatial-distribution-of-coffee-shops-in-surakarta",
