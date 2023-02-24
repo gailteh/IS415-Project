@@ -19,5 +19,47 @@
     "title": "Overview",
     "section": "",
     "text": "MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.\n\n\n\n\nMBGapp has a sidebar which has a ‘upload data’ functionality which allows users to upload their file in CSV format. Users are also prompted about the projection format so that the coordinates displayed can be accurate.\nThere are various tabs to view the distribution such as ‘Explore’, ‘Variogram’, ‘Estimation’, ‘Prediction’ and ‘Report’ to use for all-rounded analysis.\n\n\n\n\n\nWe will ensure that users are able to upload their data properly for analysis\nWe could have different tabs for different functions to serve various purposes."
+  },
+  {
+    "objectID": "Project Overview/overview.html#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists",
+    "href": "Project Overview/overview.html#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists",
+    "title": "Overview",
+    "section": "1) A Shiny Web Application for teaching model-based geostatistics to population health scientists",
+    "text": "1) A Shiny Web Application for teaching model-based geostatistics to population health scientists\n\n\n\n\nSummary:\nMBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.\n\n\nLearning Points:\n\nMBGapp has a sidebar which has a ‘upload data’ functionality which allows users to upload their file in CSV format. Users are also prompted about the projection format so that the coordinates displayed can be accurate.\nThere are various tabs to view the distribution such as ‘Explore’, ‘Variogram’, ‘Estimation’, ‘Prediction’ and ‘Report’ to use for all-rounded analysis.\n\n\n\nLinking back to our project:\n\nWe will ensure that users are able to upload their data properly for analysis\nWe could have different tabs for different functions to serve various purposes."
+  },
+  {
+    "objectID": "Project Overview/overview.html#spatial-point-analysis-of-carpark-vacancies-in-singapore",
+    "href": "Project Overview/overview.html#spatial-point-analysis-of-carpark-vacancies-in-singapore",
+    "title": "Overview",
+    "section": "2. Spatial Point Analysis of Carpark Vacancies in Singapore",
+    "text": "2. Spatial Point Analysis of Carpark Vacancies in Singapore\n(gail)"
+  },
+  {
+    "objectID": "Project Overview/overview.html#measuring-spatial-distribution-of-coffee-shops-in-surakarta",
+    "href": "Project Overview/overview.html#measuring-spatial-distribution-of-coffee-shops-in-surakarta",
+    "title": "Overview",
+    "section": "3. Measuring Spatial Distribution of Coffee Shops in Surakarta",
+    "text": "3. Measuring Spatial Distribution of Coffee Shops in Surakarta\n(kathy)"
+  },
+  {
+    "objectID": "Project Overview/overview.html#homepage",
+    "href": "Project Overview/overview.html#homepage",
+    "title": "Overview",
+    "section": "Homepage",
+    "text": "Homepage"
+  },
+  {
+    "objectID": "Project Overview/overview.html#spatial-statistical-functions",
+    "href": "Project Overview/overview.html#spatial-statistical-functions",
+    "title": "Overview",
+    "section": "Spatial Statistical Functions",
+    "text": "Spatial Statistical Functions"
+  },
+  {
+    "objectID": "Project Overview/overview.html#data",
+    "href": "Project Overview/overview.html#data",
+    "title": "Overview",
+    "section": "Data",
+    "text": "Data"
   }
 ]

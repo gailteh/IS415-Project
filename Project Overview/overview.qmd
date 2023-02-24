@@ -2,7 +2,43 @@
 title: "Overview"
 ---
 
-# Literature Review
+# 1. Theme: Spatial Points Analysis on URA Parking in Singapore
+
+# 2. Abstract
+
+# 3. Problem and Motivation
+
+# 4. Project Objectives
+
+# 5. Main Features
+
+# 6. Data Sources
+
+# 7. Approach and Methodology
+
+### i. Data Preparation
+
+-   Assembling data from various sources
+
+-   Data import
+
+-   Data wrangling
+
+### ii. Exploratory Data Analysis
+
+-   Analyse distribution of Spatial Points
+
+-   Check for outliers
+
+### iii. Point Pattern Analysis
+
+-   L-function
+
+-   G-function
+
+-   KDE
+
+# 8. Literature Review
 
 ## 1) [A Shiny Web Application for teaching model-based geostatistics to population health scientists](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8719748/)
 
@@ -27,3 +63,19 @@ MBGapp is a Shiny Web Application that can be used to teach the different stages
 -   We will ensure that users are able to upload their data properly for analysis
 
 -   We could have different tabs for different functions to serve various purposes.
+
+## 2. [Spatial Point Analysis of Carpark Vacancies in Singapore](https://jesuscaro.org/portfolio/carpark/)
+
+(gail)
+
+## 3. [Measuring Spatial Distribution of Coffee Shops in Surakarta](https://iopscience.iop.org/article/10.1088/1755-1315/778/1/012031/pdf)
+
+(kathy)
+
+# 9) Storyboards
+
+## Homepage
+
+## Spatial Statistical Functions
+
+## Data
