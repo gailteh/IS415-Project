@@ -11,4 +11,3 @@ To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
 
 ```
-Hi my name is Celine

@@ -8,10 +8,12 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - href: project overview/overview.qmd
+        text: Project Overview
 
 format:
   html:
-    theme: cosmo
+    theme: sketchy
     css: styles.css
     toc: true
 

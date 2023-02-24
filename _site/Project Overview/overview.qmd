@@ -1,0 +1,29 @@
+---
+title: "Overview"
+---
+
+# Literature Review
+
+## [A Shiny Web Application for teaching model-based geostatistics to population health scientists](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8719748/)
+
+![](images/image-127123022.png)
+
+![](images/image-1667510203.png)
+
+![](images/image-751352976.png)
+
+### Summary: 
+
+MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.
+
+### Learning Points:
+
+-   MBGapp has a sidebar which has a 'upload data' functionality which allows users to upload their file in CSV format. Users are also prompted about the projection format so that the coordinates displayed can be accurate.
+
+-   There are various tabs to view the distribution such as 'Explore', 'Variogram', 'Estimation', 'Prediction' and 'Report' to use for all-rounded analysis.
+
+### Linking back to our project
+
+-   We will ensure that users are able to upload their data properly for analysis
+
+-   We could have different tabs for different functions to serve various purposes.
