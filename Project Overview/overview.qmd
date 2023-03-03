@@ -8,9 +8,26 @@ title: "Overview"
 
 # 3. Problem and Motivation
 
+Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient carpark facilities to its residents and visitors.The spatial distribution of carparks across the city is uneven, with some areas experiencing high demand while others have surplus capacity. 
+
+Geospatial analysis can help identify hot spots and cold spots of carparks, which are areas with high and low concentrations of carparks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of carpark facilities, such as identifying areas in need of additional carparks or adjusting parking rates in areas with high demand.
+
+Therefore, the problem statement is to investigate the spatial patterns of car parks in Singapore using geospatial analysis and identify hot spots and cold spots to inform carpark allocation and management policies.
+
 # 4. Project Objectives
+In this project, we will be proposing to create an analytical application that allows users to:
+
+-   Better understand the capabilities and use cases of Point Pattern Analysis in the case of Car parks in Singapore
+
+-   Conduct Spatial Point Patterns Analysis (Kernel density estimation and, G and L functions)
+
+-   Conduct Hot Spot and Cold Spot Analysis
+
+Use these insights derived from the analysis for better understanding on the distribution of car parks in Singapore.
 
 # 5. Main Features
+
+
 
 # 6. Data Sources
 
@@ -74,9 +91,8 @@ The writer conducted geospatial analysis on the availability of parking spaces i
 
 -   The study split the availability into 3 categories (Low, Mid, High). The study analysed the availability of different carparks within a day and segregated it between business hours and non-business hours
 
-```{=html}
 <!-- -->
-```
+
 -   They did a visualisation of the carpark availability across Singapore across both business and non-business hours.
 
 ### Linking back to our project

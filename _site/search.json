@@ -14,13 +14,6 @@
     "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
   },
   {
-    "objectID": "Project Overview/overview.html",
-    "href": "Project Overview/overview.html",
-    "title": "Overview",
-    "section": "",
-    "text": "MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.\n\n\n\n\nMBGapp has a sidebar which has a ‘upload data’ functionality which allows users to upload their file in CSV format. Users are also prompted about the projection format so that the coordinates displayed can be accurate.\nThere are various tabs to view the distribution such as ‘Explore’, ‘Variogram’, ‘Estimation’, ‘Prediction’ and ‘Report’ to use for all-rounded analysis.\n\n\n\n\n\nWe will ensure that users are able to upload their data properly for analysis\nWe could have different tabs for different functions to serve various purposes."
-  },
-  {
     "objectID": "Project Overview/overview.html#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists",
     "href": "Project Overview/overview.html#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists",
     "title": "Overview",
