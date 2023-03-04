@@ -6,17 +6,23 @@ title: "Overview"
 
 # 2. Abstract
 
+To use geospatial analysis to analyze the spatial characteristics of Singapore's parking lots and to pinpoint hot and cold regions in order to guide management and allocation decisions.
+
+Our application enables users to derive insights from Point pattern analysis using Spatial Patterns Analysis and Hot Spot and Cold Spot Analysis (HCSA). It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. For HCSA, is useful to uncover the statistically significant hot spots and cold spots.
+
+In addition, our application can generate kernel density maps using the input datasets of car parks and run a range of hypothesis tests to derive meaningful conclusions on the distributions of car parks in Singapore. To better visualise how our application would work and look like, we have storyboards to depict the proposed application UI format.
+
 # 3. Problem and Motivation
 
-Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient carpark facilities to its residents and visitors.The spatial distribution of carparks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
+Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors.The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
 
-Geospatial analysis can help identify hot spots and cold spots of carparks, which are areas with high and low concentrations of carparks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of carpark facilities, such as identifying areas in need of additional carparks or adjusting parking rates in areas with high demand.
+Geospatial analysis can help identify hot spots and cold spots of car parks, which are areas with high and low concentrations of car parks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of car park facilities, such as identifying areas in need of additional car parks or adjusting parking rates in areas with high demand.
 
-Therefore, the problem statement is to investigate the spatial patterns of car parks in Singapore using geospatial analysis and identify hot spots and cold spots to inform carpark allocation and management policies.
+Therefore, the problem statement is to investigate the spatial patterns of car parks in Singapore using geospatial analysis and identify hot spots and cold spots to observe car park allocation.
 
 # 4. Project Objectives
 
-In this project, we will be proposing to create an analytical application that allows users to:
+In this project, we will be proposing to create an analytic application that allows users to:
 
 -   Better understand the capabilities and use cases of Point Pattern Analysis in the case of Car parks in Singapore
 
@@ -28,12 +34,42 @@ Use these insights derived from the analysis for better understanding on the dis
 
 # 5. Main Features
 
+### Spatial Point Patterns Analysis 
+
++-----------------------------+------------------------------------------+
+| Components                  | Parameters / Variables                   |
++=============================+==========================================+
+| Filters (Drop--down select) | -   Different Variables for Analysis     |
+|                             |                                          |
+|                             | -   Various Bandwidth Selection Methods  |
+|                             |                                          |
+|                             | -   Various Kernel Methods               |
+|                             |                                          |
+|                             | -   Various Statistical Functions        |
++-----------------------------+------------------------------------------+
+| Sliders                     | -   For Fixed Bandwidth Selection Method |
+|                             |                                          |
+|                             | -   Number of Simulations                |
++-----------------------------+------------------------------------------+
+
+### Hot Spot & Cold Spot Analysis (HCSA)
+
++-----------------------------+-------------------------------------------+
+| Components                  | Parameters / Variables                    |
++=============================+===========================================+
+| Filters (Drop--down select) | -   Deriving spatial weights matrix       |
+|                             |                                           |
+|                             | -   Computing Gi statistics               |
+|                             |                                           |
+|                             | -   Mapping Gi statistics                 |
++-----------------------------+-------------------------------------------+
+
 # 6. Data Sources
 
 -   Childcare locations
--   URA carpark
--   Shopping mall carpark fees
--   Geo-location of amenities (Community Centres, childcare)
+-   [URA carpark](https://data.gov.sg/dataset/ura-parking-lot)
+-   Community Centres
+-   (Prospective source of data) [URA API](https://www.ura.gov.sg/maps/api/) : using to acquire real-time occupancy of the URA car parks in Singapore, used for Hot Spot and Cold Spot Analysis (HCSA)
 
 # 7. Approach and Methodology
 
@@ -134,3 +170,9 @@ Use these insights derived from the analysis for better understanding on the dis
 ## Spatial Statistical Functions
 
 ## Data
+
+# 10) Application Architecture
+
+![](images/data_arch.PNG)
+
+# 11) Timeline
