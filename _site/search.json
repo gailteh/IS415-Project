@@ -9,9 +9,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "IS415-Project",
+    "title": "Welcome to CarSpot: Geospatial Parking Analysis!!",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "Group members (Team 8) : Celine, Gail, Kathy\nOverview\nWith theme of Spatial Points Patterns, this project explore the distributions of car parks in Singapore with a range of useful graphs and maps in our application to enable them to make meaningful insights.\nLink to our Github"
   },
   {
     "objectID": "Project Overview/overview.html#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists",

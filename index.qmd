@@ -1,13 +1,13 @@
 ---
-title: "IS415-Project"
+title: "Welcome to CarSpot: Geospatial Parking Analysis!!"
 ---
 
-This is a Quarto website.
+**Group members (Team 8) : Celine, Gail, Kathy**
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+**Overview**
 
-```{r}
-1 + 1
+With theme of Spatial Points Patterns, this project explore the distributions of car parks in Singapore with a range of useful graphs and maps in our application to enable them to make meaningful insights.
 
+[**Link to our Github**](https://github.com/gailteh/IS415-Project)
 
-```
+![](Project%20Overview/images/undraw_City_driver_re_9xyv.png){fig-align="center" width="434"}
