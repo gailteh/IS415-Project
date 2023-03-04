@@ -114,9 +114,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">6. Data Sources</a></li>
   <li><a href="#approach-and-methodology" id="toc-approach-and-methodology" class="nav-link" data-scroll-target="#approach-and-methodology">7. Approach and Methodology</a>
   <ul class="collapse">
-  <li><a href="#i.-data-preparation" id="toc-i.-data-preparation" class="nav-link" data-scroll-target="#i.-data-preparation">i. Data Preparation</a></li>
-  <li><a href="#ii.-exploratory-data-analysis" id="toc-ii.-exploratory-data-analysis" class="nav-link" data-scroll-target="#ii.-exploratory-data-analysis">ii. Exploratory Data Analysis</a></li>
-  <li><a href="#iii.-point-pattern-analysis" id="toc-iii.-point-pattern-analysis" class="nav-link" data-scroll-target="#iii.-point-pattern-analysis">iii. Point Pattern Analysis</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a></li>
+  <li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda" class="nav-link" data-scroll-target="#exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</a></li>
+  <li><a href="#point-pattern-analysis" id="toc-point-pattern-analysis" class="nav-link" data-scroll-target="#point-pattern-analysis">Point Pattern Analysis</a></li>
+  <li><a href="#hot-spot-and-cold-spot-area-analysis-hcsa" id="toc-hot-spot-and-cold-spot-area-analysis-hcsa" class="nav-link" data-scroll-target="#hot-spot-and-cold-spot-area-analysis-hcsa">Hot Spot and Cold Spot Area Analysis (HCSA)</a></li>
   </ul></li>
   <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">8. Literature Review</a>
   <ul class="collapse">
@@ -132,7 +133,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#learning-points-1" id="toc-learning-points-1" class="nav-link" data-scroll-target="#learning-points-1">Learning Points</a></li>
   <li><a href="#linking-back-to-our-project-1" id="toc-linking-back-to-our-project-1" class="nav-link" data-scroll-target="#linking-back-to-our-project-1">Linking back to our project</a></li>
   </ul></li>
-  <li><a href="#measuring-spatial-distribution-of-coffee-shops-in-surakarta" id="toc-measuring-spatial-distribution-of-coffee-shops-in-surakarta" class="nav-link" data-scroll-target="#measuring-spatial-distribution-of-coffee-shops-in-surakarta">3. Measuring Spatial Distribution of Coffee Shops in Surakarta</a></li>
+  <li><a href="#spatial-disparities-of-self-reported-covid-19-cases-and-influencing-factors-in-wuhan-china" id="toc-spatial-disparities-of-self-reported-covid-19-cases-and-influencing-factors-in-wuhan-china" class="nav-link" data-scroll-target="#spatial-disparities-of-self-reported-covid-19-cases-and-influencing-factors-in-wuhan-china">3. Spatial disparities of self-reported COVID-19 cases and influencing factors in Wuhan, China</a>
+  <ul class="collapse">
+  <li><a href="#summary-2" id="toc-summary-2" class="nav-link" data-scroll-target="#summary-2">Summary</a></li>
+  <li><a href="#learning-points-2" id="toc-learning-points-2" class="nav-link" data-scroll-target="#learning-points-2">Learning Points</a></li>
+  <li><a href="#linking-back-to-our-project-2" id="toc-linking-back-to-our-project-2" class="nav-link" data-scroll-target="#linking-back-to-our-project-2">Linking back to our project</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#storyboards" id="toc-storyboards" class="nav-link" data-scroll-target="#storyboards">9) Storyboards</a>
   <ul class="collapse">
@@ -190,29 +196,44 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="data-sources" class="level1">
 <h1>6. Data Sources</h1>
+<ul>
+<li>Childcare locations</li>
+<li>URA carpark</li>
+<li>Shopping mall carpark fees</li>
+<li>Geo-location of amenities (Community Centres, childcare)</li>
+</ul>
 </section>
 <section id="approach-and-methodology" class="level1">
 <h1>7. Approach and Methodology</h1>
-<section id="i.-data-preparation" class="level3">
-<h3 class="anchored" data-anchor-id="i.-data-preparation">i. Data Preparation</h3>
+<section id="data-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
 <ul>
-<li><p>Assembling data from various sources</p></li>
-<li><p>Data import</p></li>
-<li><p>Data wrangling</p></li>
+<li>Importing in data</li>
+<li>Inspect and understand the data fields</li>
+<li>Data Wrangling - Missing values - Duplicates</li>
 </ul>
 </section>
-<section id="ii.-exploratory-data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="ii.-exploratory-data-analysis">ii. Exploratory Data Analysis</h3>
+<section id="exploratory-data-analysis-eda" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-data-analysis-eda">Exploratory Data Analysis (EDA)</h3>
 <ul>
-<li><p>Analyse distribution of Spatial Points</p></li>
-<li><p>Check for outliers</p></li>
+<li>Examine distribution of data points</li>
+<li>Check for outliers and anomalies in data</li>
+<li>Additional Data Wrangling if necessary</li>
 </ul>
 </section>
-<section id="iii.-point-pattern-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="iii.-point-pattern-analysis">iii. Point Pattern Analysis</h3>
+<section id="point-pattern-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="point-pattern-analysis">Point Pattern Analysis</h3>
 <ul>
-<li><p>Kernel Density Estimation: Visualise the density of the spatial points and identify patterns in the distribution.</p></li>
-<li><p>L-function &amp; G-function: Determine whether the points patterns is clustered or randomly distributed</p></li>
+<li><p>Spatial Point Patterns Analysis: First-order and Second-order analysis</p></li>
+<li><p>Kernel Density Estimation: Visualise and explore the intensity of points cluster</p></li>
+<li><p>G-Function: Find out if the points are of either clustered pattern, regular pattern of randomly distributed pattern.</p></li>
+<li><p>L-Function: Discover if the target point locations are independent from other points’ locations</p></li>
+</ul>
+</section>
+<section id="hot-spot-and-cold-spot-area-analysis-hcsa" class="level3">
+<h3 class="anchored" data-anchor-id="hot-spot-and-cold-spot-area-analysis-hcsa">Hot Spot and Cold Spot Area Analysis (HCSA)</h3>
+<ul>
+<li>Use spatial weight identify the statistically significant hot spots and cold spots</li>
 </ul>
 </section>
 </section>
@@ -225,7 +246,9 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/image-751352976.png" class="img-fluid"></p>
 <section id="summary" class="level3">
 <h3 class="anchored" data-anchor-id="summary">Summary:</h3>
-<p>MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.</p>
+<ul>
+<li>MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.</li>
+</ul>
 </section>
 <section id="learning-points" class="level3">
 <h3 class="anchored" data-anchor-id="learning-points">Learning Points:</h3>
@@ -247,7 +270,9 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/image-1631201293.png" class="img-fluid"></p>
 <section id="summary-1" class="level3">
 <h3 class="anchored" data-anchor-id="summary-1">Summary</h3>
-<p>The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.</p>
+<ul>
+<li>The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.</li>
+</ul>
 </section>
 <section id="learning-points-1" class="level3">
 <h3 class="anchored" data-anchor-id="learning-points-1">Learning Points</h3>
@@ -261,12 +286,33 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="linking-back-to-our-project-1" class="level3">
 <h3 class="anchored" data-anchor-id="linking-back-to-our-project-1">Linking back to our project</h3>
-<p>We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.</p>
+<ul>
+<li>We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.</li>
+</ul>
 </section>
 </section>
-<section id="measuring-spatial-distribution-of-coffee-shops-in-surakarta" class="level2">
-<h2 class="anchored" data-anchor-id="measuring-spatial-distribution-of-coffee-shops-in-surakarta">3. <a href="https://iopscience.iop.org/article/10.1088/1755-1315/778/1/012031/pdf">Measuring Spatial Distribution of Coffee Shops in Surakarta</a></h2>
-<p>(kathy)</p>
+<section id="spatial-disparities-of-self-reported-covid-19-cases-and-influencing-factors-in-wuhan-china" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-disparities-of-self-reported-covid-19-cases-and-influencing-factors-in-wuhan-china">3. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8545724/">Spatial disparities of self-reported COVID-19 cases and influencing factors in Wuhan, China</a></h2>
+<p><img src="images/img(covid).jpg" class="img-fluid"></p>
+<section id="summary-2" class="level3">
+<h3 class="anchored" data-anchor-id="summary-2">Summary</h3>
+<ul>
+<li>Kernel Density Estimation (KDE) method to investigate variations in the intensity of the COVID-19 epidemic across different spatial regions. Additionally, a geographically weighted regression (GWR) model to assess how the population dynamics, transportation and social interactions contributed to the spread of the COVID-19.</li>
+</ul>
+</section>
+<section id="learning-points-2" class="level3">
+<h3 class="anchored" data-anchor-id="learning-points-2">Learning Points</h3>
+<ul>
+<li>Factors such as population density, transportation and social interactions greatly influence the choice of setting up health facilities that is crucial. Because the regions with elevated morbidity rates are predominantly located in commercial hubs and densely populated residential areas with greater population densities and more frequent social interactions.</li>
+</ul>
+</section>
+<section id="linking-back-to-our-project-2" class="level3">
+<h3 class="anchored" data-anchor-id="linking-back-to-our-project-2">Linking back to our project</h3>
+<ul>
+<li><p>We will offer a range of bandwidth values to enable to select the most suitable option for analysis</p></li>
+<li><p>A functionality will be incorporated to aid users in comprehending the outcomes of their statistical analysis and functions.</p></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="storyboards" class="level1">

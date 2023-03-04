@@ -8,13 +8,14 @@ title: "Overview"
 
 # 3. Problem and Motivation
 
-Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient carpark facilities to its residents and visitors.The spatial distribution of carparks across the city is uneven, with some areas experiencing high demand while others have surplus capacity. 
+Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient carpark facilities to its residents and visitors.The spatial distribution of carparks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
 
 Geospatial analysis can help identify hot spots and cold spots of carparks, which are areas with high and low concentrations of carparks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of carpark facilities, such as identifying areas in need of additional carparks or adjusting parking rates in areas with high demand.
 
 Therefore, the problem statement is to investigate the spatial patterns of car parks in Singapore using geospatial analysis and identify hot spots and cold spots to inform carpark allocation and management policies.
 
 # 4. Project Objectives
+
 In this project, we will be proposing to create an analytical application that allows users to:
 
 -   Better understand the capabilities and use cases of Point Pattern Analysis in the case of Car parks in Singapore
@@ -27,31 +28,40 @@ Use these insights derived from the analysis for better understanding on the dis
 
 # 5. Main Features
 
-
-
 # 6. Data Sources
+
+-   Childcare locations
+-   URA carpark
+-   Shopping mall carpark fees
+-   Geo-location of amenities (Community Centres, childcare)
 
 # 7. Approach and Methodology
 
-### i. Data Preparation
+### Data Preparation
 
--   Assembling data from various sources
+-   Importing in data
+-   Inspect and understand the data fields
+-   Data Wrangling - Missing values - Duplicates
 
--   Data import
+### Exploratory Data Analysis (EDA)
 
--   Data wrangling
+-   Examine distribution of data points
+-   Check for outliers and anomalies in data
+-   Additional Data Wrangling if necessary
 
-### ii. Exploratory Data Analysis
+### Point Pattern Analysis 
 
--   Analyse distribution of Spatial Points
+-   Spatial Point Patterns Analysis: First-order and Second-order analysis
 
--   Check for outliers
+-   Kernel Density Estimation: Visualise and explore the intensity of points cluster
 
-### iii. Point Pattern Analysis
+-   G-Function: Find out if the points are of either clustered pattern, regular pattern of randomly distributed pattern.
 
--   Kernel Density Estimation: Visualise the density of the spatial points and identify patterns in the distribution.
+-   L-Function: Discover if the target point locations are independent from other points' locations
 
--   L-function & G-function: Determine whether the points patterns is clustered or randomly distributed
+### Hot Spot and Cold Spot Area Analysis (HCSA) 
+
+-   Use spatial weight identify the statistically significant hot spots and cold spots
 
 # 8. Literature Review
 
@@ -65,7 +75,7 @@ Use these insights derived from the analysis for better understanding on the dis
 
 ### Summary:
 
-MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.
+-   MBGapp is a Shiny Web Application that can be used to teach the different stages of a geostatistical analysis. In this case study, they make use of the Loa loa (eyeworm) data from Cameroon to analyse its rate of infection. Through this model-based geostatistics (MBG) study, they are able to study the public health problems by using spatially discrete survey data to investigate spatial variation in disease risk.
 
 ### Learning Points:
 
@@ -85,7 +95,7 @@ MBGapp is a Shiny Web Application that can be used to teach the different stages
 
 ### Summary
 
-The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.
+-   The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.
 
 ### Learning Points
 
@@ -97,11 +107,25 @@ The writer conducted geospatial analysis on the availability of parking spaces i
 
 ### Linking back to our project
 
-We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.
+-   We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.
 
-## 3. [Measuring Spatial Distribution of Coffee Shops in Surakarta](https://iopscience.iop.org/article/10.1088/1755-1315/778/1/012031/pdf)
+## 3. [Spatial disparities of self-reported COVID-19 cases and influencing factors in Wuhan, China](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8545724/)
 
-(kathy)
+![](images/img(covid).jpg)
+
+### Summary
+
+-   Kernel Density Estimation (KDE) method to investigate variations in the intensity of the COVID-19 epidemic across different spatial regions. Additionally, a geographically weighted regression (GWR) model to assess how the population dynamics, transportation and social interactions contributed to the spread of the COVID-19.
+
+### Learning Points
+
+-   Factors such as population density, transportation and social interactions greatly influence the choice of setting up health facilities that is crucial. Because the regions with elevated morbidity rates are predominantly located in commercial hubs and densely populated residential areas with greater population densities and more frequent social interactions.
+
+### Linking back to our project
+
+-   We will offer a range of bandwidth values to enable to select the most suitable option for analysis
+
+-   A functionality will be incorporated to aid users in comprehending the outcomes of their statistical analysis and functions.
 
 # 9) Storyboards
 
