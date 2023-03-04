@@ -34,7 +34,7 @@ Use these insights derived from the analysis for better understanding on the dis
 
 # 5. Main Features
 
-### Spatial Point Patterns Analysis 
+### Spatial Point Patterns Analysis
 
 +-----------------------------+------------------------------------------+
 | Components                  | Parameters / Variables                   |
@@ -54,15 +54,15 @@ Use these insights derived from the analysis for better understanding on the dis
 
 ### Hot Spot & Cold Spot Analysis (HCSA)
 
-+-----------------------------+-------------------------------------------+
-| Components                  | Parameters / Variables                    |
-+=============================+===========================================+
-| Filters (Drop--down select) | -   Deriving spatial weights matrix       |
-|                             |                                           |
-|                             | -   Computing Gi statistics               |
-|                             |                                           |
-|                             | -   Mapping Gi statistics                 |
-+-----------------------------+-------------------------------------------+
++-----------------------------+-----------------------------------------+
+| Components                  | Parameters / Variables                  |
++=============================+=========================================+
+| Filters (Drop--down select) | -   Deriving spatial weights matrix     |
+|                             |                                         |
+|                             | -   Computing Gi statistics             |
+|                             |                                         |
+|                             | -   Mapping Gi statistics               |
++-----------------------------+-----------------------------------------+
 
 # 6. Data Sources
 
@@ -85,7 +85,7 @@ Use these insights derived from the analysis for better understanding on the dis
 -   Check for outliers and anomalies in data
 -   Additional Data Wrangling if necessary
 
-### Point Pattern Analysis 
+### Point Pattern Analysis
 
 -   Spatial Point Patterns Analysis: First-order and Second-order analysis
 
@@ -95,7 +95,7 @@ Use these insights derived from the analysis for better understanding on the dis
 
 -   L-Function: Discover if the target point locations are independent from other points' locations
 
-### Hot Spot and Cold Spot Area Analysis (HCSA) 
+### Hot Spot and Cold Spot Area Analysis (HCSA)
 
 -   Use spatial weight identify the statistically significant hot spots and cold spots
 
@@ -176,3 +176,7 @@ Use these insights derived from the analysis for better understanding on the dis
 ![](images/data_arch.PNG)
 
 # 11) Timeline
+
+![](images/image-353407350.png)
+
+![](images/image-1481811984.png)
