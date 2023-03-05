@@ -54,19 +54,19 @@ Use these insights derived from the analysis for better understanding on the dis
 
 ### Hot Spot & Cold Spot Analysis (HCSA)
 
-+-----------------------------+-----------------------------------------+
-| Components                  | Parameters / Variables                  |
-+=============================+=========================================+
-| Filters (Drop--down select) | -   Deriving spatial weights matrix     |
-|                             |                                         |
-|                             | -   Computing Gi statistics             |
-|                             |                                         |
-|                             | -   Mapping Gi statistics               |
-+-----------------------------+-----------------------------------------+
++-----------------------------+----------------------------------------+
+| Components                  | Parameters / Variables                 |
++=============================+========================================+
+| Filters (Drop--down select) | -   Deriving spatial weights matrix    |
+|                             |                                        |
+|                             | -   Computing Gi statistics            |
+|                             |                                        |
+|                             | -   Mapping Gi statistics              |
++-----------------------------+----------------------------------------+
 
 # 6. Data Sources
 
--   Childcare locations
+-   [Childcare Centres](https://dataportal.asia/dataset/203030733_child-care-services)
 -   [URA carpark](https://data.gov.sg/dataset/ura-parking-lot)
 -   Community Centres
 -   (Prospective source of data) [URA API](https://www.ura.gov.sg/maps/api/) : using to acquire real-time occupancy of the URA car parks in Singapore, used for Hot Spot and Cold Spot Analysis (HCSA)
@@ -167,9 +167,19 @@ Use these insights derived from the analysis for better understanding on the dis
 
 ## Homepage
 
+![](images/image-991759696.png)
+
 ## Spatial Statistical Functions
 
+![](images/image-524451418.png)
+
+![](images/image-1330788053.png)
+
+![](images/image-8965281.png)
+
 ## Data
+
+![](images/image-1696536916.png)
 
 # 10) Application Architecture
 
