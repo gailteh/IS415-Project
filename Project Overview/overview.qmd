@@ -54,20 +54,22 @@ Use these insights derived from the analysis for better understanding on the dis
 
 ### Hot Spot & Cold Spot Analysis (HCSA)
 
-+-----------------------------+---------------------------------------+
-| Components                  | Parameters / Variables                |
-+=============================+=======================================+
-| Filters (Drop--down select) | -   Deriving spatial weights matrix   |
-|                             |                                       |
-|                             | -   Computing Gi statistics           |
-|                             |                                       |
-|                             | -   Mapping Gi statistics             |
-+-----------------------------+---------------------------------------+
++-----------------------------+--------------------------------------+
+| Components                  | Parameters / Variables               |
++=============================+======================================+
+| Filters (Drop--down select) | -   Carpark Name                     |
+|                             |                                      |
+|                             | -   Availability of Carpark          |
+|                             |                                      |
+|                             | -   Mapping Gi statistics            |
++-----------------------------+--------------------------------------+
 
 # 6. Data Sources
 
 -   [Childcare Centres](https://dataportal.asia/dataset/203030733_child-care-services)
+-   [Shopping Mall](https://www.kaggle.com/datasets/karthikgangula/shopping-mall-coordinates)
 -   [URA carpark](https://data.gov.sg/dataset/ura-parking-lot)
+-   [Carpark](https://data.gov.sg/dataset/hdb-carpark-information)
 -   (Prospective source of data) [URA API](https://www.ura.gov.sg/maps/api/) : using to acquire real-time occupancy of the URA car parks in Singapore, used for Hot Spot and Cold Spot Analysis (HCSA)
 
 # 7. Approach and Methodology
