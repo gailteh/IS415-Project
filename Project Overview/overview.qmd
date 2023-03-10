@@ -6,9 +6,9 @@ title: "Overview"
 
 # 2. Abstract
 
-To use geospatial analysis to analyze the spatial characteristics of Singapore's parking lots and to pinpoint hot and cold regions in order to guide management and allocation decisions.
+To use geospatial analysis to analyze the spatial characteristics of Singapore's parking lots and
 
-Our application enables users to derive insights from Point pattern analysis using Spatial Patterns Analysis and Hot Spot and Cold Spot Analysis (HCSA). It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. For HCSA, is useful to uncover the statistically significant hot spots and cold spots.
+Our application enables users to derive insights from Point pattern analysis using Spatial Patterns Analysis. It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. Colocation (tbc)
 
 In addition, our application can generate kernel density maps using the input datasets of car parks and run a range of hypothesis tests to derive meaningful conclusions on the distributions of car parks in Singapore. To better visualise how our application would work and look like, we have storyboards to depict the proposed application UI format.
 
@@ -16,7 +16,9 @@ In addition, our application can generate kernel density maps using the input da
 
 Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors.The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
 
-Geospatial analysis can help identify hot spots and cold spots of car parks, which are areas with high and low concentrations of car parks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of car park facilities, such as identifying areas in need of additional car parks or adjusting parking rates in areas with high demand.
+Colocation between HDB and HDB carparks .... HDB carparks with shopping malls
+
+\<\<\< Need to change the problem\>\>\>Geospatial analysis can help identify hot spots and cold spots of car parks, which are areas with high and low concentrations of car parks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of car park facilities, such as identifying areas in need of additional car parks or adjusting parking rates in areas with high demand.
 
 Therefore, the problem statement is to investigate the spatial patterns of car parks in Singapore using geospatial analysis and identify hot spots and cold spots to observe car park allocation.
 
@@ -26,51 +28,51 @@ In this project, we will be proposing to create an analytic application that all
 
 -   Better understand the capabilities and use cases of Point Pattern Analysis in the case of Car parks in Singapore
 
--   Conduct Spatial Point Patterns Analysis (Kernel density estimation and, G and L functions)
+-   Conduct Spatial Point Patterns Analysis
 
--   Conduct Hot Spot and Cold Spot Analysis
+    -   1st Order (Kernel density estimation)
+
+    -   2nd Order Spatial Points Analysis (G and L functions)
+
+    -   Local Colocation Quotients (LCLQ)
 
 Use these insights derived from the analysis for better understanding on the distribution of car parks in Singapore.
 
 # 5. Main Features
 
-### Spatial Point Patterns Analysis
+### Spatial Point Patterns Analysis & Local Colocation Quotients (LCLQ) 
 
-+-----------------------------+------------------------------------------+
-| Components                  | Parameters / Variables                   |
-+=============================+==========================================+
-| Filters (Drop--down select) | -   Different Variables for Analysis     |
-|                             |                                          |
-|                             | -   Various Bandwidth Selection Methods  |
-|                             |                                          |
-|                             | -   Various Kernel Methods               |
-|                             |                                          |
-|                             | -   Various Statistical Functions        |
-+-----------------------------+------------------------------------------+
-| Sliders                     | -   For Fixed Bandwidth Selection Method |
-|                             |                                          |
-|                             | -   Number of Simulations                |
-+-----------------------------+------------------------------------------+
++-----------------------------+-----------------------------------------------------+
+| Components                  | Parameters / Variables                              |
++=============================+=====================================================+
+| Filters (Drop--down select) | -   Different Variables for Analysis                |
+|                             |                                                     |
+|                             | -   Various Bandwidth Selection Methods             |
+|                             |                                                     |
+|                             | -   Various Kernel Methods (except for LCLQ)        |
+|                             |                                                     |
+|                             | -   Various Statistical Functions (except for LCLQ) |
++-----------------------------+-----------------------------------------------------+
+| Sliders                     | -   For Fixed Bandwidth Selection Method            |
+|                             |                                                     |
+|                             | -   Number of Simulations                           |
++-----------------------------+-----------------------------------------------------+
 
-### Hot Spot & Cold Spot Analysis (HCSA)
+### Local Colocation Quotients (LCLQ) 
 
-+-----------------------------+--------------------------------------+
-| Components                  | Parameters / Variables               |
-+=============================+======================================+
-| Filters (Drop--down select) | -   Carpark Name                     |
-|                             |                                      |
-|                             | -   Availability of Carpark          |
-|                             |                                      |
-|                             | -   Mapping Gi statistics            |
-+-----------------------------+--------------------------------------+
++-----------------------------+-----------------------------------------+
+| Components                  | Parameters / Variables                  |
++=============================+=========================================+
+| Filters (Drop--down select) | -   Different Variables for Analysis    |
+|                             |                                         |
+|                             | -   Various Bandwidth Selection Methods |
++-----------------------------+-----------------------------------------+
 
 # 6. Data Sources
 
--   [Childcare Centres](https://dataportal.asia/dataset/203030733_child-care-services)
--   [Shopping Mall](https://www.kaggle.com/datasets/karthikgangula/shopping-mall-coordinates)
 -   [URA carpark](https://data.gov.sg/dataset/ura-parking-lot)
 -   [Carpark](https://data.gov.sg/dataset/hdb-carpark-information)
--   (Prospective source of data) [URA API](https://www.ura.gov.sg/maps/api/) : using to acquire real-time occupancy of the URA car parks in Singapore, used for Hot Spot and Cold Spot Analysis (HCSA)
+-   HDB locations
 
 # 7. Approach and Methodology
 
@@ -96,9 +98,9 @@ Use these insights derived from the analysis for better understanding on the dis
 
 -   L-Function: Discover if the target point locations are independent from other points' locations
 
-### Hot Spot and Cold Spot Area Analysis (HCSA)
+### Local Colocation Quotients (LCLQ)
 
--   Use spatial weight identify the statistically significant hot spots and cold spots
+-   Use spatial weight ....evaluates if a given observation's subcategory in A is colocated with subcategories in B.
 
 # 8. Literature Review
 
