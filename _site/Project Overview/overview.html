@@ -112,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#project-objectives" id="toc-project-objectives" class="nav-link" data-scroll-target="#project-objectives">4. Project Objectives</a></li>
   <li><a href="#main-features" id="toc-main-features" class="nav-link" data-scroll-target="#main-features">5. Main Features</a>
   <ul class="collapse">
-  <li><a href="#spatial-point-patterns-analysis-local-colocation-quotients-lclq" id="toc-spatial-point-patterns-analysis-local-colocation-quotients-lclq" class="nav-link" data-scroll-target="#spatial-point-patterns-analysis-local-colocation-quotients-lclq">Spatial Point Patterns Analysis &amp; Local Colocation Quotients (LCLQ)</a></li>
+  <li><a href="#spatial-point-patterns-analysis" id="toc-spatial-point-patterns-analysis" class="nav-link" data-scroll-target="#spatial-point-patterns-analysis">Spatial Point Patterns Analysis</a></li>
   <li><a href="#local-colocation-quotients-lclq" id="toc-local-colocation-quotients-lclq" class="nav-link" data-scroll-target="#local-colocation-quotients-lclq">Local Colocation Quotients (LCLQ)</a></li>
   </ul></li>
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">6. Data Sources</a></li>
@@ -180,16 +180,15 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="abstract" class="level1">
 <h1>2. Abstract</h1>
-<p>To use geospatial analysis to analyze the spatial characteristics of Singapore’s parking lots and</p>
-<p>Our application enables users to derive insights from Point pattern analysis using Spatial Patterns Analysis. It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. Colocation (tbc)</p>
+<p>To use geospatial analysis to analyze the spatial characteristics of HDB parking lot with other interest in the nehgbourhoods in Singapore.</p>
+<p>Our application enables users to derive insights from Point pattern analysis using Spatial Patterns Analysis and Local Colocation Quotient (LCLQ). It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. As for Local Colocation Quotient (LCLQ), it is useful in discovering the spatial association between HDB carparks and other interests like HDB, shopping malls and hawker centres.</p>
 <p>In addition, our application can generate kernel density maps using the input datasets of car parks and run a range of hypothesis tests to derive meaningful conclusions on the distributions of car parks in Singapore. To better visualise how our application would work and look like, we have storyboards to depict the proposed application UI format.</p>
 </section>
 <section id="problem-and-motivation" class="level1">
 <h1>3. Problem and Motivation</h1>
 <p>Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors.The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.</p>
-<p>Colocation between HDB and HDB carparks …. HDB carparks with shopping malls</p>
-<p>&lt;&lt;&lt; Need to change the problem&gt;&gt;&gt;Geospatial analysis can help identify hot spots and cold spots of car parks, which are areas with high and low concentrations of car parks, respectively. Understanding these patterns can inform policies and decisions related to the allocation and management of car park facilities, such as identifying areas in need of additional car parks or adjusting parking rates in areas with high demand.</p>
-<p>Therefore, the problem statement is to investigate the spatial patterns of car parks in Singapore using geospatial analysis and identify hot spots and cold spots to observe car park allocation.</p>
+<p>Our project aims to find out the spatial patterns of HDB carparks and its local colocation with other interests like HDB, shopping malls and hawker centres.</p>
+<p>The problem statement is focused on exploring the spatial points patterns of HDB carparks within neighbourhood in Singapore.</p>
 </section>
 <section id="project-objectives" class="level1">
 <h1>4. Project Objectives</h1>
@@ -207,12 +206,12 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="main-features" class="level1">
 <h1>5. Main Features</h1>
-<section id="spatial-point-patterns-analysis-local-colocation-quotients-lclq" class="level3">
-<h3 class="anchored" data-anchor-id="spatial-point-patterns-analysis-local-colocation-quotients-lclq">Spatial Point Patterns Analysis &amp; Local Colocation Quotients (LCLQ)</h3>
+<section id="spatial-point-patterns-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-point-patterns-analysis">Spatial Point Patterns Analysis</h3>
 <table class="table">
 <colgroup>
-<col style="width: 35%">
-<col style="width: 64%">
+<col style="width: 39%">
+<col style="width: 60%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -226,8 +225,8 @@ ul.task-list li input[type="checkbox"] {
 <td><ul>
 <li><p>Different Variables for Analysis</p></li>
 <li><p>Various Bandwidth Selection Methods</p></li>
-<li><p>Various Kernel Methods (except for LCLQ)</p></li>
-<li><p>Various Statistical Functions (except for LCLQ)</p></li>
+<li><p>Various Kernel Methods</p></li>
+<li><p>Various Statistical Functions</p></li>
 </ul></td>
 </tr>
 <tr class="even">
@@ -271,6 +270,8 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://data.gov.sg/dataset/ura-parking-lot">URA carpark</a></li>
 <li><a href="https://data.gov.sg/dataset/hdb-carpark-information">Carpark</a></li>
 <li>HDB locations</li>
+<li><a href="https://www.kaggle.com/datasets/karthikgangula/shopping-mall-coordinates">Shopping mall</a></li>
+<li><a href="https://data.gov.sg/dataset/hawker-centres">Hawker Centres</a></li>
 </ul>
 </section>
 <section id="approach-and-methodology" class="level1">
@@ -303,7 +304,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="local-colocation-quotients-lclq-1" class="level3">
 <h3 class="anchored" data-anchor-id="local-colocation-quotients-lclq-1">Local Colocation Quotients (LCLQ)</h3>
 <ul>
-<li>Use spatial weight ….evaluates if a given observation’s subcategory in A is colocated with subcategories in B.</li>
+<li>Find out the likelihood of the spatial association between 2 categorical vectors, for instance, HDB carparks and HDB blocks or Hawker Centres or Shopping Malls.</li>
 </ul>
 </section>
 </section>
