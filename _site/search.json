@@ -54,5 +54,12 @@
     "title": "Overview",
     "section": "Data",
     "text": "Data"
+  },
+  {
+    "objectID": "Project Overview/overview.html#analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data",
+    "href": "Project Overview/overview.html#analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data",
+    "title": "Overview",
+    "section": "2. Analysing the global and local spatial associations of medical resources across Wuhan city using POI data",
+    "text": "2. Analysing the global and local spatial associations of medical resources across Wuhan city using POI data\n\n\nSummary\n\nThis article is about how colocation quotients are used to identify co-location between different medical resources in Wuhan from the global and local perspective.\nLCLQ is a better analysis tool compared to GLCQ\n\n\n\nLearning Points\n\nThe colocation quotient between several categories is more suited for urban analytics in contrast to other methods for evaluating spatial connection (such as Moran’s I for interval and ratio data).\nThe global colocation quotient (GCLQ) does not take spatial heterogeneity into account, it evaluates the direction and intensity of the global spatial connections between medical resources within and between categories throughout the research area (nonstationary colocation).\nThe power of the LCLQ is its ability to map the direction and intensity of local spatial associations, i.e., colocation within a local neighbourhood. Compared with the global colocation quotient, the LCLQ also produces maps that are easier to interpret.\n\n\n\nLinking back to our project\nWe will apply the LCLQ to identify colocation between HDB carparks and different types of facilities in the neighbourhoods (e.g. HDB Buildings, Hawker Centers and Shopping Malls)"
   }
 ]

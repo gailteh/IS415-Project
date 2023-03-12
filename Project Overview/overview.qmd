@@ -38,23 +38,23 @@ Use these insights derived from the analysis for better understanding on the dis
 
 # 5. Main Features
 
-### Spatial Point Patterns Analysis 
+### Spatial Point Patterns Analysis
 
-+-----------------------------+---------------------------------------------+
-| Components                  | Parameters / Variables                      |
-+=============================+=============================================+
-| Filters (Drop--down select) | -   Different Variables for Analysis        |
-|                             |                                             |
-|                             | -   Various Bandwidth Selection Methods     |
-|                             |                                             |
-|                             | -   Various Kernel Methods                  |
-|                             |                                             |
-|                             | -   Various Statistical Functions           |
-+-----------------------------+---------------------------------------------+
-| Sliders                     | -   For Fixed Bandwidth Selection Method    |
-|                             |                                             |
-|                             | -   Number of Simulations                   |
-+-----------------------------+---------------------------------------------+
++-----------------------------+------------------------------------------+
+| Components                  | Parameters / Variables                   |
++=============================+==========================================+
+| Filters (Drop--down select) | -   Different Variables for Analysis     |
+|                             |                                          |
+|                             | -   Various Bandwidth Selection Methods  |
+|                             |                                          |
+|                             | -   Various Kernel Methods               |
+|                             |                                          |
+|                             | -   Various Statistical Functions        |
++-----------------------------+------------------------------------------+
+| Sliders                     | -   For Fixed Bandwidth Selection Method |
+|                             |                                          |
+|                             | -   Number of Simulations                |
++-----------------------------+------------------------------------------+
 
 ### Local Colocation Quotients (LCLQ)
 
@@ -128,25 +128,27 @@ Use these insights derived from the analysis for better understanding on the dis
 
 -   We could have different tabs for different functions to serve various purposes.
 
-## 2. [Spatial Point Analysis of Carpark Vacancies in Singapore](https://jesuscaro.org/portfolio/carpark/)
+## 2. [Analysing the global and local spatial associations of medical resources across Wuhan city using POI data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9883876/)
 
-![](images/image-1631201293.png)
+![](images/image-1276833123.png)
 
 ### Summary
 
--   The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.
+-   This article is about how colocation quotients are used to identify co-location between different medical resources in Wuhan from the global and local perspective.
+
+-   LCLQ is a better analysis tool compared to GLCQ
 
 ### Learning Points
 
--   The study split the availability into 3 categories (Low, Mid, High). The study analysed the availability of different carparks within a day and segregated it between business hours and non-business hours
+-   The colocation quotient between several categories is more suited for urban analytics in contrast to other methods for evaluating spatial connection (such as Moran's I for interval and ratio data).
 
-<!-- -->
+-   The global colocation quotient (GCLQ) does not take spatial heterogeneity into account, it evaluates the direction and intensity of the global spatial connections between medical resources within and between categories throughout the research area (nonstationary colocation).
 
--   They did a visualisation of the carpark availability across Singapore across both business and non-business hours.
+-   The power of the LCLQ is its ability to map the direction and intensity of local spatial associations, i.e., colocation within a local neighbourhood. Compared with the global colocation quotient, the LCLQ also produces maps that are easier to interpret.
 
 ### Linking back to our project
 
--   We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.
+We will apply the LCLQ to identify colocation between HDB carparks and different types of facilities in the neighbourhoods (e.g. HDB Buildings, Hawker Centers and Shopping Malls)
 
 ## 3. [Spatial disparities of self-reported COVID-19 cases and influencing factors in Wuhan, China](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8545724/)
 

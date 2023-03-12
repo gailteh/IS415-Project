@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#learning-points" id="toc-learning-points" class="nav-link" data-scroll-target="#learning-points">Learning Points:</a></li>
   <li><a href="#linking-back-to-our-project" id="toc-linking-back-to-our-project" class="nav-link" data-scroll-target="#linking-back-to-our-project">Linking back to our project:</a></li>
   </ul></li>
-  <li><a href="#spatial-point-analysis-of-carpark-vacancies-in-singapore" id="toc-spatial-point-analysis-of-carpark-vacancies-in-singapore" class="nav-link" data-scroll-target="#spatial-point-analysis-of-carpark-vacancies-in-singapore">2. Spatial Point Analysis of Carpark Vacancies in Singapore</a>
+  <li><a href="#analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data" id="toc-analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data" class="nav-link" data-scroll-target="#analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data">2. Analysing the global and local spatial associations of medical resources across Wuhan city using POI data</a>
   <ul class="collapse">
   <li><a href="#summary-1" id="toc-summary-1" class="nav-link" data-scroll-target="#summary-1">Summary</a></li>
   <li><a href="#learning-points-1" id="toc-learning-points-1" class="nav-link" data-scroll-target="#learning-points-1">Learning Points</a></li>
@@ -210,8 +210,8 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="spatial-point-patterns-analysis">Spatial Point Patterns Analysis</h3>
 <table class="table">
 <colgroup>
-<col style="width: 39%">
-<col style="width: 60%">
+<col style="width: 41%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -336,30 +336,27 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 </section>
-<section id="spatial-point-analysis-of-carpark-vacancies-in-singapore" class="level2">
-<h2 class="anchored" data-anchor-id="spatial-point-analysis-of-carpark-vacancies-in-singapore">2. <a href="https://jesuscaro.org/portfolio/carpark/">Spatial Point Analysis of Carpark Vacancies in Singapore</a></h2>
-<p><img src="images/image-1631201293.png" class="img-fluid"></p>
+<section id="analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data" class="level2">
+<h2 class="anchored" data-anchor-id="analysing-the-global-and-local-spatial-associations-of-medical-resources-across-wuhan-city-using-poi-data">2. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9883876/">Analysing the global and local spatial associations of medical resources across Wuhan city using POI data</a></h2>
+<p><img src="images/image-1276833123.png" class="img-fluid"></p>
 <section id="summary-1" class="level3">
 <h3 class="anchored" data-anchor-id="summary-1">Summary</h3>
 <ul>
-<li>The writer conducted geospatial analysis on the availability of parking spaces in carparks in Singapore, and then built a tool to allow drivers to have a better visualisation and sense of parking space availability of their intended carpark.</li>
+<li><p>This article is about how colocation quotients are used to identify co-location between different medical resources in Wuhan from the global and local perspective.</p></li>
+<li><p>LCLQ is a better analysis tool compared to GLCQ</p></li>
 </ul>
 </section>
 <section id="learning-points-1" class="level3">
 <h3 class="anchored" data-anchor-id="learning-points-1">Learning Points</h3>
 <ul>
-<li>The study split the availability into 3 categories (Low, Mid, High). The study analysed the availability of different carparks within a day and segregated it between business hours and non-business hours</li>
-</ul>
-<!-- -->
-<ul>
-<li>They did a visualisation of the carpark availability across Singapore across both business and non-business hours.</li>
+<li><p>The colocation quotient between several categories is more suited for urban analytics in contrast to other methods for evaluating spatial connection (such as Moran’s I for interval and ratio data).</p></li>
+<li><p>The global colocation quotient (GCLQ) does not take spatial heterogeneity into account, it evaluates the direction and intensity of the global spatial connections between medical resources within and between categories throughout the research area (nonstationary colocation).</p></li>
+<li><p>The power of the LCLQ is its ability to map the direction and intensity of local spatial associations, i.e., colocation within a local neighbourhood. Compared with the global colocation quotient, the LCLQ also produces maps that are easier to interpret.</p></li>
 </ul>
 </section>
 <section id="linking-back-to-our-project-1" class="level3">
 <h3 class="anchored" data-anchor-id="linking-back-to-our-project-1">Linking back to our project</h3>
-<ul>
-<li>We can include a similar analysis into our application solution. For our solution, we allow users to visualise the full capacities of carparks across Singapore. We can also visualise other amenities around the carparks to help them have a better sense of the area.</li>
-</ul>
+<p>We will apply the LCLQ to identify colocation between HDB carparks and different types of facilities in the neighbourhoods (e.g.&nbsp;HDB Buildings, Hawker Centers and Shopping Malls)</p>
 </section>
 </section>
 <section id="spatial-disparities-of-self-reported-covid-19-cases-and-influencing-factors-in-wuhan-china" class="level2">
