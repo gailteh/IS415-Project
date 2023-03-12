@@ -176,11 +176,17 @@ We will apply the LCLQ to identify colocation between HDB carparks and different
 
 ## Spatial Statistical Functions
 
-![](images/image-524451418.png)
+### Kernel Density Estimation
 
-![](images/image-1330788053.png)
+![](images/storyboard%20layout-2.jpg)
 
-![](images/image-8965281.png)
+### Statistical Functions
+
+![](images/storyboard%20layout-3.jpg)
+
+### Local Co-Location Quotients (LCLQ)
+
+![](images/storyboard%20layout-4.jpg)
 
 ## Data
 
