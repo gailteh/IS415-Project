@@ -69,8 +69,8 @@ Use these insights derived from the analysis for better understanding on the dis
 # 6. Data Sources
 
 -   [URA carpark](https://data.gov.sg/dataset/ura-parking-lot)
--   [Carpark](https://data.gov.sg/dataset/hdb-carpark-information)
--   HDB locations
+-   [HDB Carparks](https://data.gov.sg/dataset/hdb-carpark-information)
+-   [HDB locations](https://data.gov.sg/dataset/hdb-property-information)
 -   [Shopping mall](https://www.kaggle.com/datasets/karthikgangula/shopping-mall-coordinates)
 -   [Hawker Centres](https://data.gov.sg/dataset/hawker-centres)
 
