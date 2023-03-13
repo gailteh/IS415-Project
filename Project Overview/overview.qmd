@@ -14,7 +14,7 @@ In addition, our application can generate kernel density maps using the input da
 
 # 3. Problem and Motivation
 
-Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors.The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
+Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors. The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
 
 Our project aims to find out the spatial patterns of HDB carparks and its local co-location with other interests like HDB, shopping malls and hawker centres.
 
@@ -63,7 +63,9 @@ Use these insights derived from the analysis for better understanding on the dis
 +=============================+=========================================+
 | Filters (Drop--down select) | -   Different Variables for Analysis    |
 |                             |                                         |
-|                             | -   Various Bandwidth Selection Methods |
+|                             | -   Number of Nearest Neighbours        |
+|                             |                                         |
+|                             | -   Various Kernel Methods              |
 +-----------------------------+-----------------------------------------+
 
 # 6. Data Sources
