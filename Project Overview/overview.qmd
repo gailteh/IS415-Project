@@ -6,9 +6,9 @@ title: "Overview"
 
 # 2. Abstract
 
-To use geospatial analysis to analyze the spatial characteristics of HDB parking lot with other interest in the nehgbourhoods in Singapore.
+To use geospatial analysis to analyze the spatial characteristics of HDB parking lots with other interests in the neighbourhoods of Singapore.
 
-Our application enables users to derive insights from Point pattern analysis using Spatial Patterns Analysis and Local Colocation Quotient (LCLQ). It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. As for Local Colocation Quotient (LCLQ), it is useful in discovering the spatial association between HDB carparks and other interests like HDB, shopping malls and hawker centres.
+Our application enables users to derive insights from Point Pattern Analysis using Spatial Patterns Analysis and Local Co-location Quotient (LCLQ). It is helpful in uncovering whether the input data will be in regular, or clustered patterns or randomly distributed; or whether the distributions of data are dependent on each other. As for Local Colocation Quotient (LCLQ), it is useful in discovering the spatial association between HDB carparks and other interests like HDB, shopping malls and hawker centres.
 
 In addition, our application can generate kernel density maps using the input datasets of car parks and run a range of hypothesis tests to derive meaningful conclusions on the distributions of car parks in Singapore. To better visualise how our application would work and look like, we have storyboards to depict the proposed application UI format.
 
@@ -16,9 +16,9 @@ In addition, our application can generate kernel density maps using the input da
 
 Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors.The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
 
-Our project aims to find out the spatial patterns of HDB carparks and its local colocation with other interests like HDB, shopping malls and hawker centres.
+Our project aims to find out the spatial patterns of HDB carparks and its local co-location with other interests like HDB, shopping malls and hawker centres.
 
-The problem statement is focused on exploring the spatial points patterns of HDB carparks within neighbourhood in Singapore.
+The problem statement is focused on exploring the spatial points patterns of HDB carparks within neighbourhoods in Singapore.
 
 # 4. Project Objectives
 
