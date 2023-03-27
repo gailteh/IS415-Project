@@ -58,15 +58,15 @@ Use these insights derived from the analysis for better understanding on the dis
 
 ### Local Colocation Quotients (LCLQ)
 
-+-----------------------------+-----------------------------------------+
-| Components                  | Parameters / Variables                  |
-+=============================+=========================================+
-| Filters (Drop--down select) | -   Different Variables for Analysis    |
-|                             |                                         |
-|                             | -   Number of Nearest Neighbours        |
-|                             |                                         |
-|                             | -   Various Kernel Methods              |
-+-----------------------------+-----------------------------------------+
++-----------------------------+--------------------------------------+
+| Components                  | Parameters / Variables               |
++=============================+======================================+
+| Filters (Drop--down select) | -   Different Variables for Analysis |
+|                             |                                      |
+|                             | -   Number of Nearest Neighbours     |
+|                             |                                      |
+|                             | -   Various Kernel Methods           |
++-----------------------------+--------------------------------------+
 
 # 6. Data Sources
 

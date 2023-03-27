@@ -7,5 +7,17 @@
   },
   "Project Overview/overview.qmd": {
     "overview.html": "429824ac"
+  },
+  "hawker_centre/hawker_centre.qmd": {
+    "hawker_centre.html": "2f67ca96"
+  },
+  "hawker_centre/data/mpsz/MPSZ-2019.qmd": {
+    "MPSZ-2019.html": "2b48a27b"
+  },
+  "hdb carpark/data/mpsz/MPSZ-2019.qmd": {
+    "MPSZ-2019.html": "16aab132"
+  },
+  "hdb carpark/hdb_carpark.qmd": {
+    "hdb_carpark.html": "91a29e17"
   }
 }
