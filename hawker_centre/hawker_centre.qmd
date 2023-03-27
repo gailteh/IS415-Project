@@ -1,0 +1,101 @@
+---
+title: "Hawker_Centres"
+date: "27 Mar 2023"
+date-modified: "`r Sys.Date()`"
+number-sections: true
+format: html
+execute: 
+  echo: true
+  eval: true
+  warning: false
+editor: visual
+---
+
+## Import packages
+
+```{r}
+pacman::p_load(maptools, sf, raster, spatstat, tmap)
+```
+
+## Import geo-SG
+
+```{r}
+sg_sf <- st_read(dsn = "data/coastal_outline", layer="CostalOutline")
+```
+
+```{r}
+mpsz_sf <- st_read(dsn = "data/mpsz", 
+                layer = "MP14_SUBZONE_WEB_PL")
+```
+
+## Import hawker data 
+
+```{r}
+hawker_sf <- st_read("data/hawker-centres/hawker-centres-geojson.geojson") |>
+  st_transform(3414)
+```
+
+```{r}
+glimpse(hawker_sf)
+```
+
+```{r}
+length(which(st_is_valid(hawker_sf) == FALSE))
+```
+
+## Spatial wrangling
+
+### Convert sf into sp's spatial class
+
+```{r}
+hawker <- as_Spatial(hawker_sf)
+sg <- as_Spatial(sg_sf)
+mpsz <- as_Spatial(mpsz_sf)
+```
+
+### Converting the Spatial\* class into generic sp format
+
+```{r}
+hawker_sp <- as(hawker_sf, "SpatialPoints")
+hawker_sp
+```
+
+```{r}
+sg_sp <- as(sg, "SpatialPolygons")
+sg_sp
+```
+
+### Converting the generic sp format into spatstat\'s ppp format
+
+```{r}
+hawker_ppp <- as(hawker_sp, "ppp")
+hawker_ppp
+```
+
+### Handling duplicated points
+
+```{r}
+any(duplicated(hawker_ppp))
+```
+
+## Plot
+
+```{r}
+tmap_mode('view')
+tm_shape(hawker) +
+  tm_dots(alpha=0.4, 
+          size=0.05)
+```
+
+## 
+Owin object
+
+```{r}
+sg_owin <- as(sg_sp, "owin")
+```
+
+```{r}
+plot(sg_owin)
+```
+
+## 
