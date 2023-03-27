@@ -30,7 +30,7 @@ ui <- fluidPage(
              
              tabPanel("Spatial Point Analysis",
                         tabsetPanel(
-                          tabPanel("Choropleth Map",
+                          tabPanel("Choropleth Mapping",
                                    sidebarLayout(
                                      sidebarPanel("various selections"),
                                      mainPanel("map")
@@ -40,15 +40,36 @@ ui <- fluidPage(
                                      sidebarPanel("sliders and dropdown lists go here"),
                                      mainPanel("Map and interpretations go here")
                                    )),
-                          tabPanel("Statistical Functions",
-                                   sidebarLayout(
-                                     sidebarPanel("sliders and dropdown lists go here"),
-                                     mainPanel("graphs go here")
-                                   )),
-                          tabPanel("LCLQ",
+                          tabPanel("G Function Analysis",
                                    sidebarLayout(
                                      sidebarPanel(
-                                       selectInput("dataset",
+                                       sliderInput(inputId = "g_funct_sim",
+                                                   label = "Number of Simulations",
+                                                   min = 0,
+                                                   max = 1000,
+                                                   value= 99),
+                                       actionButton(inputId = "run_g_function",
+                                                    label = "Run Analysis")
+                                     ),
+                                     mainPanel("graphs go here")
+                                   )),
+                          tabPanel("L Function Analysis",
+                                   sidebarLayout(
+                                     sidebarPanel(
+                                       sliderInput(inputId = "l_funct_sim",
+                                                   label = "Number of Simulations",
+                                                   min = 0,
+                                                   max = 1000,
+                                                   value= 99),
+                                       actionButton(inputId = "run_l_function",
+                                                    label = "Run Analysis")
+                                     ),
+                                     mainPanel("graphs go here")
+                                   )),
+                          tabPanel("Local Co-location Quotient Analysis",
+                                   sidebarLayout(
+                                     sidebarPanel(
+                                       selectInput(inputId = "dataset",
                                                    label = "Data Source",
                                                    choices = c("HDB Flat Locations" = "HDB FLAT LOCATIONS",
                                                                "Shopping Malls" = "SHOPPING MALLS",
