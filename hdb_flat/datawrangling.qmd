@@ -1,0 +1,29 @@
+---
+title: "hdb car park data wrangling"
+---
+
+```{r}
+pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse)
+```
+
+```{r}
+carpark <- read_csv("hdb-carpark-information.csv")
+```
+
+```{r}
+list(carpark)
+```
+
+```{r}
+carpark_sf <- st_as_sf(carpark,
+                       coords = c("x_coord", "y_coord"),
+                       crs = 4326)
+```
+
+```{r}
+carpark_sf <- st_set_crs(carpark_sf, 3414)
+```
+
+```{r}
+st_crs(carpark_sf)
+```
