@@ -1,0 +1,258 @@
+---
+title: "Hawker_Centres"
+date: "27 Mar 2023"
+date-modified: "`r Sys.Date()`"
+number-sections: true
+format: html
+execute: 
+  echo: true
+  eval: true
+  warning: false
+editor: visual
+---
+
+## Import packages
+
+```{r}
+pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, readr)
+```
+
+## Import geo-SG
+
+```{r}
+sg_sf <- st_read(dsn = "data/coastal_outline", layer="CostalOutline")
+```
+
+```{r}
+mpsz_sf <- st_read(dsn = "data/mpsz", 
+                layer = "MPSZ-2019")
+```
+
+### Exclude the islands!!
+
+#### for the mpsz data!!
+
+```{r}
+unique(mpsz_sf$PLN_AREA_N)
+```
+
+```{r}
+mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "WESTERN ISLANDS")
+mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "NORTH-EASTERN ISLANDS")
+mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "SOUTHERN ISLANDS")
+```
+
+#### FOR THE COASTAL DATA
+
+```{r}
+unique(sg_sf$COSTAL_NAM)
+```
+
+```{r}
+#filter rows that contain the string 'PULAU' in the COSTAL_NAM column
+sg_sf <- sg_sf |> 
+  filter(!grepl('PULAU', COSTAL_NAM))
+```
+
+
+
+
+## Import hawker data
+
+```{r}
+hawker_sf <- st_read("data/hawker-centres/hawker-centres-geojson.geojson") |>
+  st_transform(3414)
+```
+
+```{r}
+glimpse(hawker_sf)
+```
+
+```{r}
+length(which(st_is_valid(hawker_sf) == FALSE))
+```
+
+
+## Spatial wrangling
+
+### Convert sf into sp's spatial class
+
+```{r}
+hawker <- as_Spatial(hawker_sf)
+sg <- as_Spatial(sg_sf)
+mpsz <- as_Spatial(mpsz_sf)
+```
+
+### Converting the Spatial\* class into generic sp format
+
+```{r}
+hawker_sp <- as(hawker, "SpatialPoints")
+hawker_sp
+```
+
+```{r}
+sg_sp <- as(sg, "SpatialPolygons")
+sg_sp
+```
+
+### Converting the generic sp format into spatstat's ppp format
+
+```{r}
+hawker_ppp <- as(hawker_sp, "ppp")
+hawker_ppp
+```
+
+### Handling duplicated points
+
+```{r}
+any(duplicated(hawker_ppp))
+```
+
+## Plot
+
+```{r}
+tmap_mode('view')
+tm_shape(hawker) +
+  tm_dots(alpha=0.4, 
+          size=0.05)
+```
+
+## hawker_ppp_jit
+```{r}
+hawker_ppp_jit <- rjitter(hawker_ppp, retry=TRUE, nsim=1, drop=TRUE)
+```
+
+
+
+
+
+
+## Owin object
+
+```{r}
+sg_owin <- as(sg_sp, "owin")
+```
+
+```{r}
+plot(sg_owin)
+```
+
+## Hawker & sg_owin
+```{r}
+hawkerSG_ppp = hawker_ppp[sg_owin]
+plot(hawkerSG_ppp)
+```
+
+## rds file
+```{r}
+#hawker
+write_rds(hawker_sf, "data/rds/hawker_sf.rds")
+write_rds(hawker_sp, "data/rds/hawker_sp.rds")
+write_rds(hawker_ppp, "data/rds/hawker_ppp.rds")
+write_rds(hawker, "data/rds/hawker.rds")
+
+#sg (coastal outline)
+write_rds(sg_owin, "data/rds/sg_owin.rds")
+write_rds(sg, "data/rds/sg.rds")
+write_rds(sg_sf, "data/rds/sg_sf.rds")
+write_rds(sg_sp, "data/rds/sg_sp.rds")
+
+#mpsz
+write_rds(mpsz, "data/rds/mpsz.rds")
+write_rds(mpsz_sf, "data/rds/mpsz_sf.rds")
+```
+
+
+
+
+# Study area
+
+allow users to select filter down which areas they wanna see
+
+```{r}
+punggol = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
+tampines = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
+choa_chu_kang = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
+jurong = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
+```
+
+### Plot
+
+```{r}
+par(mfrow=c(2,2))
+plot(punggol, main = "Punggol")
+plot(tampines, main = "Tampines")
+plot(choa_chu_kang, main = "Choa Chu Kang")
+plot(jurong, main = "Jurong West")
+```
+
+From here, repeat steps using study areas, from convert from sf to sp, create owin objects for EACH study areas.
+
+## Converting the spatial point data frame into generic sp format
+```{r}
+#| eval: false
+pg_sp = as(punggol, "SpatialPolygons")
+tm_sp = as(tampines, "SpatialPolygons")
+ck_sp = as(choa_chu_kang, "SpatialPolygons")
+jw_sp = as(jurong, "SpatialPolygons")
+```
+
+
+
+## Creating owin object
+```{r}
+#| eval: false
+pg_owin = as(pg_sp, "owin")
+tm_owin = as(tm_sp, "owin")
+ck_owin = as(ck_sp, "owin")
+jw_owin = as(jw_sp, "owin")
+```
+
+
+## Combining childcare points and the study area
+By using the code chunk below, we are able to extract childcare that is within the specific region to do our analysis later on.
+
+```{r}
+#| eval: false
+hawker_pg_ppp = hawker_ppp_jit[pg_owin]
+hawker_tm_ppp = hawker_ppp_jit[tm_owin]
+hawker_ck_ppp = hawker_ppp_jit[ck_owin]
+hawker_jw_ppp = hawker_ppp_jit[jw_owin]
+```
+
+
+
+### Then, Combining childcare points and the study area
+
+```{r}
+#| eval: false
+hawker_pg_ppp = hawker_ppp_jit[punggol_owin]
+hawker_tm_ppp = hawker_ppp_jit[tampines_owin]
+hawker_ck_ppp = hawker_ppp_jit[choa_chu_kang_owin]
+hawker_jw_ppp = hawker_ppp_jit[jurong_owin]
+```
+
+Next, *rescale()* function is used to trasnform the unit of measurement from metre to kilometre.
+
+```{r}
+#| eval: false
+hawker_pg_ppp.km = rescale(hawker_pg_ppp, 1000, "km")
+hawker_tm_ppp.km = rescale(hawker_tm_ppp, 1000, "km")
+hawker_ck_ppp.km = rescale(hawker_ck_ppp, 1000, "km")
+hawker_jw_ppp.km = rescale(hawker_jw_ppp, 1000, "km")
+```
+
+Plot w the points
+
+```{r}
+#| eval: false
+par(mfrow=c(2,2))
+plot(hawker_pg_ppp.km, main="Punggol")
+plot(hawker_tm_ppp.km, main="Tampines")
+plot(hawker_ck_ppp.km, main="Choa Chu Kang")
+plot(hawker_jw_ppp.km, main="Jurong West")
+```
+
+
+
+
