@@ -10,6 +10,7 @@ execute:
   warning: false
 editor: visual
 ---
+
 ## Import packages
 
 ```{r}
@@ -26,7 +27,6 @@ sg_sf <- st_read(dsn = "data/coastal_outline", layer="CostalOutline")
 mpsz_sf <- st_read(dsn = "data/mpsz", 
                 layer = "MPSZ-2019")
 ```
-
 
 ## Import carpark data
 
@@ -49,6 +49,3 @@ carpark_sf <- st_as_sf(carpark, coords = c("x_coord", "y_coord"), crs=4326) %>%
 carpark_sf
 
 ```
-
-
-

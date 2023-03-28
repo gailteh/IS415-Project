@@ -1,4 +1,4 @@
-#
+ #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
@@ -81,7 +81,12 @@ ui <- fluidPage(
                         )
                       ),
              
-             tabPanel("Import Data")
+             tabPanel("Import Data",
+                      fileInput("file1", "Choose CSV File",
+                                multiple = TRUE,
+                                accept = c("text/csv",
+                                           "text/comma-separated-values,text/plain",
+                                           ".csv")),)
   )
 )
 
