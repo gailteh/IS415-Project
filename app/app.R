@@ -1,14 +1,7 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
 
 # Libraries
 library(shiny)
+library(bslib)
 
 # Geospatial Data Import and Wrangling
 
@@ -17,6 +10,7 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+  theme = bs_theme(version = 4, bootswatch = "minty"),
   navbarPage("CarSpot Application",
              tabPanel("Homepage",
                       sidebarLayout(
