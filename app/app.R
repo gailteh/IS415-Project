@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+ #
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+>>>>>>> c4d1cf02e797804f6b6e179e3eff89e360beb895
 
 # Libraries
 library(shiny)
@@ -75,7 +86,12 @@ ui <- fluidPage(
                         )
                       ),
              
-             tabPanel("Import Data")
+             tabPanel("Import Data",
+                      fileInput("file1", "Choose CSV File",
+                                multiple = TRUE,
+                                accept = c("text/csv",
+                                           "text/comma-separated-values,text/plain",
+                                           ".csv")),)
   )
 )
 

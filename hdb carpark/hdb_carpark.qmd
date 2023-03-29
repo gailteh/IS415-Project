@@ -10,6 +10,7 @@ execute:
   warning: false
 editor: visual
 ---
+
 ## Import packages
 
 ```{r}
@@ -27,6 +28,7 @@ mpsz_sf <- st_read(dsn = "data/mpsz",
                 layer = "MPSZ-2019")
 ```
 
+<<<<<<< HEAD
 
 ### Exclude the islands!!
 
@@ -58,6 +60,8 @@ sg_sf <- sg_sf |>
 
 
 
+=======
+>>>>>>> c4d1cf02e797804f6b6e179e3eff89e360beb895
 ## Import carpark data
 
 ```{r}
@@ -80,6 +84,7 @@ carpark_sf <- st_set_crs(carpark_sf, 3414)
 carpark_sf
 
 ```
+<<<<<<< HEAD
 
 ## Spatial wrangling
 
@@ -161,3 +166,5 @@ plot(sg_owin)
 
 
 
+=======
+>>>>>>> c4d1cf02e797804f6b6e179e3eff89e360beb895
