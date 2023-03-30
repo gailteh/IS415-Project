@@ -14,7 +14,7 @@ editor: visual
 ## Import packages
 
 ```{r}
-pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, readr)
+pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, readr, stringr, sfdep)
 ```
 
 ## Import geo-SG
@@ -55,6 +55,14 @@ sg_sf <- sg_sf |>
 ```
 
 
+```{r}
+#filter rows that contain the string 'PULAU' in the COSTAL_NAM column
+sg_sf <- sg_sf |> 
+  filter(!grepl('JURONG', COSTAL_NAM))
+```
+
+
+
 
 
 ## Import hawker data
@@ -71,6 +79,41 @@ glimpse(hawker_sf)
 ```{r}
 length(which(st_is_valid(hawker_sf) == FALSE))
 ```
+
+
+
+## extract the names of the hawkers
+```{r}
+
+# Assuming your data frame is named 'df' and the column containing the HTML string is named 'html'
+
+# Define a regular expression pattern to match the desired data
+pattern <- "<th>NAME<\\/th>\\s*<td>(.*?)<\\/td>"
+
+# Extract the data using the pattern and str_extract function from the stringr package
+library(stringr)
+hawker_sf$Name <- str_extract(hawker_sf$Description, pattern)
+
+# Remove the HTML tags from the extracted data using gsub function
+hawker_sf$Name <- gsub("<.*?>", "", hawker_sf$Name)
+
+# Remove the first word (aka NAME)
+hawker_sf$Name <- sub("^[^[:space:]]+\\s", "", hawker_sf$Name)
+
+
+```
+
+## remove the description column
+```{r}
+hawker_sf <- hawker_sf[, -2]
+```
+
+
+## drop z geometry 
+```{r}
+hawker_sf$geometry <- st_zm(hawker_sf$geometry)
+```
+
 
 
 ## Spatial wrangling
@@ -127,6 +170,7 @@ hawker_ppp_jit <- rjitter(hawker_ppp, retry=TRUE, nsim=1, drop=TRUE)
 
 
 
+
 ## Owin object
 
 ```{r}
@@ -170,10 +214,10 @@ write_rds(mpsz_sf, "data/rds/mpsz_sf.rds")
 allow users to select filter down which areas they wanna see
 
 ```{r}
-punggol = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
-tampines = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
-choa_chu_kang = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
-jurong = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
+pg = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
+tm = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
+ck = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
+jw = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
 ```
 
 ### Plot
@@ -191,12 +235,15 @@ From here, repeat steps using study areas, from convert from sf to sp, create ow
 ## Converting the spatial point data frame into generic sp format
 ```{r}
 #| eval: false
-pg_sp = as(punggol, "SpatialPolygons")
-tm_sp = as(tampines, "SpatialPolygons")
-ck_sp = as(choa_chu_kang, "SpatialPolygons")
-jw_sp = as(jurong, "SpatialPolygons")
+pg_sp = as(pg, "SpatialPolygons")
+tm_sp = as(tm, "SpatialPolygons")
+ck_sp = as(ck, "SpatialPolygons")
+jw_sp = as(jw, "SpatialPolygons")
 ```
 
+```{r}
+pg_sp
+```
 
 
 ## Creating owin object
@@ -226,10 +273,10 @@ hawker_jw_ppp = hawker_ppp_jit[jw_owin]
 
 ```{r}
 #| eval: false
-hawker_pg_ppp = hawker_ppp_jit[punggol_owin]
-hawker_tm_ppp = hawker_ppp_jit[tampines_owin]
-hawker_ck_ppp = hawker_ppp_jit[choa_chu_kang_owin]
-hawker_jw_ppp = hawker_ppp_jit[jurong_owin]
+hawker_pg_ppp = hawker_ppp_jit[pg_owin]
+hawker_tm_ppp = hawker_ppp_jit[tm_owin]
+hawker_ck_ppp = hawker_ppp_jit[ck_owin]
+hawker_jw_ppp = hawker_ppp_jit[jw_owin]
 ```
 
 Next, *rescale()* function is used to trasnform the unit of measurement from metre to kilometre.
@@ -254,43 +301,134 @@ plot(hawker_jw_ppp.km, main="Jurong West")
 ```
 
 
+
+```{r}
+mpsz <- read_rds("data/rds/mpsz.rds")
+sg <- read_rds("data/rds/sg.rds")
+hawker <- read_rds("data/rds/hawker.rds")
+```
+
+```{r}
+#| eval: false
+mpsz_hawker <- left_join(mpsz, carpark)
+```
+
+
 # tmap plot
 ```{r}
-
+tm_shape(mpsz)+
+  tm_fill("DEPENDENCY", 
+          style = "jenks", 
+          palette = "Blues", 
+          legend.hist = TRUE, 
+          legend.is.portrait = TRUE,
+          legend.hist.z = 0.1) +
+  tm_layout(main.title = "Distribution of Dependency Ratio by planning subzone \n(Jenks classification)",
+            main.title.position = "center",
+            main.title.size = 1,
+            legend.height = 0.45, 
+            legend.width = 0.35,
+            legend.outside = FALSE,
+            legend.position = c("right", "bottom"),
+            frame = FALSE) +
+  tm_borders(alpha = 0.5)
 ```
-
-
-
-
-
-
-
-
 
 
 
 ```{r}
-sidebarPanel(width = 3,
-                                                    # If Choropleth Mapping tabpanel is selected, this sidebarpanel below will be shown),
-                                                    tabsetPanel(
-                                                      'input.CM_var === "Choropleth Mapping"',
-                                                      tags$strong("Choropleth Mapping Variable Inputs"),
-                                                      
-                                                      selectInput(
-                                                        inputId = "tmap_style",
-                                                        label = "Choose a style for the map:",
-                                                        choices = list("sd" = "sd", 
-                                                                       "equal" = "equal", 
-                                                                       "pretty" = "pretty", 
-                                                                       "quantile" = "quantile", 
-                                                                       "kmeans" = "kmeans", 
-                                                                       "hclust" = "hclust", 
-                                                                       "bclust" = "bclust", 
-                                                                       "fisher" = "fisher", 
-                                                                       "jenks" = "jenks"),
-                                                        selected = "pretty"),
-                                                      actionButton("SPPA_Run_KDE", "Run Analysis")
+tmap_mode("view")
+tm_basemap("OpenStreetMap") +
+tm_shape(mpsz_sf$REGION_N) +
+  tm_polygons(
+    border.col = "darkolivegreen"
+  ) +
+tm_shape(hawker)+ 
+  tm_dots(size = 0.01,
+          border.col = "black",
+          border.lwd = 0.5) +
+  
+  tm_view(set.zoom.limits = c(11, 16))
+
 ```
 
+
+
+
+
+
+
+
+# LCLQ
+
+## combine data into 1 df 
+```{r}
+hawker_lclq <- hawker_sf |>
+  mutate(Name = "Hawker")
+
+carpark_lclq <- carpark_sf |>
+  select(address, geometry) |>
+  mutate(address = "Carpark") |>
+  rename("Name" = "address")
+
+# names(my_data_frame)[names(my_data_frame) == "old_column_name"] <- "new_column_name"
+# 
+# carpark_lclq <- carpark_lclq |>
+#   rename(address = "Name")
+
+interest_lclq <- rbind(hawker_lclq, carpark_lclq)
+```
+
+
+## nearest neighbour = 6
+```{r}
+nb <- include_self(
+  st_knn(st_geometry(interest_lclq), 6))
+```
+
+## Computing kernel weights
+
+```{r}
+wt <- st_kernel_weights(nb, 
+                        interest_lclq, 
+                        "gaussian", 
+                        adaptive = TRUE)
+```
+
+## Preparing the vector list
+```{r}
+Carpark <- interest_lclq %>%
+  filter(Name == "Carpark")
+A <- interest_lclq$Name
+
+Hawker <- interest_lclq %>%
+  filter(Name == "Hawker")
+B <- interest_lclq$Name
+```
+
+
+## Computing LCLQ
+```{r}
+LCLQ <- local_colocation(A, B, nb, wt, 49)
+```
+
+## Joining output table
+```{r}
+LCLQ_hawker <- cbind(interest_lclq, LCLQ)
+```
+
+
+## Plotting LCLQ values
+```{r}
+tmap_mode("view")
+tm_shape(sg) +
+  tm_polygons() +
+tm_shape(LCLQ_hawker)+ 
+  tm_dots(col = "Hawker",
+             size = 0.01,
+             border.col = "black",
+             border.lwd = 0.5) +
+  tm_view(set.zoom.limits = c(11, 16))
+```
 
 

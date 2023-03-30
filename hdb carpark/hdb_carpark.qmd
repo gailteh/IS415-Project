@@ -28,7 +28,6 @@ mpsz_sf <- st_read(dsn = "data/mpsz",
                 layer = "MPSZ-2019")
 ```
 
-
 ### Exclude the islands!!
 
 #### for the mpsz data!!
@@ -36,8 +35,6 @@ mpsz_sf <- st_read(dsn = "data/mpsz",
 ```{r}
 unique(mpsz_sf$PLN_AREA_N)
 ```
-
-
 
 ```{r}
 mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "WESTERN ISLANDS")
@@ -56,7 +53,6 @@ unique(sg_sf$COSTAL_NAM)
 sg_sf <- sg_sf |> 
   filter(!grepl('PULAU', COSTAL_NAM))
 ```
-
 
 ## Import carpark data
 
@@ -81,7 +77,6 @@ carpark_sf
 
 ```
 
-
 ## Spatial wrangling
 
 ### Convert sf into sp's spatial class
@@ -98,8 +93,6 @@ mpsz <- as_Spatial(mpsz_sf)
 carpark_sp <- as(carpark, "SpatialPoints")
 carpark_sp
 ```
-
-
 
 ```{r}
 sg_sp <- as(sg, "SpatialPolygons")
@@ -118,6 +111,7 @@ carpark_ppp
 ```{r}
 any(duplicated(carpark_ppp))
 ```
+
 ## Plot
 
 ```{r}
@@ -127,10 +121,20 @@ tm_shape(carpark) +
           size=0.05)
 ```
 
-
 ## carpark_ppp_jit
+
 ```{r}
 carpark_ppp_jit <- rjitter(carpark_ppp, retry=TRUE, nsim=1, drop=TRUE)
+```
+
+
+## write to rds
+```{r}
+#carpark
+write_rds(carpark_sf, "data/rds/carpark_sf.rds")
+write_rds(carpark_sp, "data/rds/carpark_sp.rds")
+write_rds(carpark_ppp, "data/rds/carpark_ppp.rds")
+write_rds(carpark, "data/rds/carpark.rds")
 ```
 
 
@@ -141,11 +145,6 @@ carpark_ppp_jit <- rjitter(carpark_ppp, retry=TRUE, nsim=1, drop=TRUE)
 sg_owin <- as(sg_sp, "owin")
 ```
 
-
 ```{r}
 plot(sg_owin)
 ```
-
-
-
-
