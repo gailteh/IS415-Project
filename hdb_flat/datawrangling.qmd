@@ -2,8 +2,10 @@
 title: "hdb car park data wrangling"
 ---
 
+# HDB Carpark 2nd Order SPPA
+
 ```{r}
-pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse)
+pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse, httr, jsonlite)
 ```
 
 ```{r}
@@ -27,3 +29,148 @@ carpark_sf <- st_set_crs(carpark_sf, 3414)
 ```{r}
 st_crs(carpark_sf)
 ```
+
+# HDB Location Data Wrangling
+
+```{r}
+hdb_location <- read_csv("hdb-property-information.csv")
+```
+
+Combining Fields to create Address and remove unnecessary field:
+
+```{r}
+hdb_transform <- hdb_location %>%
+  mutate(hdb_location, address = paste(blk_no, street))%>%
+  select(blk_no, street, address)
+```
+
+unique address list:
+```{r}
+add_list <- unique(hdb_transform$address)
+```
+
+Function to get postal codes and coordinates:
+
+```{r}
+get_coords <- function(add_list){
+  
+  # Create a data frame to store all retrieved coordinates
+  postal_coords <- data.frame()
+    
+  for (i in add_list){
+    #print(i)
+
+    r <- GET('https://developers.onemap.sg/commonapi/search?',
+           query=list(searchVal=i,
+                     returnGeom='Y',
+                     getAddrDetails='Y'))
+    data <- fromJSON(rawToChar(r$content))
+    found <- data$found
+    res <- data$results
+    
+    # Create a new data frame for each address
+    new_row <- data.frame()
+    
+    # If single result, append 
+    if (found == 1){
+      postal <- res$POSTAL 
+      lat <- res$LATITUDE
+      lng <- res$LONGITUDE
+      new_row <- data.frame(address= i, postal = postal, latitude = lat, longitude = lng)
+    }
+    
+    # If multiple results, drop NIL and append top 1
+    else if (found > 1){
+      # Remove those with NIL as postal
+      res_sub <- res[res$POSTAL != "NIL", ]
+      
+      # Set as NA first if no Postal
+      if (nrow(res_sub) == 0) {
+          new_row <- data.frame(address= i, postal = NA, latitude = NA, longitude = NA)
+      }
+      
+      else{
+        top1 <- head(res_sub, n = 1)
+        postal <- top1$POSTAL 
+        lat <- top1$LATITUDE
+        lng <- top1$LONGITUDE
+        new_row <- data.frame(address= i, postal = postal, latitude = lat, longitude = lng)
+      }
+    }
+
+    else {
+      new_row <- data.frame(address= i, postal = NA, latitude = NA, longitude = NA)
+    }
+    
+    # Add the row
+    postal_coords <- rbind(postal_coords, new_row)
+  }
+  return(postal_coords)
+}
+```
+
+Calling API to get coords:
+
+```{r}
+coords <- get_coords(add_list)
+```
+
+checking coords for NA values:
+
+```{r}
+coords[(is.na(coords$postal) | is.na(coords$latitude) | is.na(coords$longitude) | coords$postal=="NIL"), ]
+```
+Filling up NA values in coords:
+
+```{r}
+# 215 CHOA CHU KANG CTRL
+coords[coords$address == "215 CHOA CHU KANG CTRL", "postal"] <- "680215"
+
+# 216 CHOA CHU KANG CTRL
+coords[coords$address == "216 CHOA CHU KANG CTRL", "postal"] <- "680215"
+
+# 	4 WOODLANDS ST 12
+coords[coords$address == "4 WOODLANDS ST 12", "postal"] <- "738623"
+coords[coords$address == "4 WOODLANDS ST 12", "latitude"] <- "1.43354318137534"
+coords[coords$address == "4 WOODLANDS ST 12", "longitude"] <- "103.77988189197"
+
+# 	5 BANDA ST
+coords[coords$address == "5 BANDA ST", "postal"] <- "050005"
+coords[coords$address == "5 BANDA ST", "latitude"] <- "1.28119737026913"
+coords[coords$address == "5 BANDA ST", "longitude"] <- "103.843410643588"
+
+coords[coords$address == "141A SERANGOON NTH AVE 2", "postal"] <- "550141"
+coords[coords$address == "141A SERANGOON NTH AVE 2", "latitude"] <- "1.36859421304209"
+coords[coords$address == "141A SERANGOON NTH AVE 2", "longitude"] <- "	
+103.874523243764"
+```
+
+```{r}
+coords[(is.na(coords$postal) | is.na(coords$latitude) | is.na(coords$longitude) | coords$postal=="NIL"), ]
+```
+
+Combining coords and hdb_location by left join
+
+```{r}
+hdb_final <- left_join(hdb_transform, coords, by = c('address' = 'address')) %>%
+  select(3:6)
+```
+
+Convert to sf dataframe:
+
+```{r}
+hdb_sf <- st_as_sf(hdb_final,
+                    coords = c("longitude", 
+                               "latitude"),
+                    crs=4326) %>%
+  st_transform(crs = 3414)
+
+st_crs(hdb_sf)
+```
+
+Saving HDB Locations into rds file:
+
+```{r}
+write_rds(hdb_sf, "hdb_sf.rds")
+```
+
