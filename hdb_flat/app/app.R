@@ -22,7 +22,8 @@ library(tidyverse)
 
 # Geospatial Data Import and Wrangling
 
-
+carpark_ppp <- read_rds("carpark_ppp.rds")
+carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
 
 # Aspatial Data Import and Wrangling
 
@@ -61,10 +62,13 @@ ui <- fluidPage(
                                                    min = 0,
                                                    max = 1000,
                                                    value= 99),
+                                       helpText("99 simulations are being run by default"),
                                        actionButton(inputId = "run_g_function",
                                                     label = "Run Analysis")
                                      ),
-                                     mainPanel("graphs go here")
+                                     mainPanel(
+                                       plotOutput("g_function_plot")
+                                      )
                                    )),
                           tabPanel("L Function Analysis",
                                    sidebarLayout(
@@ -78,7 +82,7 @@ ui <- fluidPage(
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
-                                       plotOutput("SPPA_G_Function")
+                                       plotOutput("l_function_plot")
                                      )
                                    )),
                           tabPanel("Local Co-location Quotient Analysis",
@@ -107,13 +111,21 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-  output$SPPA_G_Function <- renderPlot({
-    
+  
+  # G Function Plot
+  output$g_function_plot <- renderPlot({
     input$run_g_function
-    
-    
-    
+    g_func.csr <- isolate(envelope(carpark_ppp_km, Gest, nsim = input$g_funct_sim))
+    plot(g_func.csr)
   })
+  
+  # L Function Plot
+  output$l_function_plot <- renderPlot({
+    input$run_l_function
+    l_func.csr <- isolate(envelope(carpark_ppp_km, Lest, nsim = input$l_funct_sim))
+    plot(l_func.csr, . - r ~ r, xlab="d", ylab="L(d)-r")
+  })
+  
 
     
 }

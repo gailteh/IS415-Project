@@ -8,6 +8,43 @@ pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse)
 
 # HDB Carpark 2nd Order SPPA
 
+```{r}
+st_crs(mpsz_sf)
+```
+```{r}
+mpsz_sf <- st_transform(mpsz_sf, 3414)
+st_crs(mpsz_sf)
+```
+
+```{r}
+
+```
+
+```{r}
+mpsz <- as_Spatial(mpsz_sf)
+```
+
+```{r}
+pg = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
+tm = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
+ck = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
+jw = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
+```
+
+```{r}
+pg_sp = as(pg, "SpatialPolygons")
+tm_sp = as(tm, "SpatialPolygons")
+ck_sp = as(ck, "SpatialPolygons")
+jw_sp = as(jw, "SpatialPolygons")
+```
+
+```{r}
+pg_owin = as(pg_sp, "owin")
+tm_owin = as(tm_sp, "owin")
+ck_owin = as(ck_sp, "owin")
+jw_owin = as(jw_sp, "owin")
+```
+
 # HDB Location Data Wrangling
 
 ```{r}
@@ -23,6 +60,7 @@ hdb_transform <- hdb_location %>%
 ```
 
 unique address list:
+
 ```{r}
 add_list <- unique(hdb_transform$address)
 ```
@@ -98,6 +136,7 @@ checking coords for NA values:
 ```{r}
 coords[(is.na(coords$postal) | is.na(coords$latitude) | is.na(coords$longitude) | coords$postal=="NIL"), ]
 ```
+
 Filling up NA values in coords:
 
 ```{r}
@@ -159,4 +198,3 @@ tm_shape(mpsz_sf) +
   tm_shape(hdb_sf) +
   tm_dots()
 ```
-
