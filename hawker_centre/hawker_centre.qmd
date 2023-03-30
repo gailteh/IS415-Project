@@ -254,5 +254,43 @@ plot(hawker_jw_ppp.km, main="Jurong West")
 ```
 
 
+# tmap plot
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+sidebarPanel(width = 3,
+                                                    # If Choropleth Mapping tabpanel is selected, this sidebarpanel below will be shown),
+                                                    tabsetPanel(
+                                                      'input.CM_var === "Choropleth Mapping"',
+                                                      tags$strong("Choropleth Mapping Variable Inputs"),
+                                                      
+                                                      selectInput(
+                                                        inputId = "tmap_style",
+                                                        label = "Choose a style for the map:",
+                                                        choices = list("sd" = "sd", 
+                                                                       "equal" = "equal", 
+                                                                       "pretty" = "pretty", 
+                                                                       "quantile" = "quantile", 
+                                                                       "kmeans" = "kmeans", 
+                                                                       "hclust" = "hclust", 
+                                                                       "bclust" = "bclust", 
+                                                                       "fisher" = "fisher", 
+                                                                       "jenks" = "jenks"),
+                                                        selected = "pretty"),
+                                                      actionButton("SPPA_Run_KDE", "Run Analysis")
+```
+
 
 

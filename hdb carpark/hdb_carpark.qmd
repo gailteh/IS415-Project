@@ -28,6 +28,36 @@ mpsz_sf <- st_read(dsn = "data/mpsz",
                 layer = "MPSZ-2019")
 ```
 
+
+### Exclude the islands!!
+
+#### for the mpsz data!!
+
+```{r}
+unique(mpsz_sf$PLN_AREA_N)
+```
+
+
+
+```{r}
+mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "WESTERN ISLANDS")
+mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "NORTH-EASTERN ISLANDS")
+mpsz_sf <- filter(mpsz_sf, PLN_AREA_N != "SOUTHERN ISLANDS")
+```
+
+#### FOR THE COASTAL DATA
+
+```{r}
+unique(sg_sf$COSTAL_NAM)
+```
+
+```{r}
+#filter rows that contain the string 'PULAU' in the COSTAL_NAM column
+sg_sf <- sg_sf |> 
+  filter(!grepl('PULAU', COSTAL_NAM))
+```
+
+
 ## Import carpark data
 
 ```{r}
@@ -44,8 +74,78 @@ st_crs(carpark)
 
 ```{r}
 
-carpark_sf <- st_as_sf(carpark, coords = c("x_coord", "y_coord"), crs=4326) %>%
-  st_transform(crs = 3414)
+carpark_sf <- st_as_sf(carpark, coords = c("x_coord", "y_coord"), crs=4326)
+
+carpark_sf <- st_set_crs(carpark_sf, 3414)
 carpark_sf
 
 ```
+
+
+## Spatial wrangling
+
+### Convert sf into sp's spatial class
+
+```{r}
+carpark <- as_Spatial(carpark_sf)
+sg <- as_Spatial(sg_sf)
+mpsz <- as_Spatial(mpsz_sf)
+```
+
+### Converting the Spatial\* class into generic sp format
+
+```{r}
+carpark_sp <- as(carpark, "SpatialPoints")
+carpark_sp
+```
+
+
+
+```{r}
+sg_sp <- as(sg, "SpatialPolygons")
+sg_sp
+```
+
+### Converting the generic sp format into spatstat's ppp format
+
+```{r}
+carpark_ppp <- as(carpark_sp, "ppp")
+carpark_ppp
+```
+
+### Handling duplicated points
+
+```{r}
+any(duplicated(carpark_ppp))
+```
+## Plot
+
+```{r}
+tmap_mode('view')
+tm_shape(carpark) +
+  tm_dots(alpha=0.4, 
+          size=0.05)
+```
+
+
+## carpark_ppp_jit
+```{r}
+carpark_ppp_jit <- rjitter(carpark_ppp, retry=TRUE, nsim=1, drop=TRUE)
+```
+
+
+
+## Owin object
+
+```{r}
+sg_owin <- as(sg_sp, "owin")
+```
+
+
+```{r}
+plot(sg_owin)
+```
+
+
+
+
