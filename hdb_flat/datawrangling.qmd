@@ -2,90 +2,11 @@
 title: "hdb car park data wrangling"
 ---
 
-# HDB Carpark 2nd Order SPPA
-
-Import packages
-
 ```{r}
 pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse)
 ```
 
-Import carpark data
-
-```{r}
-carpark <- read_csv("hdb-carpark-information.csv")
-```
-
-```{r}
-glimpse(carpark)
-```
-
-```{r}
-st_crs(carpark)
-```
-
-```{r}
-carpark_sf <- st_as_sf(carpark, coords = c("x_coord", "y_coord"), crs=4326)
-
-carpark_sf <- st_set_crs(carpark_sf, 3414)
-carpark_sf
-```
-
-
-Spatial wrangling
-
-Convert sf into sp's spatial class
-
-```{r}
-carpark <- as_Spatial(carpark_sf)
-sg <- as_Spatial(sg_sf)
-mpsz <- as_Spatial(mpsz_sf)
-```
-
-
-Converting the Spatial* class into generic sp format
-
-```{r}
-carpark_sp <- as(carpark, "SpatialPoints")
-carpark_sp
-```
-
-```{r}
-sg_sp <- as(sg, "SpatialPolygons")
-sg_sp
-```
-
-Converting the generic sp format into spatstat's ppp format
-
-```{r}
-carpark_ppp <- as(carpark_sp, "ppp")
-carpark_ppp
-```
-
-Handling duplicated points
-
-```{r}
-any(duplicated(carpark_ppp))
-```
-
-Plot
-
-```{r}
-tmap_mode('view')
-tm_shape(carpark) +
-  tm_dots(alpha=0.4, 
-          size=0.05)
-```
-
-
-```{r}
-carpark_ppp_jit <- rjitter(carpark_ppp, retry=TRUE, nsim=1, drop=TRUE)
-```
-
-```{r}
-
-
-
+# HDB Carpark 2nd Order SPPA
 
 # HDB Location Data Wrangling
 
