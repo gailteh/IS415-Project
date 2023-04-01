@@ -2,32 +2,47 @@
 title: "hdb car park data wrangling"
 ---
 
+```{r}
+pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse)
+```
+
 # HDB Carpark 2nd Order SPPA
 
 ```{r}
-pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse, httr, jsonlite)
+st_crs(mpsz_sf)
+```
+```{r}
+mpsz_sf <- st_transform(mpsz_sf, 3414)
+st_crs(mpsz_sf)
 ```
 
 ```{r}
-carpark <- read_csv("hdb-carpark-information.csv")
+
 ```
 
 ```{r}
-list(carpark)
+mpsz <- as_Spatial(mpsz_sf)
 ```
 
 ```{r}
-carpark_sf <- st_as_sf(carpark,
-                       coords = c("x_coord", "y_coord"),
-                       crs = 4326)
+pg = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
+tm = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
+ck = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
+jw = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
 ```
 
 ```{r}
-carpark_sf <- st_set_crs(carpark_sf, 3414)
+pg_sp = as(pg, "SpatialPolygons")
+tm_sp = as(tm, "SpatialPolygons")
+ck_sp = as(ck, "SpatialPolygons")
+jw_sp = as(jw, "SpatialPolygons")
 ```
 
 ```{r}
-st_crs(carpark_sf)
+pg_owin = as(pg_sp, "owin")
+tm_owin = as(tm_sp, "owin")
+ck_owin = as(ck_sp, "owin")
+jw_owin = as(jw_sp, "owin")
 ```
 
 # HDB Location Data Wrangling
@@ -45,6 +60,7 @@ hdb_transform <- hdb_location %>%
 ```
 
 unique address list:
+
 ```{r}
 add_list <- unique(hdb_transform$address)
 ```
@@ -120,6 +136,7 @@ checking coords for NA values:
 ```{r}
 coords[(is.na(coords$postal) | is.na(coords$latitude) | is.na(coords$longitude) | coords$postal=="NIL"), ]
 ```
+
 Filling up NA values in coords:
 
 ```{r}
@@ -174,3 +191,10 @@ Saving HDB Locations into rds file:
 write_rds(hdb_sf, "hdb_sf.rds")
 ```
 
+```{r}
+tm_shape(mpsz_sf) +
+  tm_polygons() +
+  tmap_options(check.and.fix = TRUE)+
+  tm_shape(hdb_sf) +
+  tm_dots()
+```
