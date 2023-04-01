@@ -12,7 +12,7 @@ editor: visual
 ---
 
 ```{r}
-pacman::p_load(sf, dplyr, tidyverse)
+pacman::p_load(sf, dplyr, tidyverse, tmap)
 ```
 
 Importing shopping mall csv data
@@ -33,6 +33,17 @@ mall_sf <- st_as_sf(shopping_mall,
 st_crs(mall_sf)
 ```
 
+
+Writing to RDS
+
 ```{r}
 write_rds(mall_sf, "mall_sf")
+```
+
+```{r}
+tm_shape(mpsz_sf) +
+  tm_polygons() +
+  tmap_options(check.and.fix = TRUE)+
+  tm_shape(mall_sf) +
+  tm_dots()
 ```
