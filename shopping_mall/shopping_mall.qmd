@@ -11,4 +11,28 @@ execute:
 editor: visual
 ---
 
+```{r}
+pacman::p_load(sf, dplyr, tidyverse)
+```
 
+Importing shopping mall csv data
+
+```{r}
+shopping_mall <- read_csv("shopping_mall_coordinates.csv")
+```
+
+Converting into sf dataframe
+
+```{r}
+mall_sf <- st_as_sf(shopping_mall,
+                    coords = c("LONGITUDE", 
+                               "LATITUDE"),
+                    crs=4326) %>%
+  st_transform(crs = 3414)
+
+st_crs(mall_sf)
+```
+
+```{r}
+write_rds(mall_sf, "mall_sf")
+```
