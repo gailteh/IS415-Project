@@ -20,13 +20,20 @@ pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, readr, stringr, sfde
 ## Import geo-SG
 
 ```{r}
-sg_sf <- st_read(dsn = "data/coastal_outline", layer="CostalOutline")
+sg_sf <- st_read(dsn = "data/coastal_outline", layer="CostalOutline") |>
+  st_transform(3414)
 ```
 
 ```{r}
-mpsz_sf <- st_read(dsn = "data/mpsz", 
-                layer = "MPSZ-2019")
+mpsz_sf <- st_read(dsn = "data/mpsz", layer = "MPSZ-2019")
 ```
+
+```{r}
+mpsz_sf <- st_transform(mpsz_sf, 3414)
+st_crs(mpsz_sf)
+```
+
+
 
 ### Exclude the islands!!
 
@@ -303,14 +310,14 @@ plot(hawker_jw_ppp.km, main="Jurong West")
 
 
 ```{r}
-mpsz <- read_rds("data/rds/mpsz.rds")
-sg <- read_rds("data/rds/sg.rds")
-hawker <- read_rds("data/rds/hawker.rds")
+# mpsz <- read_rds("data/rds/mpsz.rds")
+# sg <- read_rds("data/rds/sg.rds")
+# hawker <- read_rds("data/rds/hawker.rds")
 ```
 
 ```{r}
 #| eval: false
-mpsz_hawker <- left_join(mpsz, carpark)
+# mpsz_hawker <- left_join(mpsz, carpark)
 ```
 
 
@@ -361,13 +368,18 @@ tm_shape(hawker)+
 
 # LCLQ
 
+```{r}
+carpark_sf <- read_rds("data/rds/carpark_sf.rds")
+```
+
+
 ## combine data into 1 df 
 ```{r}
 hawker_lclq <- hawker_sf |>
   mutate(Name = "Hawker")
 
 carpark_lclq <- carpark_sf |>
-  select(address, geometry) |>
+  dplyr::select(address, geometry) |>
   mutate(address = "Carpark") |>
   rename("Name" = "address")
 
@@ -430,5 +442,42 @@ tm_shape(LCLQ_hawker)+
              border.lwd = 0.5) +
   tm_view(set.zoom.limits = c(11, 16))
 ```
+
+## Plot LCLQ value with bubbles
+```{r}
+tmap_mode("view")
+
+tm_shape(sg) +
+  tm_polygons() +
+  tm_shape(LCLQ_hawker) + 
+  tm_bubbles(col = "Hawker", 
+             size = "p_sim_Carpark",
+             border.col = "black",
+             border.lwd = 0.5) +
+  tm_view(set.zoom.limits = c(11, 16))
+
+```
+
+
+
+
+
+
+```{r}
+tmap_mode("view")
+
+tm_shape(sg) +
+  tm_polygons() +
+  tm_shape(LCLQ_hawker) + 
+  tm_bubbles(col = "Hawker", 
+             size = "p_sim_Hawker",
+             border.col = "black",
+             border.lwd = 0.5) +
+  tm_view(set.zoom.limits = c(11, 16))
+
+```
+
+
+
 
 

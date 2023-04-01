@@ -127,8 +127,8 @@ tm_shape(carpark) +
 carpark_ppp_jit <- rjitter(carpark_ppp, retry=TRUE, nsim=1, drop=TRUE)
 ```
 
-
 ## write to rds
+
 ```{r}
 #carpark
 write_rds(carpark_sf, "data/rds/carpark_sf.rds")
@@ -136,8 +136,6 @@ write_rds(carpark_sp, "data/rds/carpark_sp.rds")
 write_rds(carpark_ppp, "data/rds/carpark_ppp.rds")
 write_rds(carpark, "data/rds/carpark.rds")
 ```
-
-
 
 ## Owin object
 
