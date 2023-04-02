@@ -33,15 +33,14 @@ mall_sf <- st_as_sf(shopping_mall,
 st_crs(mall_sf)
 ```
 
-
 Writing to RDS
 
 ```{r}
-write_rds(mall_sf, "mall_sf")
+write_rds(mall_sf, "mall_sf.rds")
 ```
 
 ```{r}
-tm_shape(mpsz_sf) +
+tm_shape(sg) +
   tm_polygons() +
   tmap_options(check.and.fix = TRUE)+
   tm_shape(mall_sf) +
