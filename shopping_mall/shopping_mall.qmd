@@ -11,4 +11,39 @@ execute:
 editor: visual
 ---
 
+```{r}
+pacman::p_load(sf, dplyr, tidyverse, tmap)
+```
 
+Importing shopping mall csv data
+
+```{r}
+shopping_mall <- read_csv("shopping_mall_coordinates.csv")
+```
+
+Converting into sf dataframe
+
+```{r}
+mall_sf <- st_as_sf(shopping_mall,
+                    coords = c("LONGITUDE", 
+                               "LATITUDE"),
+                    crs=4326) %>%
+  st_transform(crs = 3414)
+
+st_crs(mall_sf)
+```
+
+
+Writing to RDS
+
+```{r}
+write_rds(mall_sf, "mall_sf")
+```
+
+```{r}
+tm_shape(mpsz_sf) +
+  tm_polygons() +
+  tmap_options(check.and.fix = TRUE)+
+  tm_shape(mall_sf) +
+  tm_dots()
+```

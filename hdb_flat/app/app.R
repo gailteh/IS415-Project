@@ -22,7 +22,7 @@ library(tidyverse)
 
 # Geospatial Data Import and Wrangling
 
-carpark_ppp <- read_rds("carpark_ppp.rds")
+carpark_ppp <- read_rds("data/carpark_ppp.rds")
 carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
 
 # Aspatial Data Import and Wrangling
