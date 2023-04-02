@@ -44,5 +44,6 @@ tm_shape(sg) +
   tm_polygons() +
   tmap_options(check.and.fix = TRUE)+
   tm_shape(mall_sf) +
-  tm_dots()
+  tm_dots() +
+  tm_symbols(size = 0.02, col = "blue", shape = 19, fill = "green")
 ```

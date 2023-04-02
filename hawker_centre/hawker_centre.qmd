@@ -405,6 +405,7 @@ carpark_sf <- read_rds("data/rds/carpark_sf.rds")
 hdb_sf <- read_rds("data/rds/hdb_sf.rds")
 hawker_sf <- read_rds("data/rds/hawker_sf.rds")
 sg <- read_rds("data/rds/sg.rds")
+mall_sf <- read_rds("data/rds/mall_sf.rds")
 ```
 
 
@@ -423,6 +424,9 @@ hdb_lclq <- hdb_sf |>
   mutate(address = "HDB") |>
   rename("Name" = "address")
 
+mall_lclq <- mall_sf |>
+  rename("Name" = "Mall Name")
+
 
 # names(my_data_frame)[names(my_data_frame) == "old_column_name"] <- "new_column_name"
 # 
@@ -431,6 +435,7 @@ hdb_lclq <- hdb_sf |>
 
 interest_lclq <- rbind(hawker_lclq, carpark_lclq)
 interest_lclq <- rbind(interest_lclq, hdb_lclq)
+interest_lclq <- rbind(interest_lclq, mall_lclq)
 ```
 
 
@@ -462,6 +467,10 @@ B <- interest_lclq$Name
 HDB <- interest_lclq %>%
   filter(Name == "HDB")
 C <- interest_lclq$Name
+
+Mall <- interest_lclq %>%
+  filter(Name == "Shopping Mall")
+C <- interest_lclq$Name
 ```
 
 
@@ -470,6 +479,8 @@ C <- interest_lclq$Name
 LCLQ <- local_colocation(A, B, nb, wt, 49)
 
 # LCLQ <- local_colocation(A, C, nb, wt, 49)
+
+# LCLQ <- local_colocation(A, D, nb, wt, 49)
 ```
 
 ## Joining output table
