@@ -1,21 +1,92 @@
 
- #
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
-
 # Libraries
 library(shiny)
 library(bslib)
+library(shinycssloaders)
+
+library(leaflet)
+library(tidyverse)
+library(tools)
+library(shinythemes)
+library(shinyjs)
+library(tmap)
+library(readr)
+library(sp)
+library(sf)
+library(rgdal)
+library(spNetwork)
+library(spatstat)
+library(raster)
+library(maptools)
+library(dplyr)
+library(stringr)
 
 # Geospatial Data Import and Wrangling
 
+# sg (coastal outline)
+sg_owin <- read_rds("data/rds/sg_owin.rds")
+sg <- read_rds("data/rds/sg.rds")
+sg_sf <- read_rds("data/rds/sg_sf.rds")
+sg_sp <- read_rds("data/rds/sg_sp.rds")
+
+# mpsz
+mpsz <- read_rds("data/rds/mpsz.rds")
+mpsz_sf <- read_rds("data/rds/mpsz_sf.rds")
+
+
+
+
 # Aspatial Data Import and Wrangling
+
+# hawker
+hawker_sf <- read_rds("data/rds/hawker_sf.rds")
+# hawker_sp <- write_rds(hawker_sp, "data/rds/hawker_sp.rds")
+# hawker_ppp <- read_rds("data/rds/hawker_ppp.rds")
+# hawker <- read_rds("data/rds/hawker.rds")
+
+# HDB flats
+hdb_sf <- read_rds("data/rds/hdb_sf.rds")
+
+# Shopping mall
+
+# LCLQ preparation & wrangling
+hawker_lclq <- hawker_sf |>
+  mutate(Name = "Hawker")
+
+carpark_lclq <- carpark_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "Carpark") |>
+  rename("Name" = "address")
+
+hdb_lclq <- hdb_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "HDB") |>
+  rename("Name" = "address")
+
+## Combine LCLQ together
+interest_lclq <- rbind(hawker_lclq, carpark_lclq)
+interest_lclq <- rbind(interest_lclq, hdb_lclq)
+#interest_lclq <- rbind(interest_lclq, shop_lclq)
+
+
+## Prepare Vector list for LCLQ
+Carpark <- interest_lclq %>%
+  filter(Name == "Carpark")
+A <- interest_lclq$Name
+
+Hawker <- interest_lclq %>%
+  filter(Name == "Hawker")
+B <- interest_lclq$Name
+
+HDB <- interest_lclq %>%
+  filter(Name == "HDB")
+C <- interest_lclq$Name
+
+# Shopping_mall <- interest_lclq %>%
+#   filter(Name == "Shopping mall")
+# D <- interest_lclq$Name
+
+
 
 
 # Define UI for application that draws a histogram

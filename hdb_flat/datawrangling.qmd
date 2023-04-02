@@ -11,6 +11,7 @@ pacman::p_load(maptools, sf, raster, spatstat, tmap, dplyr, tidyverse)
 ```{r}
 st_crs(mpsz_sf)
 ```
+
 ```{r}
 mpsz_sf <- st_transform(mpsz_sf, 3414)
 st_crs(mpsz_sf)
