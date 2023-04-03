@@ -38,6 +38,8 @@ mpsz_sf <- read_rds("rds/mpsz_sf.rds")
 
 # HDB flats
 carpark_sf <- read_rds("rds/carpark_sf.rds")
+carpark_ppp <- read_rds("rds/carpark_ppp.rds")
+carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
 
 
 # hawker
@@ -48,6 +50,7 @@ hawker_sf <- read_rds("rds/hawker_sf.rds")
 
 # HDB flats
 hdb_sf <- read_rds("rds/hdb_sf.rds")
+
 
 # Shopping mall
 mall_sf <- read_rds("rds/mall_sf.rds")
@@ -241,10 +244,13 @@ ui <- fluidPage(
                                                    min = 0,
                                                    max = 1000,
                                                    value= 99),
+                                       helpText("99 simulations are being run by default"),
                                        actionButton(inputId = "run_g_function",
                                                     label = "Run Analysis")
                                      ),
-                                     mainPanel("graphs go here")
+                                     mainPanel(
+                                       plotOutput("g_function_plot")
+                                     )
                                    )),
                           tabPanel("L Function Analysis",
                                    sidebarLayout(
@@ -254,22 +260,13 @@ ui <- fluidPage(
                                                    min = 0,
                                                    max = 1000,
                                                    value= 99),
+                                       helpText("99 simulations are being run by default"),
                                        actionButton(inputId = "run_l_function",
                                                     label = "Run Analysis")
                                      ),
-                                     mainPanel("graphs go here")
-                                   )),
-                          tabPanel("Local Co-location Quotient Analysis",
-                                   sidebarLayout(
-                                     sidebarPanel(
-                                       selectInput(inputId = "dataset",
-                                                   label = "Data Source",
-                                                   choices = c("HDB Flat Locations" = "HDB FLAT LOCATIONS",
-                                                               "Shopping Malls" = "SHOPPING MALLS",
-                                                               "Hawker Centers" = "HAWKER CENTERS"),
-                                                   selected = "HDB FLAT LOCATIONS"),
-                                     ),
-                                     mainPanel("map goes here")
+                                     mainPanel(
+                                       plotOutput("l_function_plot")
+                                     )
                                    ))
                         )
                       ),
@@ -370,6 +367,20 @@ server <- function(input, output) {
               border.lwd = 0.5) +
       tm_view(set.zoom.limits = c(11, 16))
     
+  })
+  
+  ### G Function Plot ###
+  output$g_function_plot <- renderPlot({
+    input$run_g_function
+    g_func.csr <- isolate(envelope(carpark_ppp_km, Gest, nsim = input$g_funct_sim))
+    plot(g_func.csr)
+  })
+  
+  ### L Function Plot ###
+  output$l_function_plot <- renderPlot({
+    input$run_l_function
+    l_func.csr <- isolate(envelope(carpark_ppp_km, Lest, nsim = input$l_funct_sim))
+    plot(l_func.csr, . - r ~ r, xlab="d", ylab="L(d)-r")
   })
     
 }
