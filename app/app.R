@@ -245,11 +245,15 @@ ui <- fluidPage(
                                                    max = 1000,
                                                    value= 99),
                                        helpText("99 simulations are being run by default"),
+                                       hr(),
                                        actionButton(inputId = "run_g_function",
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
-                                       plotOutput("g_function_plot")
+                                       plotOutput("g_function_plot"),
+                                       hr(),
+                                       h3("What is G-Function?"),
+                                       h3("How to analyse this output?")
                                      )
                                    )),
                           tabPanel("L Function Analysis",
@@ -261,11 +265,15 @@ ui <- fluidPage(
                                                    max = 1000,
                                                    value= 99),
                                        helpText("99 simulations are being run by default"),
+                                       hr(),
                                        actionButton(inputId = "run_l_function",
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
-                                       plotOutput("l_function_plot")
+                                       plotOutput("l_function_plot"),
+                                       hr(),
+                                       h3("What is L-Function?"),
+                                       h3("How to analyse this output?")
                                      )
                                    ))
                         )
