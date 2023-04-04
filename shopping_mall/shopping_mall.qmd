@@ -43,21 +43,16 @@ write_rds(mall_sf, "mall_sf.rds")
 mall_sf <- read_rds("mall_sf.rds")
 ```
 
-
-
 ```{r}
 
 tm_shape(sg) +
   tm_polygons() +
   tmap_options(check.and.fix = TRUE)+
   tm_shape(mall_sf) +
-  tm_symbols(col = "green", size = 0.4, shape =21)
+  tm_symbols(col = "lightblue", size = 0.4, shape =21)
   
 ```
 
 ```{r}
 duplicated(mall_sf)
 ```
-
-
-
