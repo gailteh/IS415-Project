@@ -12,7 +12,7 @@ editor: visual
 ---
 
 ```{r}
-pacman::p_load(sf, dplyr, tidyverse, tmap)
+pacman::p_load(sf, dplyr, tidyverse, tmap, readr)
 ```
 
 Importing shopping mall csv data
@@ -40,10 +40,24 @@ write_rds(mall_sf, "mall_sf.rds")
 ```
 
 ```{r}
+mall_sf <- read_rds("mall_sf.rds")
+```
+
+
+
+```{r}
+
 tm_shape(sg) +
   tm_polygons() +
   tmap_options(check.and.fix = TRUE)+
   tm_shape(mall_sf) +
-  tm_dots() +
-  tm_symbols(size = 0.02, col = "blue", shape = 19, fill = "green")
+  tm_symbols(col = "green", size = 0.4, shape =21)
+  
 ```
+
+```{r}
+duplicated(mall_sf)
+```
+
+
+

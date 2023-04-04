@@ -425,7 +425,8 @@ hdb_lclq <- hdb_sf |>
   rename("Name" = "address")
 
 mall_lclq <- mall_sf |>
-  rename("Name" = "Mall Name")
+  rename("Name" = "Mall Name") |>
+  mutate("Name" = "Shopping Mall")
 
 
 # names(my_data_frame)[names(my_data_frame) == "old_column_name"] <- "new_column_name"
@@ -433,59 +434,89 @@ mall_lclq <- mall_sf |>
 # carpark_lclq <- carpark_lclq |>
 #   rename(address = "Name")
 
-interest_lclq <- rbind(hawker_lclq, carpark_lclq)
-interest_lclq <- rbind(interest_lclq, hdb_lclq)
-interest_lclq <- rbind(interest_lclq, mall_lclq)
+hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
+hdb_cp_lclq <- rbind(hdb_lclq, carpark_lclq)
+mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 ```
 
 
 ## nearest neighbour = 6
 ```{r}
 nb <- include_self(
-  st_knn(st_geometry(interest_lclq), 6))
+  st_knn(st_geometry(hk_cp_lclq), 6))
 ```
 
 ## Computing kernel weights
 
 ```{r}
 wt <- st_kernel_weights(nb, 
-                        interest_lclq, 
+                        hk_cp_lclq, 
                         "gaussian", 
                         adaptive = TRUE)
 ```
 
 ## Preparing the vector list
 ```{r}
-Carpark <- interest_lclq %>%
+Carpark_hawker <- hk_cp_lclq %>%
   filter(Name == "Carpark")
-A <- interest_lclq$Name
+A_hk <- hk_cp_lclq$Name
 
-Hawker <- interest_lclq %>%
+Carpark_hdb <- hdb_cp_lclq %>%
+  filter(Name == "Carpark")
+A_hdb <- hdb_cp_lclq$Name
+
+Carpark_mall <- mall_cp_lclq %>%
+  filter(Name == "Carpark")
+A_mall <- mall_cp_lclq$Name
+
+# identical(Carpark_hawker, Carpark_hdb)
+
+
+Hawker <- hk_cp_lclq %>%
   filter(Name == "Hawker")
-B <- interest_lclq$Name
+B <- hk_cp_lclq$Name
 
-HDB <- interest_lclq %>%
+HDB <- hdb_cp_lclq %>%
   filter(Name == "HDB")
-C <- interest_lclq$Name
+C <- hdb_cp_lclq$Name
 
-Mall <- interest_lclq %>%
+Mall <- mall_cp_lclq %>%
   filter(Name == "Shopping Mall")
-C <- interest_lclq$Name
+D <- mall_cp_lclq$Name
 ```
 
 
 ## Computing LCLQ
 ```{r}
-LCLQ <- local_colocation(A, B, nb, wt, 49)
+LCLQ_AB <- local_colocation(A, B, nb, wt, 49)
 
-# LCLQ <- local_colocation(A, C, nb, wt, 49)
+# LCLQ_AC <- local_colocation(A, C, nb, wt, 49)
 
-# LCLQ <- local_colocation(A, D, nb, wt, 49)
+# LCLQ_AD <- local_colocation(A, D, nb, wt, 49)
 ```
+
+## write to rds
+```{r}
+write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
+
+#write_rds(LCLQ_AB, "data/rds/lclq_AC.rds")
+
+#write_rds(LCLQ_AB, "data/rds/lclq_AD.rds")
+```
+
+## read rds
+```{r}
+LCLQ_AB <- read_rds("data/rds/lclq_AB.rds")
+
+#LCLQ_AC <- read_rds("data/rds/lclq_AC.rds")
+#LCLQ_AD <- read_rds("data/rds/lclq_AD.rds")
+```
+
+
 
 ## Joining output table
 ```{r}
-LCLQ_hawker <- cbind(interest_lclq, LCLQ)
+LCLQ_hawker <- cbind(interest_lclq, LCLQ_AB)
 ```
 
 
@@ -542,6 +573,47 @@ tm_shape(sg) +
   tm_view(set.zoom.limits = c(11, 16))
 
 ```
+
+```{r}
+
+tmap_mode("view")
+tm_shape(sg) +
+  tm_polygons() +
+tm_shape(LCLQ_hawker)+ 
+  tm_symbols(
+             col = "Hawker",
+             size = "p_sim_Hawker",
+             palette = "Greens"
+             ) +
+  tm_view(set.zoom.limits = c(11, 16))
+```
+
+
+```{r}
+tmaptools::palette_explorer()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
