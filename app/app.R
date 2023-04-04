@@ -38,7 +38,8 @@ mpsz_sf <- read_rds("rds/mpsz_sf.rds")
 
 # HDB flats
 carpark_sf <- read_rds("rds/carpark_sf.rds")
-
+carpark_ppp <- read_rds("rds/carpark_ppp.rds")
+carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
 
 # hawker
 hawker_sf <- read_rds("rds/hawker_sf.rds")
@@ -130,10 +131,11 @@ ui <- fluidPage(
                                      # select the point colour
                                      selectInput(inputId = "colour",
                                                  label = "Select the Point Colour:",
-                                                 choices = list("black" = "Black",
-                                                                        "blues" = "Blues", 
-                                                                        "reds" = "Reds", 
-                                                                        "greens" = "Greens"),
+                                                 choices = list("Black" = "black",
+                                                                "Blue" = "blue", 
+                                                                "Cyan" = "cyan",
+                                                                "Red" = "red", 
+                                                                "Green" = "lightgreen"),
                                                  selected = "Black")
                                    ),
                                    
@@ -311,7 +313,8 @@ server <- function(input, output) {
       tm_polygons() +
       tm_shape(map_var()) +
       tm_dots(size = input$dot_size,
-              border.col = input$colour,
+              col = input$colour,
+              border.col = "black",
               border.lwd = input$line_width) +
       tm_view(set.zoom.limits = c(11, 16))
   })

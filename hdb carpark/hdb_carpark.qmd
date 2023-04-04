@@ -162,7 +162,7 @@ kde_carpark.bw <- density(carpark_ppp,
 plot(kde_carpark.bw, sigma=0.6)
 ```
 
-##### Retrieve bandwidth 
+##### Retrieve bandwidth
 
 ```{r}
 bw <- bw.diggle(carpark_ppp)
@@ -173,6 +173,8 @@ bw
 
 ```{r}
 carpark_ppp.km <- rescale(carpark_ppp, 1000, "km")
+
+write_rds(carpark, "data/rds/carpark_ppp.km.rds")
 ```
 
 #### Working with different automatic bandwidth methods
@@ -229,6 +231,7 @@ plot(density(carpark_ppp.km,
              kernel="disc"), 
      main="Disc")
 ```
+
 #### Fixed and adaptive KDE
 
 ##### Computing KDE by fixed bandwidth
@@ -237,6 +240,7 @@ plot(density(carpark_ppp.km,
 kde_carpark_600 <- density(carpark_ppp.km, sigma=0.6, edge=TRUE, kernel="gaussian")
 plot(kde_carpark_600)
 ```
+
 ##### Computing KDE by adaptive bandwidth
 
 ```{r}
@@ -267,6 +271,7 @@ kde_carpark_bw_raster
 projection(kde_carpark_bw_raster) <- CRS("+init=EPSG:3414")
 kde_carpark_bw_raster
 ```
+
 ```{r}
 tm_shape(kde_carpark_bw_raster) + 
   tm_raster("v") +
