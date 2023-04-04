@@ -146,3 +146,129 @@ sg_owin <- as(sg_sp, "owin")
 ```{r}
 plot(sg_owin)
 ```
+
+### First-order Spatial Point Patterns Analysis
+
+#### Kernel Density Estimation (KDE)
+
+```{r}
+kde_carpark.bw <- density(carpark_ppp,
+                              sigma=bw.diggle,
+                              edge=TRUE,
+                            kernel="gaussian") 
+```
+
+```{r}
+plot(kde_carpark_bw, sigma=0.6)
+```
+
+##### Retrieve bandwidth 
+
+```{r}
+bw <- bw.diggle(carpark_ppp)
+bw
+```
+
+#### Rescaling KDE values
+
+```{r}
+carpark_ppp.km <- rescale(carpark_ppp, 1000, "km")
+```
+
+#### Working with different automatic bandwidth methods
+
+```{r}
+ bw.CvL(carpark_ppp.km)
+```
+
+```{r}
+bw.scott(carpark_ppp.km)
+```
+
+```{r}
+bw.ppl(carpark_ppp.km)
+```
+
+```{r}
+bw.diggle(carpark_ppp.km)
+```
+
+```{r}
+kde_carpark.ppl <- density(carpark_ppp.km, 
+                               sigma=bw.ppl, 
+                               edge=TRUE,
+                               kernel="gaussian")
+par(mfrow=c(1,2))
+
+plot(kde_carpark.bw, main = "bw.diggle")
+plot(kde_carpark.ppl, main = "bw.ppl")
+```
+
+#### Working with different kernel methods
+
+```{r}
+par(mfrow=c(2,2))
+plot(density(carpark_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="gaussian"), 
+     main="Gaussian")
+plot(density(carpark_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="epanechnikov"), 
+     main="Epanechnikov")
+plot(density(carpark_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="quartic"), 
+     main="Quartic")
+plot(density(carpark_ppp.km, 
+             sigma=bw.ppl, 
+             edge=TRUE, 
+             kernel="disc"), 
+     main="Disc")
+```
+#### Fixed and adaptive KDE
+
+##### Computing KDE by fixed bandwidth
+
+```{r}
+kde_carpark_600 <- density(carpark_ppp.km, sigma=0.6, edge=TRUE, kernel="gaussian")
+plot(kde_carpark_600)
+```
+##### Computing KDE by adaptive bandwidth
+
+```{r}
+kde_carpark_adaptive <- adaptive.density(carpark_ppp.km, method="kernel")
+plot(kde_carpark_adaptive)
+```
+
+#### Converting KDE output into grid object
+
+```{r}
+gridded_kde_carpark_bw <- as.SpatialGridDataFrame.im(kde_carpark.bw)
+spplot(gridded_kde_carpark_bw)
+```
+
+##### Convering gridded output into raster
+
+```{r}
+kde_carpark_bw_raster <- raster(gridded_kde_carpark_bw)
+```
+
+```{r}
+kde_carpark_bw_raster
+```
+
+#### Assigning projection systems
+
+```{r}
+projection(kde_carpark_bw_raster) <- CRS("+init=EPSG:3414")
+kde_carpark_bw_raster
+```
+```{r}
+tm_shape(kde_carpark_bw_raster) + 
+  tm_raster("v") +
+  tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
+```
