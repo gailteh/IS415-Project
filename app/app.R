@@ -24,36 +24,33 @@ library(stringr)
 # Geospatial Data Import and Wrangling
 
 # sg (Coastal outline)
-sg_owin <- read_rds("rds/sg_owin.rds")
-sg <- read_rds("rds/sg.rds")
-sg_sf <- read_rds("rds/sg_sf.rds")
-sg_sp <- read_rds("rds/sg_sp.rds")
+sg_owin <- read_rds("data/rds/sg_owin.rds")
+sg <- read_rds("data/rds/sg.rds")
+sg_sf <- read_rds("data/rds/sg_sf.rds")
+sg_sp <- read_rds("data/rds/sg_sp.rds")
 
 # mpsz
-mpsz <- read_rds("rds/mpsz.rds")
-mpsz_sf <- read_rds("rds/mpsz_sf.rds")
+mpsz <- read_rds("data/rds/mpsz.rds")
+mpsz_sf <- read_rds("data/rds/mpsz_sf.rds")
 
 
 # Aspatial Data Import and Wrangling
 
 # HDB flats
-carpark_sf <- read_rds("rds/carpark_sf.rds")
-carpark_ppp <- read_rds("rds/carpark_ppp.rds")
-carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
+carpark_sf <- read_rds("data/rds/carpark_sf.rds")
 
 
 # hawker
-hawker_sf <- read_rds("rds/hawker_sf.rds")
-# hawker_sp <- write_rds("rds/hawker_sp.rds")
-# hawker_ppp <- read_rds("rds/hawker_ppp.rds")
-# hawker <- read_rds("rds/hawker.rds")
+hawker_sf <- read_rds("data/rds/hawker_sf.rds")
+# hawker_sp <- write_rds(hawker_sp, "data/rds/hawker_sp.rds")
+# hawker_ppp <- read_rds("data/rds/hawker_ppp.rds")
+# hawker <- read_rds("data/rds/hawker.rds")
 
 # HDB flats
-hdb_sf <- read_rds("rds/hdb_sf.rds")
-
+hdb_sf <- read_rds("data/rds/hdb_sf.rds")
 
 # Shopping mall
-mall_sf <- read_rds("rds/mall_sf.rds")
+mall_sf <- read_rds("data/rds/mall_sf.rds")
 
 
 #### LCLQ preparation & wrangling ####
@@ -74,27 +71,10 @@ mall_lclq <- mall_sf |>
   rename("Name" = "Mall Name")
 
 ## Combine LCLQ together
-interest_lclq <- rbind(hawker_lclq, carpark_lclq)
-interest_lclq <- rbind(interest_lclq, hdb_lclq)
-interest_lclq <- rbind(interest_lclq, mall_lclq)
+hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
+hdb_cp_lclq <- rbind(hdb_lclq, carpark_lclq)
+mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 
-
-## Prepare Vector list for LCLQ
-Carpark <- interest_lclq %>%
-  filter(Name == "Carpark")
-A <- interest_lclq$Name
-
-Hawker <- interest_lclq %>%
-  filter(Name == "Hawker")
-B <- interest_lclq$Name
-
-HDB <- interest_lclq %>%
-  filter(Name == "HDB")
-C <- interest_lclq$Name
-
-Mall <- interest_lclq %>%
-  filter(Name == "Shopping Mall")
-D <- interest_lclq$Name
 
 
 
@@ -324,17 +304,89 @@ server <- function(input, output) {
     
     input$LCLQ_run
     
+    ## prepare vector list for LCLQ (main comparison variable)
+    A <- reactive({
+      if (input$lclq_var == "Hawker") {
+        
+        Carpark <- hk_cp_lclq %>%
+          filter(Name == "Carpark")
+        A <- hk_cp_lclq$Name
+        
+      } else if (input$lclq_var == "HDB") {
+        
+        Carpark <- hdb_cp_lclq %>%
+          filter(Name == "Carpark")
+        A <- hdb_cp_lclq$Name
+        
+      } else if (input$lclq_var == "Shopping Mall") {
+        
+        Carpark <- mall_cp_lclq %>%
+          filter(Name == "Carpark")
+        A <- mall_cp_lclq$Name
+      }
+    })
+    
+    ## prepare vector list for LCLQ (selected variable)
+    B <- reactive({
+      if (input$lclq_var == "Hawker") {
+        
+        Hawker <- hk_cp_lclq %>%
+          filter(Name == "Hawker")
+        B <- hk_cp_lclq$Name
+        
+      } else if (input$lclq_var == "HDB") {
+        
+        HDB <- hdb_cp_lclq %>%
+          filter(Name == "HDB")
+        B <- hdb_cp_lclq$Name
+        
+      } else if (input$lclq_var == "Shopping Mall") {
+        
+        Mall <- mall_cp_lclq %>%
+          filter(Name == "Shopping Mall")
+        B <- mall_cp_lclq$Name
+      }
+    })
+    
     # Compute the nearest neighbours per selected
     nb <- reactive({
-      include_self(
-        st_knn(st_geometry(interest_lclq), input$nb_lclq))
+      
+      if (input$lclq_var == "Hawker") {
+        
+        include_self(
+          st_knn(st_geometry(hk_cp_lclq), input$nb_lclq))
+        
+      } else if (input$lclq_var == "HDB") {
+        
+        include_self(
+          st_knn(st_geometry(hdb_cp_lclq), input$nb_lclq))
+        
+      } else if (input$lclq_var == "Shopping Mall") {
+        
+        include_self(
+          st_knn(st_geometry(mall_cp_lclq), input$nb_lclq))
+        
+      }
+      
     })
     
     # Compute the Kernel weights
-    wt <- reactive({st_kernel_weights(nb(),
-                                      interest_lclq,
-                                      "gaussian",
-                                      adaptive = TRUE)
+    wt <- reactive({
+      
+      if (input$lclq_var == "Hawker") {
+        
+        st_kernel_weights(nb(), hk_cp_lclq, "gaussian", adaptive = TRUE)
+        
+      } else if (input$lclq_var == "HDB") {
+        
+        st_kernel_weights(nb(), hdb_cp_lclq, "gaussian", adaptive = TRUE)
+        
+      } else if (input$lclq_var == "Shopping Mall") {
+        
+        st_kernel_weights(nb(), mall_cp_lclq, "gaussian", adaptive = TRUE)
+        
+      }
+      
     })
     
     # Determine the no. of simulations according to the selected significance level
@@ -351,14 +403,20 @@ server <- function(input, output) {
     LCLQ_output <- eventReactive(input$LCLQ_run, {
       isolate(
         if (input$lclq_var == "Hawker") {
-          LCLQ <- local_colocation(A, B, nb(), wt(), conf_int())
-          cbind(interest_lclq, LCLQ)
+          
+          LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
+          cbind(hk_cp_lclq, LCLQ)
+          
         } else if (input$lclq_var == "HDB") {
-          LCLQ <- local_colocation(A, C, nb(), wt(), conf_int())
-          cbind(interest_lclq, LCLQ)
+          
+          LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
+          cbind(hdb_cp_lclq, LCLQ)
+          
         } else if (input$lclq_var == "Shopping Mall") {
-          LCLQ <- local_colocation(A, D, nb(), wt(), conf_int())
-          cbind(interest_lclq, LCLQ)
+          
+          LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
+          cbind(mall_cp_lclq, LCLQ)
+          
         }
       )
     })
