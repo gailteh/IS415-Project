@@ -214,6 +214,10 @@ write_rds(mpsz_sf, "data/rds/mpsz_sf.rds")
 ```
 
 
+```{r}
+unique(mpsz_sf$PLN_AREA_N)
+```
+
 
 
 # Study area
@@ -225,16 +229,25 @@ pg = mpsz[mpsz@data$PLN_AREA_N == "PUNGGOL",]
 tm = mpsz[mpsz@data$PLN_AREA_N == "TAMPINES",]
 ck = mpsz[mpsz@data$PLN_AREA_N == "CHOA CHU KANG",]
 jw = mpsz[mpsz@data$PLN_AREA_N == "JURONG WEST",]
+
+
+central = mpsz[mpsz$REGION_N == "CENTRAL REGION",]
+west = mpsz[mpsz$REGION_N == "WEST REGION",]
+east = mpsz[mpsz$REGION_N == "EAST REGION",]
+north = mpsz[mpsz$REGION_N == "NORTH REGION",]
+north_east = mpsz[mpsz$REGION_N == "NORTH-EAST REGION",]
 ```
 
 ### Plot
 
 ```{r}
 par(mfrow=c(2,2))
-plot(punggol, main = "Punggol")
-plot(tampines, main = "Tampines")
-plot(choa_chu_kang, main = "Choa Chu Kang")
-plot(jurong, main = "Jurong West")
+plot(pg, main = "Punggol")
+plot(tm, main = "Tampines")
+plot(ck, main = "Choa Chu Kang")
+plot(jw, main = "Jurong West")
+
+plot(central, main = "Central Region")
 ```
 
 From here, repeat steps using study areas, from convert from sf to sp, create owin objects for EACH study areas.
@@ -246,6 +259,8 @@ pg_sp = as(pg, "SpatialPolygons")
 tm_sp = as(tm, "SpatialPolygons")
 ck_sp = as(ck, "SpatialPolygons")
 jw_sp = as(jw, "SpatialPolygons")
+
+central_sp = as(central, "SpatialPolygons")
 ```
 
 ```{r}
@@ -260,6 +275,8 @@ pg_owin = as(pg_sp, "owin")
 tm_owin = as(tm_sp, "owin")
 ck_owin = as(ck_sp, "owin")
 jw_owin = as(jw_sp, "owin")
+
+central_owin = as(central_sp, "owin")
 ```
 
 
@@ -272,6 +289,8 @@ hawker_pg_ppp = hawker_ppp_jit[pg_owin]
 hawker_tm_ppp = hawker_ppp_jit[tm_owin]
 hawker_ck_ppp = hawker_ppp_jit[ck_owin]
 hawker_jw_ppp = hawker_ppp_jit[jw_owin]
+
+hawker_central_ppp = hawker_ppp_jit[central_owin]
 ```
 
 
@@ -284,6 +303,8 @@ hawker_pg_ppp = hawker_ppp_jit[pg_owin]
 hawker_tm_ppp = hawker_ppp_jit[tm_owin]
 hawker_ck_ppp = hawker_ppp_jit[ck_owin]
 hawker_jw_ppp = hawker_ppp_jit[jw_owin]
+
+hawker_central_ppp = hawker_ppp_jit[central_owin]
 ```
 
 Next, *rescale()* function is used to trasnform the unit of measurement from metre to kilometre.
@@ -294,17 +315,21 @@ hawker_pg_ppp.km = rescale(hawker_pg_ppp, 1000, "km")
 hawker_tm_ppp.km = rescale(hawker_tm_ppp, 1000, "km")
 hawker_ck_ppp.km = rescale(hawker_ck_ppp, 1000, "km")
 hawker_jw_ppp.km = rescale(hawker_jw_ppp, 1000, "km")
+
+hawker_central_ppp.km = rescale(hawker_central_ppp, 1000, "km")
 ```
 
 Plot w the points
 
 ```{r}
 #| eval: false
-par(mfrow=c(2,2))
-plot(hawker_pg_ppp.km, main="Punggol")
-plot(hawker_tm_ppp.km, main="Tampines")
-plot(hawker_ck_ppp.km, main="Choa Chu Kang")
-plot(hawker_jw_ppp.km, main="Jurong West")
+# par(mfrow=c(2,2))
+# plot(hawker_pg_ppp.km, main="Punggol")
+# plot(hawker_tm_ppp.km, main="Tampines")
+# plot(hawker_ck_ppp.km, main="Choa Chu Kang")
+# plot(hawker_jw_ppp.km, main="Jurong West")
+
+plot(hawker_central_ppp.km, main="Central")
 ```
 
 
@@ -360,8 +385,15 @@ tm_shape(hawker)+
 ```
 
 
+```{r}
+tmap_mode("view")
 
+tm_shape(central_owin) +
+  tm_polygons() +
+  tm_shape(hawker_central_ppp.km) + 
+  tm_view(set.zoom.limits = c(11, 16))
 
+```
 
 
 
@@ -370,6 +402,10 @@ tm_shape(hawker)+
 
 ```{r}
 carpark_sf <- read_rds("data/rds/carpark_sf.rds")
+hdb_sf <- read_rds("data/rds/hdb_sf.rds")
+hawker_sf <- read_rds("data/rds/hawker_sf.rds")
+sg <- read_rds("data/rds/sg.rds")
+mall_sf <- read_rds("data/rds/mall_sf.rds")
 ```
 
 
@@ -383,63 +419,124 @@ carpark_lclq <- carpark_sf |>
   mutate(address = "Carpark") |>
   rename("Name" = "address")
 
+hdb_lclq <- hdb_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "HDB") |>
+  rename("Name" = "address")
+
+mall_lclq <- mall_sf |>
+  rename("Name" = "Mall Name") |>
+  mutate("Name" = "Shopping Mall")
+
+
 # names(my_data_frame)[names(my_data_frame) == "old_column_name"] <- "new_column_name"
 # 
 # carpark_lclq <- carpark_lclq |>
 #   rename(address = "Name")
 
-interest_lclq <- rbind(hawker_lclq, carpark_lclq)
+hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
+hdb_cp_lclq <- rbind(hdb_lclq, carpark_lclq)
+mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 ```
 
 
 ## nearest neighbour = 6
 ```{r}
 nb <- include_self(
-  st_knn(st_geometry(interest_lclq), 6))
+  st_knn(st_geometry(hk_cp_lclq), 6))
 ```
 
 ## Computing kernel weights
 
 ```{r}
 wt <- st_kernel_weights(nb, 
-                        interest_lclq, 
+                        hk_cp_lclq, 
                         "gaussian", 
                         adaptive = TRUE)
 ```
 
 ## Preparing the vector list
 ```{r}
-Carpark <- interest_lclq %>%
+Carpark_hawker <- hk_cp_lclq %>%
   filter(Name == "Carpark")
-A <- interest_lclq$Name
+A_hk <- hk_cp_lclq$Name
 
-Hawker <- interest_lclq %>%
+Carpark_hdb <- hdb_cp_lclq %>%
+  filter(Name == "Carpark")
+A_hdb <- hdb_cp_lclq$Name
+
+Carpark_mall <- mall_cp_lclq %>%
+  filter(Name == "Carpark")
+A_mall <- mall_cp_lclq$Name
+
+# identical(Carpark_hawker, Carpark_hdb)
+
+
+Hawker <- hk_cp_lclq %>%
   filter(Name == "Hawker")
-B <- interest_lclq$Name
+B <- hk_cp_lclq$Name
+
+HDB <- hdb_cp_lclq %>%
+  filter(Name == "HDB")
+C <- hdb_cp_lclq$Name
+
+Mall <- mall_cp_lclq %>%
+  filter(Name == "Shopping Mall")
+D <- mall_cp_lclq$Name
 ```
 
 
 ## Computing LCLQ
 ```{r}
-LCLQ <- local_colocation(A, B, nb, wt, 49)
+LCLQ_AB <- local_colocation(A, B, nb, wt, 49)
+
+# LCLQ_AC <- local_colocation(A, C, nb, wt, 49)
+
+# LCLQ_AD <- local_colocation(A, D, nb, wt, 49)
 ```
+
+## write to rds
+```{r}
+write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
+
+#write_rds(LCLQ_AB, "data/rds/lclq_AC.rds")
+
+#write_rds(LCLQ_AB, "data/rds/lclq_AD.rds")
+```
+
+## read rds
+```{r}
+LCLQ_AB <- read_rds("data/rds/lclq_AB.rds")
+
+#LCLQ_AC <- read_rds("data/rds/lclq_AC.rds")
+#LCLQ_AD <- read_rds("data/rds/lclq_AD.rds")
+```
+
+
 
 ## Joining output table
 ```{r}
-LCLQ_hawker <- cbind(interest_lclq, LCLQ)
+LCLQ_hawker <- cbind(interest_lclq, LCLQ_AB)
 ```
 
 
 ## Plotting LCLQ values
 ```{r}
+
+
 tmap_mode("view")
 tm_shape(sg) +
   tm_polygons() +
 tm_shape(LCLQ_hawker)+ 
   tm_dots(col = "Hawker",
              size = 0.01,
+          
              border.col = "black",
              border.lwd = 0.5) +
+  # tm_symbols(shape = "",
+  #            title.shape = "Type:",
+  #            shapes.labels = c("Cave entrance", "Peak", "Volcano")
+  #            ) +
   tm_view(set.zoom.limits = c(11, 16))
 ```
 
@@ -476,6 +573,47 @@ tm_shape(sg) +
   tm_view(set.zoom.limits = c(11, 16))
 
 ```
+
+```{r}
+
+tmap_mode("view")
+tm_shape(sg) +
+  tm_polygons() +
+tm_shape(LCLQ_hawker)+ 
+  tm_symbols(
+             col = "Hawker",
+             size = "p_sim_Hawker",
+             palette = "Greens"
+             ) +
+  tm_view(set.zoom.limits = c(11, 16))
+```
+
+
+```{r}
+tmaptools::palette_explorer()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
