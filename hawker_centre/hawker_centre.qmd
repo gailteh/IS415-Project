@@ -33,8 +33,6 @@ mpsz_sf <- st_transform(mpsz_sf, 3414)
 st_crs(mpsz_sf)
 ```
 
-
-
 ### Exclude the islands!!
 
 #### for the mpsz data!!
@@ -61,16 +59,11 @@ sg_sf <- sg_sf |>
   filter(!grepl('PULAU', COSTAL_NAM))
 ```
 
-
 ```{r}
 #filter rows that contain the string 'PULAU' in the COSTAL_NAM column
 sg_sf <- sg_sf |> 
   filter(!grepl('JURONG', COSTAL_NAM))
 ```
-
-
-
-
 
 ## Import hawker data
 
@@ -87,9 +80,8 @@ glimpse(hawker_sf)
 length(which(st_is_valid(hawker_sf) == FALSE))
 ```
 
-
-
 ## extract the names of the hawkers
+
 ```{r}
 
 # Assuming your data frame is named 'df' and the column containing the HTML string is named 'html'
@@ -111,17 +103,16 @@ hawker_sf$Name <- sub("^[^[:space:]]+\\s", "", hawker_sf$Name)
 ```
 
 ## remove the description column
+
 ```{r}
 hawker_sf <- hawker_sf[, -2]
 ```
 
+## drop z geometry
 
-## drop z geometry 
 ```{r}
 hawker_sf$geometry <- st_zm(hawker_sf$geometry)
 ```
-
-
 
 ## Spatial wrangling
 
@@ -168,15 +159,10 @@ tm_shape(hawker) +
 ```
 
 ## hawker_ppp_jit
+
 ```{r}
 hawker_ppp_jit <- rjitter(hawker_ppp, retry=TRUE, nsim=1, drop=TRUE)
 ```
-
-
-
-
-
-
 
 ## Owin object
 
@@ -189,12 +175,14 @@ plot(sg_owin)
 ```
 
 ## Hawker & sg_owin
+
 ```{r}
 hawkerSG_ppp = hawker_ppp[sg_owin]
 plot(hawkerSG_ppp)
 ```
 
 ## rds file
+
 ```{r}
 #hawker
 write_rds(hawker_sf, "data/rds/hawker_sf.rds")
@@ -213,12 +201,9 @@ write_rds(mpsz, "data/rds/mpsz.rds")
 write_rds(mpsz_sf, "data/rds/mpsz_sf.rds")
 ```
 
-
 ```{r}
 unique(mpsz_sf$PLN_AREA_N)
 ```
-
-
 
 # Study area
 
@@ -253,6 +238,7 @@ plot(central, main = "Central Region")
 From here, repeat steps using study areas, from convert from sf to sp, create owin objects for EACH study areas.
 
 ## Converting the spatial point data frame into generic sp format
+
 ```{r}
 #| eval: false
 pg_sp = as(pg, "SpatialPolygons")
@@ -267,8 +253,8 @@ central_sp = as(central, "SpatialPolygons")
 pg_sp
 ```
 
-
 ## Creating owin object
+
 ```{r}
 #| eval: false
 pg_owin = as(pg_sp, "owin")
@@ -279,8 +265,8 @@ jw_owin = as(jw_sp, "owin")
 central_owin = as(central_sp, "owin")
 ```
 
-
 ## Combining childcare points and the study area
+
 By using the code chunk below, we are able to extract childcare that is within the specific region to do our analysis later on.
 
 ```{r}
@@ -292,8 +278,6 @@ hawker_jw_ppp = hawker_ppp_jit[jw_owin]
 
 hawker_central_ppp = hawker_ppp_jit[central_owin]
 ```
-
-
 
 ### Then, Combining childcare points and the study area
 
@@ -332,8 +316,6 @@ Plot w the points
 plot(hawker_central_ppp.km, main="Central")
 ```
 
-
-
 ```{r}
 # mpsz <- read_rds("data/rds/mpsz.rds")
 # sg <- read_rds("data/rds/sg.rds")
@@ -345,8 +327,8 @@ plot(hawker_central_ppp.km, main="Central")
 # mpsz_hawker <- left_join(mpsz, carpark)
 ```
 
-
 # tmap plot
+
 ```{r}
 tm_shape(mpsz)+
   tm_fill("DEPENDENCY", 
@@ -366,8 +348,6 @@ tm_shape(mpsz)+
   tm_borders(alpha = 0.5)
 ```
 
-
-
 ```{r}
 tmap_mode("view")
 tm_basemap("OpenStreetMap") +
@@ -384,7 +364,6 @@ tm_shape(hawker)+
 
 ```
 
-
 ```{r}
 tmap_mode("view")
 
@@ -394,9 +373,6 @@ tm_shape(central_owin) +
   tm_view(set.zoom.limits = c(11, 16))
 
 ```
-
-
-
 
 # LCLQ
 
@@ -408,8 +384,8 @@ sg <- read_rds("data/rds/sg.rds")
 mall_sf <- read_rds("data/rds/mall_sf.rds")
 ```
 
+## combine data into 1 df
 
-## combine data into 1 df 
 ```{r}
 hawker_lclq <- hawker_sf |>
   mutate(Name = "Hawker")
@@ -439,8 +415,8 @@ hdb_cp_lclq <- rbind(hdb_lclq, carpark_lclq)
 mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 ```
 
-
 ## nearest neighbour = 6
+
 ```{r}
 nb <- include_self(
   st_knn(st_geometry(hk_cp_lclq), 6))
@@ -456,6 +432,7 @@ wt <- st_kernel_weights(nb,
 ```
 
 ## Preparing the vector list
+
 ```{r}
 Carpark_hawker <- hk_cp_lclq %>%
   filter(Name == "Carpark")
@@ -485,8 +462,8 @@ Mall <- mall_cp_lclq %>%
 D <- mall_cp_lclq$Name
 ```
 
-
 ## Computing LCLQ
+
 ```{r}
 LCLQ_AB <- local_colocation(A, B, nb, wt, 49)
 
@@ -496,6 +473,7 @@ LCLQ_AB <- local_colocation(A, B, nb, wt, 49)
 ```
 
 ## write to rds
+
 ```{r}
 write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
 
@@ -505,6 +483,7 @@ write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
 ```
 
 ## read rds
+
 ```{r}
 LCLQ_AB <- read_rds("data/rds/lclq_AB.rds")
 
@@ -512,15 +491,14 @@ LCLQ_AB <- read_rds("data/rds/lclq_AB.rds")
 #LCLQ_AD <- read_rds("data/rds/lclq_AD.rds")
 ```
 
-
-
 ## Joining output table
+
 ```{r}
 LCLQ_hawker <- cbind(interest_lclq, LCLQ_AB)
 ```
 
-
 ## Plotting LCLQ values
+
 ```{r}
 
 
@@ -541,6 +519,7 @@ tm_shape(LCLQ_hawker)+
 ```
 
 ## Plot LCLQ value with bubbles
+
 ```{r}
 tmap_mode("view")
 
@@ -554,11 +533,6 @@ tm_shape(sg) +
   tm_view(set.zoom.limits = c(11, 16))
 
 ```
-
-
-
-
-
 
 ```{r}
 tmap_mode("view")
@@ -588,34 +562,6 @@ tm_shape(LCLQ_hawker)+
   tm_view(set.zoom.limits = c(11, 16))
 ```
 
-
 ```{r}
 tmaptools::palette_explorer()
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

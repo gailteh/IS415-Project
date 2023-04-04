@@ -159,7 +159,7 @@ kde_carpark.bw <- density(carpark_ppp,
 ```
 
 ```{r}
-plot(kde_carpark_bw, sigma=0.6)
+plot(kde_carpark.bw, sigma=0.6)
 ```
 
 ##### Retrieve bandwidth 

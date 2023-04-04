@@ -213,9 +213,28 @@ ui <- fluidPage(
                         tabsetPanel(
                           tabPanel("KDE",
                                    sidebarLayout(
-                                     sidebarPanel("sliders and dropdown lists go here"),
-                                     mainPanel("Map and interpretations go here")
-                                   )),
+                                     sidebarPanel(
+                                       # select mapping variable
+                                       selectInput(inputId = "kde_var",
+                                                   label = "Select a Kernel Method:",
+                                                   choices = list("Gaussian" = "gaussian",
+                                                                  "Epanechnikov" = "Epanechnikovl",
+                                                                  "Quartic" = "quartic",
+                                                                  "Disc" = "disc"),
+                                                   selected = "Gaussian")
+                                      ),
+                                     sliderInput(inputId = "kde_bandwidth",
+                                                 label = "Bandwidth",
+                                                 min = 0.1,
+                                                 max = 1,
+                                                 value= 0.6)
+                                    
+                                   ),
+                                   
+                                   actionButton("KDE_run", "Run Kernel Density Estimation"),
+                                   
+                                   h4("How to interpret the map?"),
+                                   ),
                           tabPanel("G Function Analysis",
                                    sidebarLayout(
                                      sidebarPanel(
