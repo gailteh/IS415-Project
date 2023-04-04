@@ -24,33 +24,33 @@ library(stringr)
 # Geospatial Data Import and Wrangling
 
 # sg (Coastal outline)
-sg_owin <- read_rds("data/rds/sg_owin.rds")
-sg <- read_rds("data/rds/sg.rds")
-sg_sf <- read_rds("data/rds/sg_sf.rds")
-sg_sp <- read_rds("data/rds/sg_sp.rds")
+sg_owin <- read_rds("rds/sg_owin.rds")
+sg <- read_rds("rds/sg.rds")
+sg_sf <- read_rds("rds/sg_sf.rds")
+sg_sp <- read_rds("rds/sg_sp.rds")
 
 # mpsz
-mpsz <- read_rds("data/rds/mpsz.rds")
-mpsz_sf <- read_rds("data/rds/mpsz_sf.rds")
+mpsz <- read_rds("rds/mpsz.rds")
+mpsz_sf <- read_rds("rds/mpsz_sf.rds")
 
 
 # Aspatial Data Import and Wrangling
 
 # HDB flats
-carpark_sf <- read_rds("data/rds/carpark_sf.rds")
+carpark_sf <- read_rds("rds/carpark_sf.rds")
 
 
 # hawker
-hawker_sf <- read_rds("data/rds/hawker_sf.rds")
+hawker_sf <- read_rds("rds/hawker_sf.rds")
 # hawker_sp <- write_rds(hawker_sp, "data/rds/hawker_sp.rds")
 # hawker_ppp <- read_rds("data/rds/hawker_ppp.rds")
 # hawker <- read_rds("data/rds/hawker.rds")
 
 # HDB flats
-hdb_sf <- read_rds("data/rds/hdb_sf.rds")
+hdb_sf <- read_rds("rds/hdb_sf.rds")
 
 # Shopping mall
-mall_sf <- read_rds("data/rds/mall_sf.rds")
+mall_sf <- read_rds("rds/mall_sf.rds")
 
 
 #### LCLQ preparation & wrangling ####
