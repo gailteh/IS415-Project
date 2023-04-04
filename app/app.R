@@ -38,7 +38,8 @@ mpsz_sf <- read_rds("rds/mpsz_sf.rds")
 
 # HDB flats
 carpark_sf <- read_rds("rds/carpark_sf.rds")
-carpark_ppp_km <- read_rds("rds/carpark_ppp.km.rds")
+carpark_ppp <- read_rds("rds/carpark_ppp.rds")
+carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
 
 # hawker
 hawker_sf <- read_rds("rds/hawker_sf.rds")
