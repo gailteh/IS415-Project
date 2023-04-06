@@ -88,7 +88,17 @@ ui <- fluidPage(
                         sidebarPanel(
                           "A group project by: Celine, Gail, Kathy for IS415 Geospatial Analytics and Applications"
                         ),
-                        mainPanel()
+                        mainPanel(
+                          h2("Project Motivation"),
+                          ("Singapore is a densely populated city-state facing the challenge of providing adequate and efficient car park facilities to its residents and visitors. The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity."),
+                          ("Many people do not have enough knowledge on the underlying reasons for the spatial distribution of carpark facilities as they are not aware of Point Pattern Analysis techniques."),
+                          h2("Project Objectives"),
+                          ("We aim to create an application that enables users to:"),
+                          tags$ul(
+                            tags$li("Explore the capabilities and use cases of Point Pattern Analysis in the case of Car parks in Singapore"),
+                            tags$li("Conduct Spatial Point Pattern Analysis to derive insights on the distributions of carparks.")
+                          )
+                        )
                       )),
              
              tabPanel("Mapping & Colocation",
