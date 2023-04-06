@@ -88,9 +88,7 @@ ui <- fluidPage(
                         sidebarPanel(
                           "A group project by: Celine, Gail, Kathy for IS415 Geospatial Analytics and Applications"
                         ),
-                        mainPanel(
-                          "About our project..."
-                        )
+                        mainPanel()
                       )),
              
              tabPanel("Mapping & Colocation",
@@ -251,10 +249,15 @@ ui <- fluidPage(
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
+                                       em("Please wait a short while for the default graph to load."),
                                        plotOutput("g_function_plot"),
                                        hr(),
                                        h3("What is G-Function?"),
-                                       h3("How to analyse this output?")
+                                       h6("The G-function measures the degree of clustering or dispersion of points relative to a random distribution, by calculating the expected number of points within a given distance of any point in the dataset. The G-function is a cumulative function and is calculated by adding up the number of points at increasing distances from each individual point."),
+                                       h3("How to analyse this output?"),
+                                       h6(strong("If the G-function lies above the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a clustered distribution."),
+                                       h6(strong("If the G-function lies below the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a dispersed distribution."),
+                                       h6(strong("If the G-function lies within the envelope,"), "the null hypothesis cannot be rejected, we can conclude that the value is not statistically significant and that the points have a random distribution.")
                                      )
                                    )),
                           tabPanel("L Function Analysis",
@@ -271,10 +274,16 @@ ui <- fluidPage(
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
+                                       em("Please wait a short while for the default graph to load."),
                                        plotOutput("l_function_plot"),
                                        hr(),
                                        h3("What is L-Function?"),
-                                       h3("How to analyse this output?")
+                                       h6("L-function measures the degree of clustering or dispersion of points by comparing the observed density of points to the expected density under complete spatial randomness."),
+                                       h3("How to analyse this output?"),
+                                       h6(strong("If the L-function lies above the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a clustered distribution."),
+                                       h6(strong("If the L-function lies below the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a dispersed distribution."),
+                                       h6(strong("If the L-function lies within the envelope,"), "the null hypothesis cannot be rejected, we can conclude that the value is not statistically significant and that the points have a random distribution.")
+                                       
                                      )
                                    ))
                         )
