@@ -39,8 +39,7 @@ mpsz_sf <- read_rds("rds/mpsz_sf.rds")
 
 # HDB flats
 carpark_sf <- read_rds("rds/carpark_sf.rds")
-carpark_ppp <- read_rds("rds/carpark_ppp.rds")
-carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
+carpark_ppp_km <- read_rds("rds/carparkSG_ppp.km.rds")
 
 # hawker
 hawker_sf <- read_rds("rds/hawker_sf.rds")
@@ -226,38 +225,61 @@ ui <- fluidPage(
                           tabPanel("KDE",
                                    sidebarLayout(
                                      sidebarPanel(
-                                       # select mapping variable
-                                       selectInput(inputId = "kde_var",
+                                       # select kernel method
+                                       selectInput(inputId = "kernel_var",
                                                    label = "Select a Kernel Method",
                                                    choices = list("Gaussian" = "gaussian",
-                                                                  "Epanechnikov" = "Epanechnikovl",
+                                                                  "Epanechnikov" = "epanechnikov",
                                                                   "Quartic" = "quartic",
                                                                   "Disc" = "disc"),
-                                                   selected = "Gaussian"),
-                                     
-                                      # select bandwidth
-                                      sliderInput(inputId = "kde_bandwidth",
-                                                  label = "Bandwidth",
-                                                  min = 0.1,
-                                                  max = 1,
-                                                  value= 0.6),
+                                                   selected = "gaussian"),
+                                       
+                                       # select bandwidth method
+                                       radioButtons(inputId = "bandwidth_method",
+                                                    label = "Select the bandwidth method to be used:",
+                                                    choices = c("Auto" = "auto",
+                                                                "Fixed" = "fixed", 
+                                                                "Adaptive" = "adaptive"),
+                                                    selected = "auto"),
+                                       
+                                       # if automatic 
+                                       conditionalPanel(
+                                         condition = "input.bandwidth_method == 'auto'",
+                                         selectInput(inputId = "bw_auto",
+                                                     label = "Select a Bandwidth Method",
+                                                     choices = list("bw.CvL" = "bw.CvL",
+                                                                    "bw.scott" = "bw.scott",
+                                                                    "bw.diggle" = "bw.diggle",
+                                                                    "bw.ppl" = "bw.ppl"),
+                                                     selected = "bw.diggle")
+                                       ),
+                                       
+                                       # if fixed
+                                       conditionalPanel(
+                                         condition = "input.bandwidth_method == 'fixed'",
+                                         sliderInput(inputId = "bw_fix_var",
+                                                     label = "Select the fixed bandwidth to be used: (in km)",
+                                                     min = 0,
+                                                     max = 5,
+                                                     step = 0.1,
+                                                     value = 0.6)
+                                       ),
                                        
                                        actionButton(inputId = "kde_run",
                                                     label = "Run Kernel Density Estimation")
-                                    )
                                      ),
- 
-
-                                   
-                           mainPanel(
-                             withSpinner(tmapOutput("kde_plot",
-                                                    width = "100%", 
-                                                    height = 550)
-                             ),
-                                   h4("How to interpret the map?"),
-                           )
+                                     
+                                     mainPanel(
+                                       em("Please wait a short while for the default map to load."),
+                                       tmapOutput("kde_map"),
+                                       hr(),
+                                       h3("What is Kernel Density Estimation?"),
+                                       h6("Kernel Density Estimation (KDE) is a statistical method used to estimate and visualise the intensity of points in a selected geographic area."),
+                                       h6("The KDE technique involves placing a kernel, which is a small smooth function, at each observation point in the spatial domain. The kernel function then spreads out from the observation point, and the total contribution of all the kernels gives an estimate of the underlying probability density at any point in the continuous space."),
+                                       h3("How to interpret the map?"),
+                                       h6("The letter v in the legend represents the quantity of objects located in the kernel window positioned at the center of each grid. In essence, if the color of the area is darker (the larger the value of v), it indicates a greater concentration of points in that particular region and vice versa.")
+                                     )
                                    )),
-              
                           
                           tabPanel("G Function Analysis",
                                    sidebarLayout(
@@ -488,6 +510,63 @@ server <- function(input, output) {
       tm_view(set.zoom.limits = c(11, 16))
     
     
+  })
+  
+  ### KDE Plot ###
+  
+  output$kde_map <- renderTmap({
+    
+    input$kde_run
+    
+    kde <- reactive({
+      if (input$bandwidth_method == 'auto'){
+        if (input$bw_auto == 'bw.diggle'){
+          the_bw <- bw.diggle(carpark_ppp_km)
+        }
+        else if (input$bw_auto == 'bw.CvL'){
+          the_bw <- bw.CvL(carpark_ppp_km)
+        }
+        else if (input$bw_auto == 'bw.scott'){
+          the_bw <- bw.scott(carpark_ppp_km)
+        }
+        else if (input$bw_auto == 'bw.ppl'){
+          the_bw <- bw.ppl(carpark_ppp_km)
+        }
+        kde <- isolate(density(carpark_ppp_km,
+                               sigma=as.numeric(the_bw),
+                               edge=TRUE,
+                               kernel=input$kernel_var))
+        
+      }
+      else if (input$bandwidth_method == 'fixed'){
+        kde <- isolate(density(carpark_ppp_km,
+                               sigma=input$bw_fix_var,
+                               edge=TRUE,
+                               kernel=input$kernel_var))
+      }
+      else if (input$bandwidth_method == 'adaptive'){
+        kde <- isolate(adaptive.density(carpark_ppp_km, 
+                                        method="kernel"))
+      }
+      return (kde)
+    })
+    
+    gridded_kde <- isolate(as.SpatialGridDataFrame.im(kde()))
+    kde_raster <- isolate(raster(gridded_kde))
+    projection(kde_raster) <- CRS("+init=EPSG:3414 +datum=WGS84 +units=km")
+    
+    tmap_mode("view")
+    
+    SPPA_KDE <- isolate(tm_shape(sg_sf) +
+                          tm_borders(col = 'black',
+                                     lwd = 1,
+                                     alpha = 0.5) +
+                          tm_shape(kde_raster) + 
+                          tm_raster("v", alpha = 0.7) +
+                          tm_layout(legend.outside = TRUE, frame = FALSE, title = "KDE") +
+                          tmap_options(basemaps = c("Esri.WorldGrayCanvas","OpenStreetMap", "Stamen.TonerLite"),
+                                       basemaps.alpha = c(0.8, 0.8, 0.8)) +
+                          tm_view(set.zoom.limits = c(11,14))) 
   })
   
   ### G Function Plot ###

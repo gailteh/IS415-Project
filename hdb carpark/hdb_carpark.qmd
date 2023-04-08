@@ -146,7 +146,9 @@ sg_owin <- as(sg_sp, "owin")
 ```{r}
 plot(sg_owin)
 ```
+
 ## Extract childcare events that are located within Singapore
+
 ```{r}
 carparkSG_ppp = carpark_ppp[sg_owin]
 ```
@@ -156,6 +158,8 @@ carparkSG_ppp = carpark_ppp[sg_owin]
 ```{r}
 plot(carparkSG_ppp)
 ```
+
+write to rds:
 
 ### First-order Spatial Point Patterns Analysis
 
@@ -184,7 +188,7 @@ bw
 ```{r}
 carparkSG_ppp.km <- rescale(carparkSG_ppp, 1000, "km")
 
-write_rds(carpark, "data/rds/carpark_ppp.km.rds")
+write_rds(carparkSG_ppp.km, "data/rds/carparkSG_ppp.km.rds")
 ```
 
 #### Working with different automatic bandwidth methods

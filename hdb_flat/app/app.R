@@ -12,20 +12,80 @@
 # Libraries
 library(shiny)
 library(bslib)
-library(maptools)
-library(sf)
-library(raster)
-library(spatstat)
-library(tmap)
-library(dplyr)
+library(shinycssloaders)
+
+library(leaflet)
 library(tidyverse)
+library(tools)
+library(shinythemes)
+library(shinyjs)
+library(tmap)
+library(readr)
+library(sp)
+library(sf)
+library(rgdal)
+library(spNetwork)
+library(spatstat)
+library(raster)
+library(maptools)
+library(dplyr)
+library(stringr)
+library(sfdep)
 
 # Geospatial Data Import and Wrangling
 
-carpark_ppp <- read_rds("data/carpark_ppp.rds")
-carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
+# sg (Coastal outline)
+sg_owin <- read_rds("rds/sg_owin.rds")
+sg <- read_rds("rds/sg.rds")
+sg_sf <- read_rds("rds/sg_sf.rds")
+sg_sp <- read_rds("rds/sg_sp.rds")
+
+# mpsz
+mpsz <- read_rds("rds/mpsz.rds")
+mpsz_sf <- read_rds("rds/mpsz_sf.rds")
+
 
 # Aspatial Data Import and Wrangling
+
+# HDB flats
+carpark_sf <- read_rds("rds/carpark_sf.rds")
+carpark_ppp <- read_rds("rds/carpark_ppp.rds")
+carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
+
+# hawker
+hawker_sf <- read_rds("rds/hawker_sf.rds")
+# hawker_sp <- write_rds(hawker_sp, "data/rds/hawker_sp.rds")
+# hawker_ppp <- read_rds("data/rds/hawker_ppp.rds")
+# hawker <- read_rds("data/rds/hawker.rds")
+
+# HDB flats
+hdb_sf <- read_rds("rds/hdb_sf.rds")
+
+# Shopping mall
+mall_sf <- read_rds("rds/mall_sf.rds")
+
+
+#### LCLQ preparation & wrangling ####
+hawker_lclq <- hawker_sf |>
+  mutate(Name = "Hawker")
+
+carpark_lclq <- carpark_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "Carpark") |>
+  rename("Name" = "address")
+
+hdb_lclq <- hdb_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "HDB") |>
+  rename("Name" = "address")
+
+mall_lclq <- mall_sf |>
+  rename("Name" = "Mall Name")
+
+## Combine LCLQ together
+hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
+hdb_cp_lclq <- rbind(hdb_lclq, carpark_lclq)
+mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 
 
 # Define UI for application that draws a histogram
@@ -51,8 +111,54 @@ ui <- fluidPage(
                                    )),
                           tabPanel("KDE",
                                    sidebarLayout(
-                                     sidebarPanel("sliders and dropdown lists go here"),
-                                     mainPanel("Map and interpretations go here")
+                                     sidebarPanel(
+                                       # select kernel method
+                                       selectInput(inputId = "kernel_var",
+                                                   label = "Select a Kernel Method",
+                                                   choices = list("Gaussian" = "gaussian",
+                                                                  "Epanechnikov" = "epanechnikov",
+                                                                  "Quartic" = "quartic",
+                                                                  "Disc" = "disc"),
+                                                   selected = "gaussian"),
+                                       
+                                       # select bandwidth method
+                                       radioButtons(inputId = "bandwidth_method",
+                                                    label = "Select the bandwidth method to be used:",
+                                                    choices = c("Auto" = "auto",
+                                                                "Fixed" = "fixed", 
+                                                                "Adaptive" = "adaptive"),
+                                                    selected = "auto"),
+                                       
+                                       # if automatic 
+                                       conditionalPanel(
+                                         condition = "input.bandwidth_method == 'auto'",
+                                         selectInput(inputId = "bw_auto",
+                                                     label = "Select a Bandwidth Method",
+                                                     choices = list("bw.CvL" = "bw.CvL",
+                                                                    "bw.scott" = "bw.scott",
+                                                                    "bw.diggle" = "bw.diggle",
+                                                                    "bw.ppl" = "bw.ppl"),
+                                                     selected = "bw.diggle")
+                                       ),
+                                       
+                                       # if fixed
+                                       conditionalPanel(
+                                         condition = "input.bandwidth_method == 'fixed'",
+                                         sliderInput(inputId = "bw_fix_var",
+                                                     label = "Select the fixed bandwidth to be used: (in km)",
+                                                     min = 0,
+                                                     max = 5,
+                                                     step = 0.1,
+                                                     value = 0.6)
+                                       ),
+                                       
+                                       actionButton(inputId = "kde_run",
+                                                    label = "Run Kernel Density Estimation")
+                                     ),
+                                     
+                                     mainPanel(
+                                       tmapOutput("kde_map")
+                                     )
                                    )),
                           tabPanel("G Function Analysis",
                                    sidebarLayout(
@@ -126,6 +232,62 @@ server <- function(input, output) {
     plot(l_func.csr, . - r ~ r, xlab="d", ylab="L(d)-r")
   })
   
+  # KDE Plot
+  
+  output$kde_map <- renderTmap({
+    
+    input$kde_run
+    
+    kde <- reactive({
+      if (input$bandwidth_method == 'auto'){
+        if (input$bw_auto == 'bw.diggle'){
+          the_bw <- bw.diggle(carpark_ppp_km)
+        }
+        else if (input$bw_auto == 'bw.CvL'){
+          the_bw <- bw.CvL(carpark_ppp_km)
+        }
+        else if (input$bw_auto == 'bw.scott'){
+          the_bw <- bw.scott(carpark_ppp_km)
+        }
+        else if (input$bw_auto == 'bw.ppl'){
+          the_bw <- bw.ppl(carpark_ppp_km)
+        }
+        kde <- isolate(density(carpark_ppp_km,
+                               sigma=as.numeric(the_bw),
+                               edge=TRUE,
+                               kernel=input$kernel_var))
+        
+      }
+      else if (input$bandwidth_method == 'fixed'){
+        kde <- isolate(density(carpark_ppp_km,
+                               sigma=input$bw_fix_var,
+                               edge=TRUE,
+                               kernel=input$kernel_var))
+      }
+      else if (input$bandwidth_method == 'adaptive'){
+        kde <- isolate(adaptive.density(carpark_ppp_km, 
+                                        method="kernel"))
+      }
+      return (kde)
+    })
+    
+    gridded_kde <- isolate(as.SpatialGridDataFrame.im(kde()))
+    kde_raster <- isolate(raster(gridded_kde))
+    projection(kde_raster) <- CRS("+init=EPSG:3414 +datum=WGS84 +units=km")
+    
+    tmap_mode("view")
+    
+    SPPA_KDE <- isolate(tm_shape(sg_sf) +
+                          tm_borders(col = 'black',
+                                     lwd = 1,
+                                     alpha = 0.5) +
+                          tm_shape(kde_raster) + 
+                          tm_raster("v", alpha = 0.7) +
+                          tm_layout(legend.outside = TRUE, frame = FALSE, title = "KDE") +
+                          tmap_options(basemaps = c("Esri.WorldGrayCanvas","OpenStreetMap", "Stamen.TonerLite"),
+                                       basemaps.alpha = c(0.8, 0.8, 0.8)) +
+                          tm_view(set.zoom.limits = c(11,13))) 
+  })
 
     
 }
