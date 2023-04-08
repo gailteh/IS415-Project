@@ -146,13 +146,23 @@ sg_owin <- as(sg_sp, "owin")
 ```{r}
 plot(sg_owin)
 ```
+## Extract childcare events that are located within Singapore
+```{r}
+carparkSG_ppp = carpark_ppp[sg_owin]
+```
+
+## Plot newly derived carpark_ppp
+
+```{r}
+plot(carparkSG_ppp)
+```
 
 ### First-order Spatial Point Patterns Analysis
 
 #### Kernel Density Estimation (KDE)
 
 ```{r}
-kde_carpark.bw <- density(carpark_ppp,
+kde_carpark.bw <- density(carparkSG_ppp,
                               sigma=bw.diggle,
                               edge=TRUE,
                             kernel="gaussian") 
@@ -165,14 +175,14 @@ plot(kde_carpark.bw, sigma=0.6)
 ##### Retrieve bandwidth
 
 ```{r}
-bw <- bw.diggle(carpark_ppp)
+bw <- bw.diggle(carparkSG_ppp)
 bw
 ```
 
 #### Rescaling KDE values
 
 ```{r}
-carpark_ppp.km <- rescale(carpark_ppp, 1000, "km")
+carparkSG_ppp.km <- rescale(carparkSG_ppp, 1000, "km")
 
 write_rds(carpark, "data/rds/carpark_ppp.km.rds")
 ```
@@ -180,23 +190,23 @@ write_rds(carpark, "data/rds/carpark_ppp.km.rds")
 #### Working with different automatic bandwidth methods
 
 ```{r}
- bw.CvL(carpark_ppp.km)
+ bw.CvL(carparkSG_ppp.km)
 ```
 
 ```{r}
-bw.scott(carpark_ppp.km)
+bw.scott(carparkSG_ppp.km)
 ```
 
 ```{r}
-bw.ppl(carpark_ppp.km)
+bw.ppl(carparkSG_ppp.km)
 ```
 
 ```{r}
-bw.diggle(carpark_ppp.km)
+bw.diggle(carparkSG_ppp.km)
 ```
 
 ```{r}
-kde_carpark.ppl <- density(carpark_ppp.km, 
+kde_carpark.ppl <- density(carparkSG_ppp.km, 
                                sigma=bw.ppl, 
                                edge=TRUE,
                                kernel="gaussian")
@@ -210,22 +220,22 @@ plot(kde_carpark.ppl, main = "bw.ppl")
 
 ```{r}
 par(mfrow=c(2,2))
-plot(density(carpark_ppp.km, 
+plot(density(carparkSG_ppp.km, 
              sigma=bw.ppl, 
              edge=TRUE, 
              kernel="gaussian"), 
      main="Gaussian")
-plot(density(carpark_ppp.km, 
+plot(density(carparkSG_ppp.km, 
              sigma=bw.ppl, 
              edge=TRUE, 
              kernel="epanechnikov"), 
      main="Epanechnikov")
-plot(density(carpark_ppp.km, 
+plot(density(carparkSG_ppp.km, 
              sigma=bw.ppl, 
              edge=TRUE, 
              kernel="quartic"), 
      main="Quartic")
-plot(density(carpark_ppp.km, 
+plot(density(carparkSG_ppp.km, 
              sigma=bw.ppl, 
              edge=TRUE, 
              kernel="disc"), 
@@ -237,14 +247,14 @@ plot(density(carpark_ppp.km,
 ##### Computing KDE by fixed bandwidth
 
 ```{r}
-kde_carpark_600 <- density(carpark_ppp.km, sigma=0.6, edge=TRUE, kernel="gaussian")
+kde_carpark_600 <- density(carparkSG_ppp.km, sigma=0.6, edge=TRUE, kernel="gaussian")
 plot(kde_carpark_600)
 ```
 
 ##### Computing KDE by adaptive bandwidth
 
 ```{r}
-kde_carpark_adaptive <- adaptive.density(carpark_ppp.km, method="kernel")
+kde_carpark_adaptive <- adaptive.density(carparkSG_ppp.km, method="kernel")
 plot(kde_carpark_adaptive)
 ```
 
