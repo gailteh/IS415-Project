@@ -20,6 +20,7 @@ library(raster)
 library(maptools)
 library(dplyr)
 library(stringr)
+library(sfdep)
 
 # Geospatial Data Import and Wrangling
 
@@ -69,7 +70,8 @@ hdb_lclq <- hdb_sf |>
   rename("Name" = "address")
 
 mall_lclq <- mall_sf |>
-  rename("Name" = "Mall Name")
+  rename("Name" = "Mall Name") |>
+  mutate( Name = "Mall")
 
 ## Combine LCLQ together
 hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
@@ -89,7 +91,15 @@ ui <- fluidPage(
                           "A group project by: Celine, Gail, Kathy for IS415 Geospatial Analytics and Applications"
                         ),
                         mainPanel(
-                          "About our project..."
+                          h2("Project Motivation"),
+                          ("Singapore is a densely populated city-state facing the challenge of providing adequate and efficient car park facilities to its residents and visitors. The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity."),
+                          ("Many people do not have enough knowledge on the underlying reasons for the spatial distribution of carpark facilities as they are not aware of Point Pattern Analysis techniques."),
+                          h2("Project Objectives"),
+                          ("We aim to create an application that enables users to:"),
+                          tags$ul(
+                            tags$li("Explore the capabilities and use cases of Point Pattern Analysis in the case of Car parks in Singapore"),
+                            tags$li("Conduct Spatial Point Pattern Analysis to derive insights on the distributions of carparks.")
+                          )
                         )
                       )),
              
@@ -110,7 +120,7 @@ ui <- fluidPage(
                                                  label = "Select a Mapping variable:",
                                                  choices = list("Carpark" = "Carpark",
                                                                 "Hawker" = "Hawker",
-                                                                "Shopping Mall" = "Shopping Mall",
+                                                                "Mall" = "Mall",
                                                                 "HDB" = "HDB"),
                                                  selected = "Carpark"),
                                      
@@ -167,7 +177,7 @@ ui <- fluidPage(
                                      selectInput(inputId = "lclq_var",
                                                  label = "Select a Mapping variable:",
                                                  choices = list("Hawker" = "Hawker",
-                                                                "Shopping Mall" = "Shopping Mall",
+                                                                "Mall" = "Mall",
                                                                 "HDB" = "HDB"),
                                                  selected = "Hawker"),
                                      
@@ -263,10 +273,15 @@ ui <- fluidPage(
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
+                                       em("Please wait a short while for the default graph to load."),
                                        plotOutput("g_function_plot"),
                                        hr(),
                                        h3("What is G-Function?"),
-                                       h3("How to analyse this output?")
+                                       h6("The G-function measures the degree of clustering or dispersion of points relative to a random distribution, by calculating the expected number of points within a given distance of any point in the dataset. The G-function is a cumulative function and is calculated by adding up the number of points at increasing distances from each individual point."),
+                                       h3("How to analyse this output?"),
+                                       h6(strong("If the G-function lies above the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a clustered distribution."),
+                                       h6(strong("If the G-function lies below the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a dispersed distribution."),
+                                       h6(strong("If the G-function lies within the envelope,"), "the null hypothesis cannot be rejected, we can conclude that the value is not statistically significant and that the points have a random distribution.")
                                      )
                                    )),
                           tabPanel("L Function Analysis",
@@ -283,10 +298,16 @@ ui <- fluidPage(
                                                     label = "Run Analysis")
                                      ),
                                      mainPanel(
+                                       em("Please wait a short while for the default graph to load."),
                                        plotOutput("l_function_plot"),
                                        hr(),
                                        h3("What is L-Function?"),
-                                       h3("How to analyse this output?")
+                                       h6("L-function measures the degree of clustering or dispersion of points by comparing the observed density of points to the expected density under complete spatial randomness."),
+                                       h3("How to analyse this output?"),
+                                       h6(strong("If the L-function lies above the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a clustered distribution."),
+                                       h6(strong("If the L-function lies below the envelope,"), "the null hypothesis is rejected, we can conclude that the value is statistically significant and that the points have a dispersed distribution."),
+                                       h6(strong("If the L-function lies within the envelope,"), "the null hypothesis cannot be rejected, we can conclude that the value is not statistically significant and that the points have a random distribution.")
+                                       
                                      )
                                    ))
                         )
@@ -311,7 +332,7 @@ server <- function(input, output) {
     } else if (input$variable == "Carpark") {
       carpark_sf
     } 
-    else if (input$variable == "Shopping Mall") {
+    else if (input$variable == "Mall") {
       mall_sf
     }
   })
@@ -319,8 +340,8 @@ server <- function(input, output) {
   ## Mapping ##
   output$mapPlot <- renderTmap({
     
-    tmap_mode("view") +
-      tm_basemap("OpenStreetMap") +
+    tmap_mode("view") 
+      tm_basemap("OpenStreetMap")+
       tm_shape(sg) +
       tm_polygons() +
       tm_shape(map_var()) +
@@ -352,7 +373,7 @@ server <- function(input, output) {
           filter(Name == "Carpark")
         A <- hdb_cp_lclq$Name
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var == "Mall") {
         
         Carpark <- mall_cp_lclq %>%
           filter(Name == "Carpark")
@@ -374,10 +395,10 @@ server <- function(input, output) {
           filter(Name == "HDB")
         B <- hdb_cp_lclq$Name
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var == "Mall") {
         
         Mall <- mall_cp_lclq %>%
-          filter(Name == "Shopping Mall")
+          filter(Name == "Mall")
         B <- mall_cp_lclq$Name
       }
     })
@@ -395,7 +416,7 @@ server <- function(input, output) {
         include_self(
           st_knn(st_geometry(hdb_cp_lclq), input$nb_lclq))
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var ==  "Mall") {
         
         include_self(
           st_knn(st_geometry(mall_cp_lclq), input$nb_lclq))
@@ -415,7 +436,7 @@ server <- function(input, output) {
         
         st_kernel_weights(nb(), hdb_cp_lclq, "gaussian", adaptive = TRUE)
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var == "Mall") {
         
         st_kernel_weights(nb(), mall_cp_lclq, "gaussian", adaptive = TRUE)
         
@@ -446,7 +467,7 @@ server <- function(input, output) {
           LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
           cbind(hdb_cp_lclq, LCLQ)
           
-        } else if (input$lclq_var == "Shopping Mall") {
+        } else if (input$lclq_var == "Mall") {
           
           LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
           cbind(mall_cp_lclq, LCLQ)
@@ -456,16 +477,16 @@ server <- function(input, output) {
     })
     
     # Create the tmap plot
-    tmap_mode("view") +
-      tm_basemap("OpenStreetMap") +
+    tmap_mode("plot") +
       tm_shape(sg) +
       tm_polygons() +
       tm_shape(LCLQ_output()) +
       tm_dots(col = input$lclq_var,
-              size = 0.01,
+              size = 0.08,
               border.col = "black",
               border.lwd = 0.5) +
       tm_view(set.zoom.limits = c(11, 16))
+    
     
   })
   
