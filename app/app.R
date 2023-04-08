@@ -69,7 +69,8 @@ hdb_lclq <- hdb_sf |>
   rename("Name" = "address")
 
 mall_lclq <- mall_sf |>
-  rename("Name" = "Mall Name")
+  rename("Name" = "Mall Name") |>
+  mutate( Name = "Mall")
 
 ## Combine LCLQ together
 hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
@@ -118,7 +119,7 @@ ui <- fluidPage(
                                                  label = "Select a Mapping variable:",
                                                  choices = list("Carpark" = "Carpark",
                                                                 "Hawker" = "Hawker",
-                                                                "Shopping Mall" = "Shopping Mall",
+                                                                "Mall" = "Mall",
                                                                 "HDB" = "HDB"),
                                                  selected = "Carpark"),
                                      
@@ -175,7 +176,7 @@ ui <- fluidPage(
                                      selectInput(inputId = "lclq_var",
                                                  label = "Select a Mapping variable:",
                                                  choices = list("Hawker" = "Hawker",
-                                                                "Shopping Mall" = "Shopping Mall",
+                                                                "Mall" = "Mall",
                                                                 "HDB" = "HDB"),
                                                  selected = "Hawker"),
                                      
@@ -318,7 +319,7 @@ server <- function(input, output) {
     } else if (input$variable == "Carpark") {
       carpark_sf
     } 
-    else if (input$variable == "Shopping Mall") {
+    else if (input$variable == "Mall") {
       mall_sf
     }
   })
@@ -326,8 +327,8 @@ server <- function(input, output) {
   ## Mapping ##
   output$mapPlot <- renderTmap({
     
-    tmap_mode("view") +
-      tm_basemap("OpenStreetMap") +
+    tmap_mode("view") 
+      tm_basemap("OpenStreetMap")+
       tm_shape(sg) +
       tm_polygons() +
       tm_shape(map_var()) +
@@ -359,7 +360,7 @@ server <- function(input, output) {
           filter(Name == "Carpark")
         A <- hdb_cp_lclq$Name
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var == "Mall") {
         
         Carpark <- mall_cp_lclq %>%
           filter(Name == "Carpark")
@@ -381,10 +382,10 @@ server <- function(input, output) {
           filter(Name == "HDB")
         B <- hdb_cp_lclq$Name
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var == "Mall") {
         
         Mall <- mall_cp_lclq %>%
-          filter(Name == "Shopping Mall")
+          filter(Name == "Mall")
         B <- mall_cp_lclq$Name
       }
     })
@@ -402,7 +403,7 @@ server <- function(input, output) {
         include_self(
           st_knn(st_geometry(hdb_cp_lclq), input$nb_lclq))
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var ==  "Mall") {
         
         include_self(
           st_knn(st_geometry(mall_cp_lclq), input$nb_lclq))
@@ -422,7 +423,7 @@ server <- function(input, output) {
         
         st_kernel_weights(nb(), hdb_cp_lclq, "gaussian", adaptive = TRUE)
         
-      } else if (input$lclq_var == "Shopping Mall") {
+      } else if (input$lclq_var == "Mall") {
         
         st_kernel_weights(nb(), mall_cp_lclq, "gaussian", adaptive = TRUE)
         
@@ -453,7 +454,7 @@ server <- function(input, output) {
           LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
           cbind(hdb_cp_lclq, LCLQ)
           
-        } else if (input$lclq_var == "Shopping Mall") {
+        } else if (input$lclq_var == "Mall") {
           
           LCLQ <- local_colocation(A(), B(), nb(), wt(), conf_int())
           cbind(mall_cp_lclq, LCLQ)
@@ -463,16 +464,16 @@ server <- function(input, output) {
     })
     
     # Create the tmap plot
-    tmap_mode("view") +
-      tm_basemap("OpenStreetMap") +
+    tmap_mode("plot") +
       tm_shape(sg) +
       tm_polygons() +
       tm_shape(LCLQ_output()) +
       tm_dots(col = input$lclq_var,
-              size = 0.01,
+              size = 0.08,
               border.col = "black",
               border.lwd = 0.5) +
       tm_view(set.zoom.limits = c(11, 16))
+    
     
   })
   

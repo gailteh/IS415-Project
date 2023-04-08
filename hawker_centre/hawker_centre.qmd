@@ -402,7 +402,7 @@ hdb_lclq <- hdb_sf |>
 
 mall_lclq <- mall_sf |>
   rename("Name" = "Mall Name") |>
-  mutate("Name" = "Shopping Mall")
+  mutate( Name = "Mall")
 
 
 # names(my_data_frame)[names(my_data_frame) == "old_column_name"] <- "new_column_name"
@@ -419,14 +419,14 @@ mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 
 ```{r}
 nb <- include_self(
-  st_knn(st_geometry(hk_cp_lclq), 6))
+  st_knn(st_geometry(mall_cp_lclq), 9))
 ```
 
 ## Computing kernel weights
 
 ```{r}
 wt <- st_kernel_weights(nb, 
-                        hk_cp_lclq, 
+                        mall_cp_lclq, 
                         "gaussian", 
                         adaptive = TRUE)
 ```
@@ -458,14 +458,14 @@ HDB <- hdb_cp_lclq %>%
 C <- hdb_cp_lclq$Name
 
 Mall <- mall_cp_lclq %>%
-  filter(Name == "Shopping Mall")
+  filter(Name == "Mall")
 D <- mall_cp_lclq$Name
 ```
 
 ## Computing LCLQ
 
 ```{r}
-LCLQ_AB <- local_colocation(A, B, nb, wt, 49)
+LCLQ_AB <- local_colocation(A_mall, D, nb, wt, 49)
 
 # LCLQ_AC <- local_colocation(A, C, nb, wt, 49)
 
@@ -475,9 +475,9 @@ LCLQ_AB <- local_colocation(A, B, nb, wt, 49)
 ## write to rds
 
 ```{r}
-write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
+#write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
 
-#write_rds(LCLQ_AB, "data/rds/lclq_AC.rds")
+write_rds(LCLQ_AB, "data/rds/lclq_AD.rds")
 
 #write_rds(LCLQ_AB, "data/rds/lclq_AD.rds")
 ```
@@ -485,16 +485,16 @@ write_rds(LCLQ_AB, "data/rds/lclq_AB.rds")
 ## read rds
 
 ```{r}
-LCLQ_AB <- read_rds("data/rds/lclq_AB.rds")
+#LCLQ_AB <- read_rds("data/rds/lclq_AB.rds")
 
 #LCLQ_AC <- read_rds("data/rds/lclq_AC.rds")
-#LCLQ_AD <- read_rds("data/rds/lclq_AD.rds")
+LCLQ_AD <- read_rds("data/rds/lclq_AD.rds")
 ```
 
 ## Joining output table
 
 ```{r}
-LCLQ_hawker <- cbind(interest_lclq, LCLQ_AB)
+LCLQ_mall <- cbind(mall_cp_lclq, LCLQ_AD)
 ```
 
 ## Plotting LCLQ values
@@ -502,11 +502,11 @@ LCLQ_hawker <- cbind(interest_lclq, LCLQ_AB)
 ```{r}
 
 
-tmap_mode("view")
+tmap_mode("plot")
 tm_shape(sg) +
   tm_polygons() +
 tm_shape(LCLQ_hawker)+ 
-  tm_dots(col = "Hawker",
+  tm_dots(col = "Shopping Mall",
              size = 0.01,
           
              border.col = "black",
@@ -561,6 +561,19 @@ tm_shape(LCLQ_hawker)+
              ) +
   tm_view(set.zoom.limits = c(11, 16))
 ```
+
+```{r}
+tmap_mode("plot") +
+tm_shape(sg) +
+tm_polygons() +
+tm_shape(LCLQ_mall) +
+tm_dots(col = "Mall",
+        size = 0.08,
+        border.col = "black",
+        border.lwd = 0.5) +
+tm_view(set.zoom.limits = c(11, 16))
+```
+
 
 ```{r}
 tmaptools::palette_explorer()
