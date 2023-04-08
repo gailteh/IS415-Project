@@ -20,6 +20,7 @@ library(raster)
 library(maptools)
 library(dplyr)
 library(stringr)
+library(sfdep)
 
 # Geospatial Data Import and Wrangling
 
