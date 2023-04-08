@@ -1,31 +1,80 @@
 
- #
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
-
 # Libraries
 library(shiny)
 library(bslib)
-library(maptools)
-library(sf)
-library(raster)
-library(spatstat)
-library(tmap)
-library(dplyr)
+library(shinycssloaders)
+
+library(leaflet)
 library(tidyverse)
+library(tools)
+library(shinythemes)
+library(shinyjs)
+library(tmap)
+library(readr)
+library(sp)
+library(sf)
+library(rgdal)
+library(spNetwork)
+library(spatstat)
+library(raster)
+library(maptools)
+library(dplyr)
+library(stringr)
 
 # Geospatial Data Import and Wrangling
 
-carpark_ppp <- read_rds("carpark_ppp.rds")
-carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
+# sg (Coastal outline)
+sg_owin <- read_rds("rds/sg_owin.rds")
+sg <- read_rds("rds/sg.rds")
+sg_sf <- read_rds("rds/sg_sf.rds")
+sg_sp <- read_rds("rds/sg_sp.rds")
+
+# mpsz
+mpsz <- read_rds("rds/mpsz.rds")
+mpsz_sf <- read_rds("rds/mpsz_sf.rds")
+
 
 # Aspatial Data Import and Wrangling
+
+# HDB flats
+carpark_sf <- read_rds("rds/carpark_sf.rds")
+carpark_ppp <- read_rds("rds/carpark_ppp.rds")
+carpark_ppp_km <- rescale(carpark_ppp, 1000, "km")
+
+# hawker
+hawker_sf <- read_rds("rds/hawker_sf.rds")
+# hawker_sp <- write_rds(hawker_sp, "data/rds/hawker_sp.rds")
+# hawker_ppp <- read_rds("data/rds/hawker_ppp.rds")
+# hawker <- read_rds("data/rds/hawker.rds")
+
+# HDB flats
+hdb_sf <- read_rds("rds/hdb_sf.rds")
+
+# Shopping mall
+mall_sf <- read_rds("rds/mall_sf.rds")
+
+
+#### LCLQ preparation & wrangling ####
+hawker_lclq <- hawker_sf |>
+  mutate(Name = "Hawker")
+
+carpark_lclq <- carpark_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "Carpark") |>
+  rename("Name" = "address")
+
+hdb_lclq <- hdb_sf |>
+  dplyr::select(address, geometry) |>
+  mutate(address = "HDB") |>
+  rename("Name" = "address")
+
+mall_lclq <- mall_sf |>
+  rename("Name" = "Mall Name")
+
+## Combine LCLQ together
+hk_cp_lclq <- rbind(hawker_lclq, carpark_lclq)
+hdb_cp_lclq <- rbind(hdb_lclq, carpark_lclq)
+mall_cp_lclq <- rbind(mall_lclq, carpark_lclq)
 
 
 # Define UI for application that draws a histogram
@@ -49,11 +98,59 @@ ui <- fluidPage(
                                      sidebarPanel("various selections"),
                                      mainPanel("map")
                                    )),
+                          
                           tabPanel("KDE",
-                                   sidebarLayout(
-                                     sidebarPanel("sliders and dropdown lists go here"),
-                                     mainPanel("Map and interpretations go here")
-                                   )),
+                                    sidebarLayout(
+                                      sidebarPanel(
+                                        # select mapping variable
+                                        selectInput(inputId = "kernel_var",
+                                                    label = "Select a Kernel Method",
+                                                    choices = list("gaussian" = "gaussian",
+                                                                   "epanechnikov" = "Epanechnikovl",
+                                                                   "quartic" = "quartic",
+                                                                   "disc" = "disc"),
+                                                    selected = "gaussian"),
+                                        
+                                        # select bandwidth method
+                                        radioButtons(inputId = "SPA_bandwidth_method",
+                                                     label = "Select the bandwidth method to be used:",
+                                                     choices = c("Auto" = "auto",
+                                                                 "Fixed" = "fixed", 
+                                                                 "Adaptive" = "adaptive"),
+                                                     selected = "auto"),
+                                        # if automatic 
+                                        conditionalPanel(
+                                          condition = "input.SPA_bandwidth_method == 'auto'",
+                                          selectInput(inputId = "bw_var",
+                                                      label = "Select a Bandwidth Method",
+                                                      choices = list("bw.CvL" = "bw.CvL",
+                                                                     "bw.scott" = "bw.scott",
+                                                                     "bw.diggle" = "bw.diggle",
+                                                                     "bw.ppl" = "bw.ppl"),
+                                                      selected = "bw.diggle")
+                                        ),
+                                        
+                                        # if fixed
+                                        conditionalPanel(
+                                          condition = "input.SPA_bandwidth_method == 'fixed'",
+                                          sliderInput(inputId = "bw_fix_var",
+                                                      label = "Select the fixed bandwidth to be used: (in km)",
+                                                      min = 0,
+                                                      max = 5,
+                                                      step = 0.1,
+                                                      value = 0.6)
+                                        ),
+                                        
+                                      actionButton(inputId = "kde_run",
+                                                   label = "Run Kernel Density Estimation")
+                                      ),
+                                      
+                                      mainPanel(withSpinner(tmapOutput("SPPA_KDE_Map",
+                                                                       width = "100%", 
+                                                                       height = 550)))
+                                      )),
+                                      
+                                  
                           tabPanel("G Function Analysis",
                                    sidebarLayout(
                                      sidebarPanel(
@@ -126,8 +223,78 @@ server <- function(input, output) {
     plot(l_func.csr, . - r ~ r, xlab="d", ylab="L(d)-r")
   })
   
+  # KDE Function Plot
+  
+  output$SPPA_KDE_Map <- renderPlot({
+    input$run_kde
+    plot(density(carpark_ppp, 
+                 sigma=as.numeric(input$bw_var), 
+                 edge=TRUE, 
+                 kernel=input$kernel_var))
+  })
 
-    
+  # output$SPPA_KDE_Map <- 
+  #   reactive({
+  #     if (input$SPA_bandwidth_method == 'auto'){
+  #       if (input$bw_var == 'bw.diggle') {
+  #         bw <- bw.diggle(carpark_ppp.km)
+  #       }
+  #       
+  #       else if (input$bw_var == 'bw.CvL'){
+  #         bw <- bw.CvL(carpark_ppp.km)
+  #       }
+  #       
+  #       else if (input$bw_var == 'bw.scott'){
+  #         bw <- bw.scott(carpark_ppp.km)
+  #       }
+  #       
+  #       else if (input$bw_var == 'bw.ppl'){
+  #         bw <- bw.ppl(carpark_ppp.km)
+  #       }
+  #       
+  #      isolate(density(carpark_ppp.km,
+  #                       sigma=as.numeric(the_bw),
+  #                       edge=TRUE,
+  #                       kernel=input$kernel_var))
+  #     }
+  #     
+  #     else if 
+  #   }) 
+  # kde <- reactive({
+  #     
+  #     # else if (input$SPA_bandwidth_method == 'fixed'){
+  #     #   kde <- isolate(density(carpark_ppp.km,
+  #     #                          sigma=input$bw_fix_var,
+  #     #                          edge=TRUE,
+  #     #                          kernel=input$kernel_var))
+  #     # }
+  #     # else if (input$SPA_bandwidth_method == 'adaptive'){
+  #     #   kde <- isolate(adaptive.density(carpark_ppp.km,
+  #     #                                   method="kernel"))
+  #     # }
+  #     return (kde)
+  # 
+  #     gridded_kde <- as.SpatialGridDataFrame.im(kde)
+  #     kde_raster <- raster(gridded_kde)
+  #     projection(kde_raster) <- CRS("+init=EPSG:3414 +datum=WGS84 +units=km")
+  # 
+  #   tmap_mode("view")
+  #   
+  #   SPPA_KDE_Map <- tm_shape(kde_raster) 
+    # SPPA_KDE_Map <- tm_shape(kde_raster) + 
+    #                 tm_raster("v") +
+    #                 tm_layout(legend.position = c("right", "bottom"), frame = FALSE)
+    # 
+    # SPPA_KDE_Map <- isolate(tm_shape(sg_sf) +
+    #                       tm_borders(col = 'black',
+    #                                  lwd = 1,
+    #                                  alpha = 0.5) +
+    #                       tm_shape(kde_raster) +
+    #                       tm_raster("v", alpha = 0.7) +
+    #                       tm_layout(legend.outside = TRUE, frame = FALSE, title = "KDE") +
+#     #                       tm_view(set.zoom.limits = c(11,13)))
+# })
+# })
 }
 
 # Run the application 

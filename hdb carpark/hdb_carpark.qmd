@@ -255,7 +255,7 @@ gridded_kde_carpark_bw <- as.SpatialGridDataFrame.im(kde_carpark.bw)
 spplot(gridded_kde_carpark_bw)
 ```
 
-##### Convering gridded output into raster
+##### Converting gridded output into raster
 
 ```{r}
 kde_carpark_bw_raster <- raster(gridded_kde_carpark_bw)

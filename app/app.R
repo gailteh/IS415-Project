@@ -218,25 +218,37 @@ ui <- fluidPage(
                                      sidebarPanel(
                                        # select mapping variable
                                        selectInput(inputId = "kde_var",
-                                                   label = "Select a Kernel Method:",
+                                                   label = "Select a Kernel Method",
                                                    choices = list("Gaussian" = "gaussian",
                                                                   "Epanechnikov" = "Epanechnikovl",
                                                                   "Quartic" = "quartic",
                                                                   "Disc" = "disc"),
-                                                   selected = "Gaussian")
-                                      ),
-                                     sliderInput(inputId = "kde_bandwidth",
-                                                 label = "Bandwidth",
-                                                 min = 0.1,
-                                                 max = 1,
-                                                 value= 0.6)
-                                    
-                                   ),
+                                                   selected = "Gaussian"),
+                                     
+                                      # select bandwidth
+                                      sliderInput(inputId = "kde_bandwidth",
+                                                  label = "Bandwidth",
+                                                  min = 0.1,
+                                                  max = 1,
+                                                  value= 0.6),
+                                       
+                                       actionButton(inputId = "kde_run",
+                                                    label = "Run Kernel Density Estimation")
+                                    )
+                                     ),
+ 
+
                                    
-                                   actionButton("KDE_run", "Run Kernel Density Estimation"),
-                                   
+                           mainPanel(
+                             withSpinner(tmapOutput("kde_plot",
+                                                    width = "100%", 
+                                                    height = 550)
+                             ),
                                    h4("How to interpret the map?"),
-                                   ),
+                           )
+                                   )),
+              
+                          
                           tabPanel("G Function Analysis",
                                    sidebarLayout(
                                      sidebarPanel(
