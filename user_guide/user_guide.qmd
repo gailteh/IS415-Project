@@ -1,0 +1,33 @@
+# Application User Guide
+
+Welcome to the user guide for CarSpot Shiny Application.
+
+Link to our application: <https://gailteh.shinyapps.io/is415-project/>
+
+## Mapping & Co-location
+
+### Mapping
+
+### LCLQ
+
+## Spatial Point Pattern Analysis
+
+### Kernel Density Estimation (KDE)
+
+### G Function
+
+![Main Page for G-Function](images/image-701144850.png)
+
+When you first enter into the G-Function page by clicking on the "G Function Analysis Tab", the application will run 99 simulations of the G-Function by default, and its respective graph will appear.
+
+In the side panel, to change the number of simulations, drag the slider and then click on the "Run Analysis" button to generate a new graph.
+
+Below the graph is a short write-up of what G-Function is supposed to analyse and how you can analyse the output generated.
+
+### L Function
+
+When you first enter into the L Function page by clicking on the "L Function Analysis Tab", the application will run 99 simulations of the L Function by default, and its respective graph will appear.
+
+In the side panel, to change the number of simulations, drag the slider and then click on the "Run Analysis" button to generate a new graph.
+
+Below the graph is a short write-up of what L Function is supposed to analyse and how you can analyse the output generated.

@@ -87,7 +87,7 @@ ui <- fluidPage(
              tabPanel("Homepage",
                       sidebarLayout(
                         sidebarPanel(
-                          "A group project by: Celine, Gail, Kathy for IS415 Geospatial Analytics and Applications"
+                          "A group project by: Kathy Tong, Gail Teh and Celine Ng for IS415 Geospatial Analytics and Applications"
                         ),
                         mainPanel(
                           h2("Project Motivation"),

@@ -11,6 +11,8 @@ website:
         text: About
       - href: "project overview/overview.html"
         text: Project Overview
+      - href: "user_guide/user_guide.html"
+        text: App User Guide
 
 format:
   html:

@@ -19,5 +19,8 @@
   },
   "hdb carpark/hdb_carpark.qmd": {
     "hdb_carpark.html": "91a29e17"
+  },
+  "user_guide/user_guide.qmd": {
+    "user_guide.html": "24626a52"
   }
 }
