@@ -333,14 +333,7 @@ ui <- fluidPage(
                                      )
                                    ))
                         )
-                      ),
-             
-             tabPanel("Import Data",
-                      fileInput("file1", "Choose CSV File",
-                                multiple = TRUE,
-                                accept = c("text/csv",
-                                           "text/comma-separated-values,text/plain",
-                                           ".csv")),)
+                      )
   )
 )
 
