@@ -7,8 +7,36 @@ Link to our application: <https://gailteh.shinyapps.io/is415-project/>
 ## Mapping & Co-location
 
 ### Mapping
+On the main panel, you can see the default map that has been rendered upon landing which is Car parks with the default based map of OpenStreetMap.
+![](images/interactive_map.jpg)
+
+On the left panel, you can see the variables and parameters to explore around. Including the mapping variables like Hawker, HDB, Shopping Malls. Other interesting parameters to "play" around are the size and colours of the data points.
+
+![](images/left_panel1.jpg)
+
+The map is rendered automatically. And if you scroll down, you should see a brief explanation of this interactive map and how it works.
+
+![](images/interactive_desc.jpg)
 
 ### LCLQ
+* A kind note for this feature of our app: LCLQ takes at least 10 mins to render the output map.
+Please select the parameters for this feature to work: 
+-   Mapping variables (Hawker, Shopping mall, HDB) 
+-   The level of significance which can also be intepreted from the confidence level
+-   The number of Neighbours
+
+After selecting, click on the red button called "Run Analysis".
+
+![](images/lclq_left_panel.jpg)
+
+The map output will resemble something similar to this
+![](images/LCLQ_pic.jpg)
+
+
+If you scroll down, you can see the brief description on what is Local Co-location Quotient and how it works.
+
+![](images/lclq_desc.jpg)
+
 
 ## Spatial Point Pattern Analysis
 
