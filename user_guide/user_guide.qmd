@@ -14,6 +14,14 @@ Link to our application: <https://gailteh.shinyapps.io/is415-project/>
 
 ### Kernel Density Estimation (KDE)
 
+![](images/photo_2023-04-14_13-44-01.jpg)
+
+When you first enter into the Kernel Density Estimation (KDE) page by clicking on the \"Spatial Point Analysis Tab\", the application will run KDE using the Gaussian method and using an automatic bw.diggle bandwidth by default, and its graph will appear.
+
+In the side panel, users are able to choose their kernel method, bandwidth method, and if automatic bandwidth, they are able to choose between bw.CvL, bw.scott, bw.diggle and bw.ppl. For fixed bandwidth option, they are able to choose between 0-5, with an interval of 0.1. By default, the fixed bandwidth will be at 0.6 if chosen.
+
+Below the graph is a short write-up of what KDE is supposed to analyse and how you can analyse the output generated.
+
 ### G Function
 
 ![Main Page for G-Function](images/image-701144850.png)
