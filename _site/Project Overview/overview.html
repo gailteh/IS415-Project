@@ -127,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#point-pattern-analysis" id="toc-point-pattern-analysis" class="nav-link" data-scroll-target="#point-pattern-analysis">Point Pattern Analysis</a></li>
   <li><a href="#local-colocation-quotients-lclq-1" id="toc-local-colocation-quotients-lclq-1" class="nav-link" data-scroll-target="#local-colocation-quotients-lclq-1">Local Colocation Quotients (LCLQ)</a></li>
   </ul></li>
-  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">8. Literature Review</a>
+  <li><a href="#review-and-critic-on-past-work" id="toc-review-and-critic-on-past-work" class="nav-link" data-scroll-target="#review-and-critic-on-past-work">8. Review and Critic on Past Work</a>
   <ul class="collapse">
   <li><a href="#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists" id="toc-a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists" class="nav-link" data-scroll-target="#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists">1) A Shiny Web Application for teaching model-based geostatistics to population health scientists</a>
   <ul class="collapse">
@@ -161,8 +161,16 @@ ul.task-list li input[type="checkbox"] {
   </ul></li>
   <li><a href="#application-architecture" id="toc-application-architecture" class="nav-link" data-scroll-target="#application-architecture">10) Application Architecture</a></li>
   <li><a href="#timeline" id="toc-timeline" class="nav-link" data-scroll-target="#timeline">11) Timeline</a></li>
-  <li><a href="#review-and-critic-on-past-work" id="toc-review-and-critic-on-past-work" class="nav-link" data-scroll-target="#review-and-critic-on-past-work">12) Review and Critic on Past Work</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">13)</a></li>
+  <li><a href="#user-interface-design" id="toc-user-interface-design" class="nav-link" data-scroll-target="#user-interface-design">12) User Interface Design</a>
+  <ul class="collapse">
+  <li><a href="#i.-interactive-choropleth-map" id="toc-i.-interactive-choropleth-map" class="nav-link" data-scroll-target="#i.-interactive-choropleth-map"><em>i. Interactive Choropleth Map</em></a></li>
+  <li><a href="#ii.-local-co-location-quotient-lclq" id="toc-ii.-local-co-location-quotient-lclq" class="nav-link" data-scroll-target="#ii.-local-co-location-quotient-lclq"><em>ii. Local Co-Location Quotient (LCLQ)</em></a></li>
+  <li><a href="#iii.-kernel-density-estimation-kde" id="toc-iii.-kernel-density-estimation-kde" class="nav-link" data-scroll-target="#iii.-kernel-density-estimation-kde"><em>iii. Kernel Density Estimation</em> <em>(KDE)</em></a></li>
+  <li><a href="#iv.-g-and-l-function" id="toc-iv.-g-and-l-function" class="nav-link" data-scroll-target="#iv.-g-and-l-function"><em>iv. G and L Function</em></a></li>
+  </ul></li>
+  <li><a href="#demonstration" id="toc-demonstration" class="nav-link" data-scroll-target="#demonstration">13) Demonstration</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">14) Discussion</a></li>
+  <li><a href="#future-work" id="toc-future-work" class="nav-link" data-scroll-target="#future-work">15) Future Work</a></li>
   </ul>
 </nav>
     </div>
@@ -324,8 +332,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 </section>
-<section id="literature-review" class="level1">
-<h1>8. Literature Review</h1>
+<section id="review-and-critic-on-past-work" class="level1">
+<h1>8. Review and Critic on Past Work</h1>
 <section id="a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists" class="level2">
 <h2 class="anchored" data-anchor-id="a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists">1) <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8719748/">A Shiny Web Application for teaching model-based geostatistics to population health scientists</a></h2>
 <p><img src="images/image-127123022.png" class="img-fluid"></p>
@@ -434,11 +442,34 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/image-353407350.png" class="img-fluid"></p>
 <p><img src="images/image-1481811984.png" class="img-fluid"></p>
 </section>
-<section id="review-and-critic-on-past-work" class="level1">
-<h1>12) Review and Critic on Past Work</h1>
+<section id="user-interface-design" class="level1">
+<h1>12) User Interface Design</h1>
+<p>The design of CarSpot application consists of three main components namely graph, feature selection and interpretations.</p>
+<p>With the navigation panels at the top most of the application, users will be able to navigate between the various uses of the application, from the homepage to mapping and co-location and spatial points analysis. The graphs will be loaded by default once users click into any of the tabs but to be able to change the different variables and for graphs to be loaded to their selection, they would have make changes to the variables or click on ‘Run Analysis’.</p>
+<section id="i.-interactive-choropleth-map" class="level2">
+<h2 class="anchored" data-anchor-id="i.-interactive-choropleth-map"><em>i. Interactive Choropleth Map</em></h2>
+<p>In this section, users are able to select the variable that they would like to map out and the size of the points for visualisation. The width of the borderline can also be set and the point colour can be set to the users’ preferred colour.</p>
 </section>
-<section id="section" class="level1">
-<h1>13)</h1>
+<section id="ii.-local-co-location-quotient-lclq" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-local-co-location-quotient-lclq"><em>ii. Local Co-Location Quotient (LCLQ)</em></h2>
+<p>For the LCLQ analysis, users can also select the mapping variable and also the level of significance and number of neighbours as well to run the analysis.</p>
+</section>
+<section id="iii.-kernel-density-estimation-kde" class="level2">
+<h2 class="anchored" data-anchor-id="iii.-kernel-density-estimation-kde"><em>iii. Kernel Density Estimation</em> <em>(KDE)</em></h2>
+<p>Users are able to choose the kernel and bandwidth methods, where the estimation will then be run according to their selection.</p>
+</section>
+<section id="iv.-g-and-l-function" class="level2">
+<h2 class="anchored" data-anchor-id="iv.-g-and-l-function"><em>iv. G and L Function</em></h2>
+</section>
+</section>
+<section id="demonstration" class="level1">
+<h1>13) Demonstration</h1>
+</section>
+<section id="discussion" class="level1">
+<h1>14) Discussion</h1>
+</section>
+<section id="future-work" class="level1">
+<h1>15) Future Work</h1>
 
 
 </section>
