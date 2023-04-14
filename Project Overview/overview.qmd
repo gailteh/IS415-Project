@@ -109,7 +109,7 @@ Use these insights derived from the analysis for better understanding on the dis
 
 -   Find out the likelihood of the spatial association between 2 categorical vectors, for instance, HDB carparks and HDB blocks or Hawker Centres or Shopping Malls.
 
-# 8. Literature Review
+# 8. Review and Critic on Past Work
 
 ## 1) [A Shiny Web Application for teaching model-based geostatistics to population health scientists](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8719748/)
 
@@ -209,6 +209,28 @@ We will apply the LCLQ to identify colocation between HDB carparks and different
 
 ![](images/image-1481811984.png)
 
-# 12) Review and Critic on Past Work
+# 12) User Interface Design
 
-# 13) 
+The design of CarSpot application consists of three main components namely graph, feature selection and interpretations.
+
+With the navigation panels at the top most of the application, users will be able to navigate between the various uses of the application, from the homepage to mapping and co-location and spatial points analysis. The graphs will be loaded by default once users click into any of the tabs but to be able to change the different variables and for graphs to be loaded to their selection, they would have make changes to the variables or click on 'Run Analysis'.
+
+## *i. Interactive Choropleth Map* 
+
+In this section, users are able to select the variable that they would like to map out and the size of the points for visualisation. The width of the borderline can also be set and the point colour can be set to the users' preferred colour.
+
+## *ii. Local Co-Location Quotient (LCLQ)*
+
+For the LCLQ analysis, users can also select the mapping variable and also the level of significance and number of neighbours as well to run the analysis.
+
+## *iii. Kernel Density Estimation* *(KDE)*
+
+Users are able to choose the kernel and bandwidth methods, where the estimation will then be run according to their selection.
+
+## *iv. G and L Function*
+
+# 13) Demonstration
+
+# 14) Discussion
+
+# 15) Future Work
