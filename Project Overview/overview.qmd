@@ -215,7 +215,7 @@ The design of CarSpot application consists of three main components namely graph
 
 With the navigation panels at the top most of the application, users will be able to navigate between the various uses of the application, from the homepage to mapping and co-location and spatial points analysis. The graphs will be loaded by default once users click into any of the tabs but to be able to change the different variables and for graphs to be loaded to their selection, they would have make changes to the variables or click on 'Run Analysis'.
 
-## *i. Interactive Choropleth Map* 
+## *i. Interactive Choropleth Map*
 
 In this section, users are able to select the variable that they would like to map out and the size of the points for visualisation. The width of the borderline can also be set and the point colour can be set to the users' preferred colour.
 
@@ -229,7 +229,25 @@ Users are able to choose the kernel and bandwidth methods, where the estimation 
 
 ## *iv. G and L Function*
 
-# 13) Demonstration
+Users will be able to adjust the number of simulations to their preference and the corresponding function graphs will be generated and displayed.
+
+# 13) Demonstration (Case Study -- Singapore Car Park Data)
+
+There are many uses to which this application can be of use to, but one of the examples demonstrated will be the Singapore car park data. The choropleth maps of their locations is as follows and the same can be done to hawker centres, shopping malls and HDB flats data.
+
+![](images/interactive_map.jpg)
+
+As for the co-location to the other interests, users are able to see and an example of their co-location relating to hawker centres is shown below.
+
+![](images/LCLQ_pic.jpg)
+
+As for Kernel Density Estimation, we are able to see the distribution of the car parks and how clustered they are.
+
+![](images/kde.jpg)
+
+Lastly, for the G and L function, they will be greeted by the graphs used with a number of simulations.
+
+![](images/image-701144850.png)
 
 # 14) Discussion
 
