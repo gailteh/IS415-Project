@@ -14,11 +14,17 @@ In addition, our application can generate kernel density maps using the input da
 
 # 3. Problem and Motivation
 
-Singapore is a densely populated city-state that faces the challenge of providing adequate and efficient car park facilities to its residents and visitors. The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
+Singapore is a densely populated city-state that facing the challenge of providing adequate and efficient car park facilities to its residents and visitors. The spatial distribution of car parks across the city is uneven, with some areas experiencing high demand while others have surplus capacity.
 
-Our project aims to find out the spatial patterns of HDB carparks and its local co-location with other interests like HDB, shopping malls and hawker centres.
+Many people do not have enough knowledge on the underlying reasons for the spatial distribution of carpark facilities as they are not aware of Point Pattern Analysis techniques.
 
-The problem statement is focused on exploring the spatial points patterns of HDB carparks within neighbourhoods in Singapore.
+Hence, the team is inspired to create an application that enables users to:
+
+-   Explore the capabilities and use cases of Point Pattern Analysis in the case of car parks in Singapore
+
+-   Conduct Spatial Point Pattern Analysis to derive insights on the distributions of car parks
+
+-   Conduct Co-location Analysis to derive insights on other interests such as HDB, shopping malls and hawker centres with car parks
 
 # 4. Project Objectives
 
@@ -202,3 +208,7 @@ We will apply the LCLQ to identify colocation between HDB carparks and different
 ![](images/image-353407350.png)
 
 ![](images/image-1481811984.png)
+
+# 12) Review and Critic on Past Work
+
+# 13) 
