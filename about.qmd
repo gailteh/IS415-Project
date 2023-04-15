@@ -1,5 +1,0 @@
----
-title: "About"
----
-
-This is Group 8's Geospatial Analytics and Applications (IS415) Project Website.

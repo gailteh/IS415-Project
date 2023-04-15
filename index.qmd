@@ -8,4 +8,6 @@ With theme of Spatial Points Patterns, this project explore the distributions of
 
 [**Link to our Github**](https://github.com/gailteh/IS415-Project)
 
+**Link to our Poster**
+
 ![](Project%20Overview/images/undraw_City_driver_re_9xyv.png){fig-align="center" width="434"}

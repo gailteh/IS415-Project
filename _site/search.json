@@ -1,17 +1,10 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "This is Group 8’s Geospatial Analytics and Applications (IS415) Project Website."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Welcome to CarSpot: Geospatial Parking Analysis!!",
     "section": "",
-    "text": "Group members (Team 8) : Celine, Gail, Kathy\nWith theme of Spatial Points Patterns, this project explore the distributions of car parks in Singapore with a range of useful graphs and maps in our application to enable users to make meaningful insights.\nLink to our Github"
+    "text": "Group members (Team 8) : Celine, Gail, Kathy\nWith theme of Spatial Points Patterns, this project explore the distributions of car parks in Singapore with a range of useful graphs and maps in our application to enable users to make meaningful insights.\nLink to our Github\nLink to our Poster"
   },
   {
     "objectID": "Project Overview/overview.html#a-shiny-web-application-for-teaching-model-based-geostatistics-to-population-health-scientists",
