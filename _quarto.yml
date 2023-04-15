@@ -11,6 +11,8 @@ website:
         text: Project Overview
       - href: "user_guide/user_guide.html"
         text: App User Guide
+      - href: "app/poster.qmd"
+        text: Poster
 
 format:
   html:

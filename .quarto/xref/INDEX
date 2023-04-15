@@ -22,5 +22,8 @@
   },
   "user_guide/user_guide.qmd": {
     "user_guide.html": "24626a52"
+  },
+  "app/poster.qmd": {
+    "poster.html": "e48e103f"
   }
 }
