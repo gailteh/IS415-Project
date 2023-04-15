@@ -4,8 +4,6 @@ title: "Welcome to CarSpot: Geospatial Parking Analysis!!"
 
 **Group members (Team 8) : Celine, Gail, Kathy**
 
-**Overview**
-
 With theme of Spatial Points Patterns, this project explore the distributions of car parks in Singapore with a range of useful graphs and maps in our application to enable users to make meaningful insights.
 
 [**Link to our Github**](https://github.com/gailteh/IS415-Project)

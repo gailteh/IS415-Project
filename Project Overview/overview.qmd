@@ -251,6 +251,10 @@ Lastly, for the G and L function, they will be greeted by the graphs used with a
 
 # 14) Discussion
 
+Our application will allow users to engage in Spatial Point Pattern Analysis in the local context of HDB Carparks in Singapore. As many people do not have knowledge of how to conduct point pattern analysis or programming, our application has made point pattern analysis more accessible to everyone, especially for something that affects many people in Singapore.
+
+The user interface of our application is rather simple for users to use as it is rather intuitive. It also is not extremely cluttered with many different things which allows users to focus on the generated outputs. Finally, we also provided explanations on how to interpret the outputs that are simple enough for people without prior knowledge on geospatial analysis to understand. However, the disadvantage of providing simple explanations was our application was not able to educate the users further and more in-depth on point pattern analysis.
+
 # 15) Future Work
 
 -   **Enable the data import function**
