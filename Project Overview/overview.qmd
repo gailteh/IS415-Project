@@ -252,3 +252,15 @@ Lastly, for the G and L function, they will be greeted by the graphs used with a
 # 14) Discussion
 
 # 15) Future Work
+
+-   **Enable the data import function**
+
+    The app only functions with pre-loaded data at the moment. The use of the program would be greatly enhanced with the inclusion of a function that allows users to import their own data. To do this, a data import function that can read and handle different file formats such as CSV, shapefiles, or geodatabases would need to be created.
+
+-   **Utilise more SPPA techniques**
+
+    In order to locate geographic clusters of parking lots, the app currently uses Local Co-Location Quotient. More spatial point pattern analysis methods, like Ripley's K-function, and Network Contrained would assist reveal more details regarding the location of parking lots.
+
+-   **Leverage on Real-time data**
+
+    At the moment, the app analyzes the spatial distribution of parking spaces using static data. The app's utility would be greatly enhanced by the addition of an API that offers real-time information regarding parking availability and occupancy. Finding and connecting with pertinent real-time data APIs, such as those from parking management firms or municipalities, would be necessary to achieve this. Users could then use the app to find available parking spaces in real-time by viewing real-time parking information on a map.
