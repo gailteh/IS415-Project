@@ -548,7 +548,7 @@ server <- function(input, output) {
     kde_raster <- isolate(raster(gridded_kde))
     projection(kde_raster) <- CRS("+init=EPSG:3414 +datum=WGS84 +units=km")
     
-    tmap_mode("view")
+    # tmap_mode("view")
     
     SPPA_KDE <- isolate(tm_shape(sg_sf) +
                           tm_borders(col = 'black',

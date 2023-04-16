@@ -5,9 +5,10 @@ account: gailteh
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 8747637
-bundleId: 7070011
+bundleId: 7094737
 url: https://gailteh.shinyapps.io/is415-project/
-when: 1681113385.57558
-lastSyncTime: 1681113385.57562
+when: 1681619150.24753
+lastSyncTime: 1681619150.24758
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: IS415_GAA_Poster_T8.jpg|poster.qmd
